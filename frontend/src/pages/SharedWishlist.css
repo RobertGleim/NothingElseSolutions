@@ -1,0 +1,105 @@
+.shared-wishlist-page {
+  padding: var(--space-xl) 0 var(--space-3xl);
+  min-height: 60vh;
+}
+
+.shared-header {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+}
+
+.shared-user {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--bg-card);
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-lg);
+}
+
+.user-icon {
+  color: var(--color-primary);
+}
+
+.shared-header h1 {
+  font-size: 2rem;
+  margin-bottom: var(--space-sm);
+}
+
+.shared-header p {
+  color: var(--text-secondary);
+}
+
+.shared-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-lg);
+}
+
+.shared-item {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all var(--transition-normal);
+}
+
+.shared-item:hover {
+  border-color: rgba(0, 102, 255, 0.3);
+}
+
+.shared-item-image {
+  display: block;
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.shared-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.shared-item-info {
+  padding: var(--space-lg);
+}
+
+.shared-item-name {
+  display: block;
+  font-weight: 500;
+  margin-bottom: var(--space-sm);
+}
+
+.shared-item-name:hover {
+  color: var(--color-primary);
+}
+
+.shared-item-price {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: var(--space-md);
+  color: var(--color-primary);
+}
+
+.not-found {
+  text-align: center;
+  padding: var(--space-3xl);
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+}
+
+.not-found-icon {
+  font-size: 4rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-lg);
+}
+
+.not-found h2 {
+  margin-bottom: var(--space-sm);
+}
+
+.not-found p {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xl);
+}

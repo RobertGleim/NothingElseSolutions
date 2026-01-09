@@ -1,0 +1,118 @@
+.digital-page {
+  padding: var(--space-xl) 0 var(--space-3xl);
+}
+
+.digital-hero {
+  text-align: center;
+  padding: var(--space-3xl) 0;
+  background: linear-gradient(135deg, rgba(0, 102, 255, 0.1) 0%, transparent 100%);
+  border-radius: var(--radius-xl);
+  margin-bottom: var(--space-2xl);
+}
+
+.hero-badge {
+  display: inline-block;
+  padding: var(--space-sm) var(--space-lg);
+  background: rgba(0, 217, 255, 0.2);
+  color: var(--color-accent);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: var(--space-lg);
+}
+
+.digital-hero h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: var(--space-md);
+}
+
+.digital-hero p {
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.digital-categories {
+  display: flex;
+  gap: var(--space-md);
+  margin-bottom: var(--space-2xl);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.category-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-xl);
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  color: var(--text-secondary);
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.category-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--text-primary);
+}
+
+.category-btn.active {
+  background: var(--gradient-primary);
+  border-color: transparent;
+  color: white;
+}
+
+.product-skeleton {
+  aspect-ratio: 0.85;
+}
+
+.digital-benefits {
+  margin-top: var(--space-3xl);
+  text-align: center;
+}
+
+.digital-benefits h2 {
+  margin-bottom: var(--space-2xl);
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl);
+}
+
+.benefit-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2xl);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all var(--transition-normal);
+}
+
+.benefit-card:hover {
+  border-color: rgba(0, 102, 255, 0.3);
+  transform: translateY(-5px);
+}
+
+.benefit-icon {
+  font-size: 2.5rem;
+  color: var(--color-primary);
+  margin-bottom: var(--space-lg);
+}
+
+.benefit-card h3 {
+  margin-bottom: var(--space-sm);
+}
+
+.benefit-card p {
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+}

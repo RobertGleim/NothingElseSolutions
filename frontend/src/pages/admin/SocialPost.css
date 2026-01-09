@@ -1,0 +1,270 @@
+.social-post-page {
+  animation: fadeIn var(--transition-normal);
+}
+
+.social-post-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+.social-post-grid .admin-card h3 {
+  font-size: 1rem;
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Product Selection */
+.product-select-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.product-select-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--bg-input);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: 2px solid transparent;
+}
+
+.product-select-item:hover {
+  border-color: rgba(0, 102, 255, 0.3);
+}
+
+.product-select-item.selected {
+  border-color: var(--color-primary);
+  background: rgba(0, 102, 255, 0.1);
+}
+
+.product-select-item img {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+}
+
+.product-select-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-select-info .product-name {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.product-select-info .product-price {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.selected-check {
+  color: var(--color-primary);
+  font-size: 1.2rem;
+}
+
+/* Post Image Preview */
+.post-image-preview {
+  position: relative;
+  margin-top: var(--space-lg);
+}
+
+.post-image-preview img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+.post-image-preview .remove-image {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: var(--color-error);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Platform Toggles */
+.platform-toggles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.platform-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--bg-input);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.platform-btn svg:first-child {
+  font-size: 1.25rem;
+}
+
+.platform-btn span {
+  flex: 1;
+  text-align: left;
+}
+
+.platform-check {
+  color: var(--color-success);
+}
+
+.platform-btn.active {
+  border: 2px solid currentColor;
+}
+
+.platform-btn.facebook {
+  color: #1877F2;
+}
+
+.platform-btn.facebook.active {
+  background: rgba(24, 119, 242, 0.1);
+}
+
+.platform-btn.instagram {
+  color: #E4405F;
+}
+
+.platform-btn.instagram.active {
+  background: rgba(228, 64, 95, 0.1);
+}
+
+.platform-btn.tiktok {
+  color: #00F2EA;
+}
+
+.platform-btn.tiktok.active {
+  background: rgba(0, 242, 234, 0.1);
+}
+
+.post-btn {
+  width: 100%;
+  margin-top: var(--space-md);
+}
+
+/* Recent Posts */
+.recent-posts-card {
+  grid-column: span 2;
+}
+
+.no-posts {
+  text-align: center;
+  color: var(--text-muted);
+  padding: var(--space-xl);
+}
+
+.recent-posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.recent-post-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md);
+  background: var(--bg-input);
+  border-radius: var(--radius-md);
+}
+
+.post-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.post-product {
+  font-weight: 500;
+}
+
+.post-platforms {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.platform-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+}
+
+.platform-badge.facebook {
+  background: rgba(24, 119, 242, 0.2);
+  color: #1877F2;
+}
+
+.platform-badge.instagram {
+  background: rgba(228, 64, 95, 0.2);
+  color: #E4405F;
+}
+
+.platform-badge.tiktok {
+  background: rgba(0, 242, 234, 0.2);
+  color: #00F2EA;
+}
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+}
+
+.status-indicator.success {
+  background: var(--color-success);
+}
+
+.status-indicator.pending {
+  background: var(--color-warning);
+}
+
+.status-indicator.failed {
+  background: var(--color-error);
+}
+
+.post-date {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 1024px) {
+  .social-post-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .recent-posts-card {
+    grid-column: span 1;
+  }
+}

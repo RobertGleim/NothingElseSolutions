@@ -1,0 +1,232 @@
+.products-page {
+  padding: var(--space-xl) 0 var(--space-3xl);
+}
+
+.products-header {
+  margin-bottom: var(--space-xl);
+}
+
+.products-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.products-title h1 {
+  font-size: 1.75rem;
+}
+
+.products-count {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.products-layout {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: var(--space-xl);
+}
+
+/* Sidebar */
+.products-sidebar {
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+}
+
+.filter-section {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.filter-section h3 {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.filter-option {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.filter-option:hover {
+  background: var(--bg-input);
+  color: var(--text-primary);
+}
+
+.filter-option.active {
+  background: var(--gradient-primary);
+  color: white;
+}
+
+.price-inputs {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.price-inputs input {
+  width: 80px;
+  padding: var(--space-sm);
+  text-align: center;
+}
+
+.filter-checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+
+.filter-checkbox input {
+  accent-color: var(--color-primary);
+}
+
+/* Main Content */
+.products-main {
+  min-width: 0;
+}
+
+.products-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-xl);
+  padding: var(--space-md);
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.filter-toggle {
+  display: none;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.sort-select {
+  position: relative;
+}
+
+.sort-select select {
+  appearance: none;
+  padding-right: var(--space-xl);
+  min-width: 180px;
+}
+
+.select-icon {
+  position: absolute;
+  right: var(--space-md);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.view-toggle {
+  display: flex;
+  background: var(--bg-input);
+  border-radius: var(--radius-md);
+  padding: var(--space-xs);
+}
+
+.view-btn {
+  padding: var(--space-sm);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  transition: all var(--transition-fast);
+}
+
+.view-btn.active {
+  background: var(--color-primary);
+  color: white;
+}
+
+/* Product Grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-lg);
+}
+
+.product-grid.list {
+  grid-template-columns: 1fr;
+}
+
+.product-skeleton {
+  aspect-ratio: 0.85;
+}
+
+/* No Products */
+.no-products {
+  text-align: center;
+  padding: var(--space-3xl);
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+}
+
+.no-products h3 {
+  margin-bottom: var(--space-sm);
+}
+
+.no-products p {
+  color: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .products-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .products-sidebar {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    bottom: 0;
+    width: 300px;
+    background: var(--bg-dark);
+    padding: var(--space-lg);
+    transform: translateX(-100%);
+    transition: transform var(--transition-normal);
+    z-index: 100;
+    overflow-y: auto;
+  }
+
+  .products-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .filter-toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 640px) {
+  .toolbar-right {
+    gap: var(--space-md);
+  }
+
+  .sort-select select {
+    min-width: 140px;
+  }
+}

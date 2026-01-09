@@ -1,0 +1,78 @@
+.admin-promos {
+  animation: fadeIn var(--transition-normal);
+}
+
+/* Code Cell */
+.code-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.promo-code {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--color-primary);
+  padding: var(--space-xs) var(--space-sm);
+  background: rgba(0, 102, 255, 0.1);
+  border-radius: var(--radius-sm);
+}
+
+.copy-btn {
+  padding: var(--space-xs);
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.copy-btn:hover {
+  color: var(--color-primary);
+}
+
+/* Discount Value */
+.discount-value {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-weight: 500;
+  color: var(--color-success);
+}
+
+/* Usage Count */
+.usage-count {
+  font-family: var(--font-mono);
+}
+
+/* Status Toggle */
+.status-toggle {
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 500;
+  background: var(--bg-input);
+  color: var(--text-muted);
+  transition: all var(--transition-fast);
+}
+
+.status-toggle.active {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--color-success);
+}
+
+.status-toggle:hover {
+  transform: scale(1.05);
+}
+
+/* Promo Modal */
+.promo-modal {
+  max-width: 500px;
+}
+
+.promo-modal .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+.promo-modal .checkbox-group {
+  margin-top: var(--space-md);
+}
