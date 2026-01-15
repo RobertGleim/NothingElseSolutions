@@ -1,0 +1,25 @@
+{
+  "name": "nothing-else-solutions",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Nothing Else Solutions - Full Stack E-commerce Application",
+  "scripts": {
+    "install:frontend": "cd frontend && npm install",
+    "install:backend": "cd backend && pip install -r requirements.txt",
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "preview": "cd frontend && npm run preview",
+    "start:backend": "cd backend && python app.py",
+    "postinstall": "cd frontend && npm install"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "ecommerce",
+    "react",
+    "flask",
+    "stripe"
+  ],
+  "license": "ISC"
+}
