@@ -37,38 +37,21 @@ const EditProduct = () => {
 
   const loadProduct = async () => {
     try {
-      // Mock data for demo
-      const mockProduct = {
-        id,
-        name: 'Wireless Bluetooth Earbuds Pro',
-        description: 'Experience premium sound quality...',
-        price: 79.99,
-        salePrice: 59.99,
-        category: 'electronics',
-        sku: 'WBE-001',
-        stock: 45,
-        isDigital: false,
-        supplierUrl: 'https://amazon.com/example',
-        supplierSource: 'amazon',
-        images: ['https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400'],
-        features: ['Active Noise Cancellation', '30-hour battery life'],
-        specifications: [
-          { key: 'Connectivity', value: 'Bluetooth 5.2' },
-          { key: 'Battery', value: '6 hours' }
-        ],
-        socialTitle: '🎧 Premium Earbuds at Amazing Price!',
-        socialDescription: 'Get the best sound quality...',
-        hashtags: '#earbuds #tech #audio'
-      }
-
-      setFormData({
-        ...mockProduct,
-        price: mockProduct.price.toString(),
-        salePrice: mockProduct.salePrice?.toString() || '',
-        stock: mockProduct.stock.toString(),
-        promoCode: '',
-        promoDiscount: ''
-      })
+      // TODO: Fetch product from API
+      // const response = await adminAPI.getProduct(id)
+      // const product = response.data.product
+      // setFormData({
+      //   ...product,
+      //   price: product.price.toString(),
+      //   salePrice: product.salePrice?.toString() || '',
+      //   stock: product.stock.toString(),
+      //   promoCode: '',
+      //   promoDiscount: ''
+      // })
+      
+      // Redirect if no product found
+      toast.error('Product not found')
+      navigate('/admin/products')
     } catch (error) {
       toast.error('Failed to load product')
       navigate('/admin/products')

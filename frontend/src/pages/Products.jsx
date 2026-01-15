@@ -40,106 +40,11 @@ const Products = () => {
   const loadProducts = async () => {
     setIsLoading(true)
     try {
-      // Mock data for demo
-      const mockProducts = [
-        {
-          id: '1',
-          name: 'Wireless Bluetooth Earbuds Pro',
-          price: 79.99,
-          salePrice: 59.99,
-          images: ['https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400'],
-          rating: 4.5,
-          reviewCount: 128,
-          category: 'electronics'
-        },
-        {
-          id: '2',
-          name: 'Smart Watch Series X',
-          price: 299.99,
-          images: ['https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400'],
-          rating: 4.8,
-          reviewCount: 256,
-          category: 'electronics'
-        },
-        {
-          id: '3',
-          name: 'Portable Power Bank 20000mAh',
-          price: 49.99,
-          salePrice: 39.99,
-          images: ['https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400'],
-          rating: 4.3,
-          reviewCount: 89,
-          category: 'accessories'
-        },
-        {
-          id: '4',
-          name: 'USB-C Hub 7-in-1',
-          price: 59.99,
-          images: ['https://images.unsplash.com/photo-1625723044792-44de16ccb4e9?w=400'],
-          rating: 4.6,
-          reviewCount: 167,
-          category: 'accessories'
-        },
-        {
-          id: '5',
-          name: 'Mechanical Gaming Keyboard RGB',
-          price: 129.99,
-          salePrice: 99.99,
-          images: ['https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=400'],
-          rating: 4.7,
-          reviewCount: 203,
-          category: 'gadgets'
-        },
-        {
-          id: '6',
-          name: 'Wireless Charging Pad',
-          price: 29.99,
-          images: ['https://images.unsplash.com/photo-1591815302525-756a9bcc3425?w=400'],
-          rating: 4.4,
-          reviewCount: 156,
-          category: 'accessories'
-        },
-        {
-          id: '7',
-          name: 'Noise Cancelling Headphones',
-          price: 249.99,
-          salePrice: 199.99,
-          images: ['https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400'],
-          rating: 4.9,
-          reviewCount: 312,
-          category: 'electronics'
-        },
-        {
-          id: '8',
-          name: 'Smart LED Light Strip',
-          price: 34.99,
-          images: ['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400'],
-          rating: 4.2,
-          reviewCount: 98,
-          category: 'gadgets'
-        }
-      ]
-
-      let filtered = category 
-        ? mockProducts.filter(p => p.category === category)
-        : mockProducts
-
-      // Sort
-      switch (filters.sort) {
-        case 'price-asc':
-          filtered.sort((a, b) => (a.salePrice || a.price) - (b.salePrice || b.price))
-          break
-        case 'price-desc':
-          filtered.sort((a, b) => (b.salePrice || b.price) - (a.salePrice || a.price))
-          break
-        case 'rating':
-          filtered.sort((a, b) => b.rating - a.rating)
-          break
-        default:
-          break
-      }
-
-      setProducts(filtered)
+      // TODO: Fetch products from API
+      // const response = await productAPI.getAll({ category, sort: filters.sort })
+      // setProducts(response.data.products || [])
+      
+      setProducts([])
     } catch (error) {
       console.error('Error loading products:', error)
     } finally {

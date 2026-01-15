@@ -5,7 +5,7 @@ import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
 import { orderAPI } from '../services/api'
 import { toast } from 'react-toastify'
-import { FiLock, FiCreditCard, FiTruck, FiUser } from 'react-icons/fi'
+import { FiLock, FiCreditCard, FiUser } from 'react-icons/fi'
 import './Checkout.css'
 
 const Checkout = () => {
@@ -29,10 +29,9 @@ const Checkout = () => {
     saveInfo: false
   })
 
-  const hasPhysicalProducts = cartItems.some(item => !item.isDigital)
   const subtotal = getCartTotal()
-  const shipping = hasPhysicalProducts && subtotal < 50 ? 4.99 : 0
-  const total = subtotal + shipping
+  const shipping = 0 // Digital products only - no shipping
+  const total = subtotal
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -177,73 +176,6 @@ const Checkout = () => {
                 </div>
               </div>
             </div>
-
-            {/* Shipping Address */}
-            {hasPhysicalProducts && (
-              <div className="checkout-section">
-                <div className="section-header">
-                  <FiTruck className="section-icon" />
-                  <h2>Shipping Address</h2>
-                </div>
-                <div className="form-grid">
-                  <div className="form-group full-width">
-                    <label className="form-label">Address</label>
-                    <input
-                      type="text"
-                      name="address"
-                      value={formData.address}
-                      onChange={handleInputChange}
-                      className="form-input"
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">City</label>
-                    <input
-                      type="text"
-                      name="city"
-                      value={formData.city}
-                      onChange={handleInputChange}
-                      className="form-input"
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">State</label>
-                    <input
-                      type="text"
-                      name="state"
-                      value={formData.state}
-                      onChange={handleInputChange}
-                      className="form-input"
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">ZIP Code</label>
-                    <input
-                      type="text"
-                      name="zipCode"
-                      value={formData.zipCode}
-                      onChange={handleInputChange}
-                      className="form-input"
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Country</label>
-                    <select
-                      name="country"
-                      value={formData.country}
-                      onChange={handleInputChange}
-                      className="form-select"
-                    >
-                      <option value="United States">United States</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            )}
 
             {/* Payment */}
             <div className="checkout-section">

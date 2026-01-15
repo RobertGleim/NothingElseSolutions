@@ -49,25 +49,21 @@ const Dashboard = () => {
 
   const loadDashboardData = async () => {
     try {
-      // Mock data for demonstration
+      // TODO: Fetch dashboard data from API
+      // const response = await adminAPI.getDashboardStats()
+      // setStats(response.data.stats || {})
+      // setRecentOrders(response.data.recentOrders || [])
+      // setBestSellers(response.data.bestSellers || [])
+      
       setStats({
-        revenue: 12459.00,
-        orders: 156,
-        visitors: 2847,
-        conversion: 5.5
+        revenue: 0,
+        orders: 0,
+        visitors: 0,
+        conversion: 0
       })
 
-      setRecentOrders([
-        { id: 'ORD-001', customer: 'John Doe', total: 89.99, status: 'processing' },
-        { id: 'ORD-002', customer: 'Jane Smith', total: 156.00, status: 'shipped' },
-        { id: 'ORD-003', customer: 'Bob Wilson', total: 45.50, status: 'delivered' }
-      ])
-
-      setBestSellers([
-        { name: 'Wireless Earbuds Pro', sales: 45, revenue: 2699.55 },
-        { name: 'Smart Watch X', sales: 32, revenue: 9599.68 },
-        { name: 'Power Bank 20k', sales: 28, revenue: 1119.72 }
-      ])
+      setRecentOrders([])
+      setBestSellers([])
     } catch (error) {
       console.error('Error loading dashboard:', error)
     } finally {
@@ -106,9 +102,9 @@ const Dashboard = () => {
   }
 
   const categoryData = {
-    labels: ['Electronics', 'Accessories', 'Digital', 'Gadgets'],
+    labels: ['n8n Templates', 'Templates', 'Automation', 'Other'],
     datasets: [{
-      data: [40, 25, 20, 15],
+      data: [45, 25, 20, 10],
       backgroundColor: ['#0066FF', '#00D9FF', '#0052CC', '#3385FF'],
       borderWidth: 0
     }]

@@ -1,19 +1,28 @@
 import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import ProductCard from '../components/ProductCard'
-import { FiDownload, FiZap, FiCode, FiBox } from 'react-icons/fi'
+import { FiDownload, FiZap, FiCode, FiBox, FiCpu } from 'react-icons/fi'
 import './DigitalProducts.css'
 
 const DigitalProducts = () => {
+  const { category: urlCategory } = useParams()
   const [products, setProducts] = useState([])
-  const [category, setCategory] = useState('all')
+  const [category, setCategory] = useState(urlCategory || 'all')
   const [isLoading, setIsLoading] = useState(true)
 
   const categories = [
-    { value: 'all', label: 'All Digital', icon: FiBox },
+    { value: 'all', label: 'All Products', icon: FiBox },
     { value: 'n8n', label: 'n8n Templates', icon: FiZap },
     { value: 'templates', label: 'Templates', icon: FiCode },
+    { value: 'automation', label: 'Automation', icon: FiCpu },
     { value: 'other', label: 'Other', icon: FiDownload }
   ]
+
+  useEffect(() => {
+    if (urlCategory && urlCategory !== category) {
+      setCategory(urlCategory)
+    }
+  }, [urlCategory])
 
   useEffect(() => {
     loadProducts()
@@ -22,60 +31,11 @@ const DigitalProducts = () => {
   const loadProducts = async () => {
     setIsLoading(true)
     try {
-      // Mock data
-      const mockProducts = [
-        {
-          id: 'd1',
-          name: 'n8n E-commerce Automation Pack',
-          price: 49.99,
-          salePrice: 29.99,
-          images: ['https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400'],
-          rating: 5.0,
-          reviewCount: 42,
-          isDigital: true,
-          category: 'n8n',
-          description: 'Complete automation workflow pack for e-commerce stores. Includes order processing, inventory sync, and customer notifications.'
-        },
-        {
-          id: 'd2',
-          name: 'Social Media Scheduler Workflows',
-          price: 29.99,
-          images: ['https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400'],
-          rating: 4.7,
-          reviewCount: 31,
-          isDigital: true,
-          category: 'n8n',
-          description: 'Automate your social media posting across Facebook, Instagram, and TikTok.'
-        },
-        {
-          id: 'd3',
-          name: 'Lead Generation Automation',
-          price: 39.99,
-          images: ['https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400'],
-          rating: 4.8,
-          reviewCount: 28,
-          isDigital: true,
-          category: 'n8n',
-          description: 'Capture leads, enrich data, and sync with your CRM automatically.'
-        },
-        {
-          id: 'd4',
-          name: 'Customer Support Bot Template',
-          price: 24.99,
-          images: ['https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=400'],
-          rating: 4.5,
-          reviewCount: 19,
-          isDigital: true,
-          category: 'templates',
-          description: 'AI-powered customer support automation with ticket routing and auto-responses.'
-        }
-      ]
-
-      const filtered = category === 'all' 
-        ? mockProducts 
-        : mockProducts.filter(p => p.category === category)
+      // TODO: Fetch products from API
+      // const response = await productAPI.getAll({ category })
+      // setProducts(response.data.products || [])
       
-      setProducts(filtered)
+      setProducts([])
     } catch (error) {
       console.error('Error loading products:', error)
     } finally {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { FiArrowRight, FiTruck, FiShield, FiHeadphones, FiRefreshCw } from 'react-icons/fi'
+import { FiArrowRight, FiDownload, FiShield, FiHeadphones, FiZap, FiCode, FiCpu, FiLayers, FiGlobe } from 'react-icons/fi'
 import ProductCard from '../components/ProductCard'
 import { productAPI } from '../services/api'
 import './Home.css'
@@ -17,71 +17,15 @@ const Home = () => {
 
   const loadHomeData = async () => {
     try {
-      // For demo, using mock data
-      const mockProducts = [
-        {
-          id: '1',
-          name: 'Wireless Bluetooth Earbuds Pro',
-          price: 79.99,
-          salePrice: 59.99,
-          images: ['https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400'],
-          rating: 4.5,
-          reviewCount: 128,
-          badge: 'Hot'
-        },
-        {
-          id: '2',
-          name: 'Smart Watch Series X',
-          price: 299.99,
-          salePrice: null,
-          images: ['https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400'],
-          rating: 4.8,
-          reviewCount: 256
-        },
-        {
-          id: '3',
-          name: 'Portable Power Bank 20000mAh',
-          price: 49.99,
-          salePrice: 39.99,
-          images: ['https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400'],
-          rating: 4.3,
-          reviewCount: 89
-        },
-        {
-          id: '4',
-          name: 'USB-C Hub 7-in-1',
-          price: 59.99,
-          images: ['https://images.unsplash.com/photo-1625723044792-44de16ccb4e9?w=400'],
-          rating: 4.6,
-          reviewCount: 167,
-          badge: 'New'
-        }
-      ]
-
-      const mockDigital = [
-        {
-          id: 'd1',
-          name: 'n8n Automation Pack - E-commerce',
-          price: 29.99,
-          images: ['https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400'],
-          rating: 5.0,
-          reviewCount: 42,
-          isDigital: true
-        },
-        {
-          id: 'd2',
-          name: 'Social Media Scheduler Templates',
-          price: 19.99,
-          images: ['https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400'],
-          rating: 4.7,
-          reviewCount: 31,
-          isDigital: true
-        }
-      ]
-
-      setFeaturedProducts(mockProducts)
-      setBestSellers(mockProducts.slice(0, 4))
-      setDigitalProducts(mockDigital)
+      // TODO: Fetch products from API
+      // const response = await productAPI.getAll()
+      // setFeaturedProducts(response.data.featured || [])
+      // setBestSellers(response.data.bestSellers || [])
+      // setDigitalProducts(response.data.products || [])
+      
+      setFeaturedProducts([])
+      setBestSellers([])
+      setDigitalProducts([])
     } catch (error) {
       console.error('Error loading home data:', error)
     } finally {
@@ -90,17 +34,17 @@ const Home = () => {
   }
 
   const features = [
-    { icon: FiTruck, title: 'Free Shipping', desc: 'On orders over $50' },
+    { icon: FiDownload, title: 'Instant Download', desc: 'Immediate access' },
     { icon: FiShield, title: 'Secure Payment', desc: '100% protected' },
     { icon: FiHeadphones, title: '24/7 Support', desc: 'Dedicated support' },
-    { icon: FiRefreshCw, title: 'Easy Returns', desc: '30-day returns' }
+    { icon: FiZap, title: 'Ready to Use', desc: 'Pre-built templates' }
   ]
 
   const categories = [
-    { name: 'Electronics', image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=400', path: '/products/electronics' },
-    { name: 'Accessories', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400', path: '/products/accessories' },
-    { name: 'Gadgets', image: 'https://images.unsplash.com/photo-1519558260268-cde7e03a0152?w=400', path: '/products/gadgets' },
-    { name: 'Digital', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400', path: '/digital' }
+    { name: 'n8n Templates', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400', path: '/products/n8n' },
+    { name: 'Templates', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400', path: '/products/templates' },
+    { name: 'Automation', image: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400', path: '/products/automation' },
+    { name: 'All Digital', image: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=400', path: '/products' }
   ]
 
   return (
@@ -110,27 +54,108 @@ const Home = () => {
         <div className="hero-content container">
           <div className="hero-text">
             <h1 className="hero-title">
-              Discover <span className="text-gradient">Premium</span> Tech & Digital Solutions
+              Discover <span className="text-gradient">Premium</span> Digital Solutions
             </h1>
             <p className="hero-subtitle">
-              Quality electronics, innovative gadgets, and powerful automation templates. 
-              Everything you need, nothing else.
+              Powerful automation templates, n8n workflows, and digital tools. 
+              Everything you need to automate your business, nothing else.
             </p>
             <div className="hero-buttons">
               <Link to="/products" className="btn btn-primary btn-lg">
-                Shop Now <FiArrowRight />
+                Browse Products <FiArrowRight />
               </Link>
-              <Link to="/digital" className="btn btn-outline btn-lg">
-                Digital Products
+              <Link to="/products/n8n" className="btn btn-outline btn-lg">
+                n8n Templates
               </Link>
             </div>
           </div>
           <div className="hero-image">
             <div className="hero-glow"></div>
             <img 
-              src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600" 
-              alt="Featured Product"
+              src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600" 
+              alt="Automation Templates"
             />
+          </div>
+        </div>
+      </section>
+
+      {/* Custom Services Section */}
+      <section className="services-section">
+        <div className="container">
+          <div className="section-header centered">
+            <span className="section-badge">Custom Solutions</span>
+            <h2>Build Something <span className="text-gradient">Amazing</span></h2>
+            <p>Need something unique? Let's create a custom solution tailored to your business needs.</p>
+          </div>
+
+          <div className="services-grid">
+            {/* Custom Website Card */}
+            <div className="service-card">
+              <div className="service-card-glow website-glow"></div>
+              <div className="service-icon">
+                <FiGlobe />
+              </div>
+              <h3>Custom Website Development</h3>
+              <p className="service-description">
+                Get a stunning, modern website built from scratch. From sleek landing pages to 
+                full-featured e-commerce platforms, we bring your vision to life.
+              </p>
+              <div className="service-features">
+                <div className="service-feature">
+                  <FiCode /> React & Modern Tech Stack
+                </div>
+                <div className="service-feature">
+                  <FiLayers /> Responsive Design
+                </div>
+                <div className="service-feature">
+                  <FiShield /> Secure & Scalable
+                </div>
+              </div>
+              <div className="service-skills">
+                <span>React</span>
+                <span>Node.js</span>
+                <span>Python</span>
+                <span>PostgreSQL</span>
+                <span>AWS</span>
+              </div>
+              <Link to="/inquiry?service=website" className="btn btn-primary service-btn">
+                Start Your Project <FiArrowRight />
+              </Link>
+            </div>
+
+            {/* Custom Automation Card */}
+            <div className="service-card">
+              <div className="service-card-glow automation-glow"></div>
+              <div className="service-icon automation-icon">
+                <FiCpu />
+              </div>
+              <h3>Custom Automation & AI Agents</h3>
+              <p className="service-description">
+                Streamline your business with intelligent automation workflows and AI agents. 
+                Save time, reduce errors, and scale your operations effortlessly.
+              </p>
+              <div className="service-features">
+                <div className="service-feature">
+                  <FiZap /> n8n & Workflow Automation
+                </div>
+                <div className="service-feature">
+                  <FiCpu /> AI-Powered Agents
+                </div>
+                <div className="service-feature">
+                  <FiLayers /> API Integrations
+                </div>
+              </div>
+              <div className="service-skills">
+                <span>n8n</span>
+                <span>AI/ML</span>
+                <span>Python</span>
+                <span>APIs</span>
+                <span>ChatGPT</span>
+              </div>
+              <Link to="/inquiry?service=automation" className="btn btn-primary service-btn">
+                Automate Your Business <FiArrowRight />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -199,19 +224,19 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Digital Products Banner */}
+      {/* n8n Templates Banner */}
       <section className="digital-banner">
         <div className="container">
           <div className="banner-content">
             <div className="banner-text">
-              <span className="banner-label">Digital Downloads</span>
+              <span className="banner-label">Most Popular</span>
               <h2>n8n Automation Templates</h2>
               <p>
                 Supercharge your business with our premium automation workflows. 
                 Ready-to-use templates for e-commerce, social media, and more.
               </p>
-              <Link to="/digital" className="btn btn-primary">
-                Explore Digital Products <FiArrowRight />
+              <Link to="/products/n8n" className="btn btn-primary">
+                Explore n8n Templates <FiArrowRight />
               </Link>
             </div>
             <div className="banner-products">
@@ -228,7 +253,7 @@ const Home = () => {
         <div className="container">
           <div className="section-header">
             <h2>Best Sellers</h2>
-            <Link to="/products?sort=best-selling" className="view-all">
+            <Link to="/products" className="view-all">
               View All <FiArrowRight />
             </Link>
           </div>

@@ -8,13 +8,13 @@ import AdminLayout from './layouts/AdminLayout'
 
 // Public Pages
 import Home from './pages/Home'
-import Products from './pages/Products'
-import ProductDetail from './pages/ProductDetail'
 import DigitalProducts from './pages/DigitalProducts'
+import ProductDetail from './pages/ProductDetail'
 import Cart from './pages/Cart'
 import Checkout from './pages/Checkout'
 import Contact from './pages/Contact'
 import About from './pages/About'
+import CustomInquiry from './pages/CustomInquiry'
 
 // Auth Pages
 import Login from './pages/auth/Login'
@@ -53,14 +53,15 @@ function App() {
         {/* Public Routes */}
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
-          <Route path="products" element={<Products />} />
-          <Route path="products/:category" element={<Products />} />
+          <Route path="products" element={<DigitalProducts />} />
+          <Route path="products/:category" element={<DigitalProducts />} />
           <Route path="product/:id" element={<ProductDetail />} />
           <Route path="digital" element={<DigitalProducts />} />
           <Route path="cart" element={<Cart />} />
           <Route path="checkout" element={<Checkout />} />
           <Route path="contact" element={<Contact />} />
           <Route path="about" element={<About />} />
+          <Route path="inquiry" element={<CustomInquiry />} />
           <Route path="wishlist/shared/:shareId" element={<SharedWishlist />} />
           
           {/* Auth Routes */}

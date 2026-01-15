@@ -31,83 +31,15 @@ const ProductDetail = () => {
   const loadProduct = async () => {
     setIsLoading(true)
     try {
-      // Mock data
-      const mockProduct = {
-        id,
-        name: 'Wireless Bluetooth Earbuds Pro',
-        price: 79.99,
-        salePrice: 59.99,
-        description: 'Experience premium sound quality with our Wireless Bluetooth Earbuds Pro. Featuring advanced noise cancellation, crystal-clear audio, and up to 30 hours of battery life with the charging case. Perfect for music, calls, and everything in between.',
-        features: [
-          'Active Noise Cancellation',
-          '30-hour battery life with case',
-          'IPX5 water resistance',
-          'Touch controls',
-          'Bluetooth 5.2',
-          'Fast wireless charging'
-        ],
-        specifications: {
-          'Brand': 'TechPro',
-          'Model': 'EP-500',
-          'Connectivity': 'Bluetooth 5.2',
-          'Battery': '6 hours (earbuds), 24 hours (case)',
-          'Water Resistance': 'IPX5',
-          'Weight': '5.4g per earbud'
-        },
-        images: [
-          'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600',
-          'https://images.unsplash.com/photo-1598331668826-20cecc596b86?w=600',
-          'https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?w=600'
-        ],
-        rating: 4.5,
-        reviewCount: 128,
-        inStock: true,
-        supplierUrl: 'https://amazon.com/example',
-        category: 'electronics'
-      }
-
-      const mockReviews = [
-        {
-          id: '1',
-          user: 'John D.',
-          rating: 5,
-          date: '2025-01-05',
-          title: 'Amazing sound quality!',
-          content: 'These earbuds exceeded my expectations. The noise cancellation is fantastic and battery life is exactly as advertised.'
-        },
-        {
-          id: '2',
-          user: 'Sarah M.',
-          rating: 4,
-          date: '2025-01-02',
-          title: 'Great value for money',
-          content: 'Very comfortable to wear for long periods. Only minor issue is the touch controls can be a bit sensitive.'
-        }
-      ]
-
-      const mockRelated = [
-        {
-          id: '2',
-          name: 'Smart Watch Series X',
-          price: 299.99,
-          images: ['https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400'],
-          rating: 4.8,
-          reviewCount: 256
-        },
-        {
-          id: '3',
-          name: 'Portable Power Bank 20000mAh',
-          price: 49.99,
-          salePrice: 39.99,
-          images: ['https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400'],
-          rating: 4.3,
-          reviewCount: 89
-        }
-      ]
-
-      setProduct(mockProduct)
-      setReviews(mockReviews)
-      setRelatedProducts(mockRelated)
+      // TODO: Fetch product from API
+      // const response = await productAPI.getById(id)
+      // setProduct(response.data.product || null)
+      // setReviews(response.data.reviews || [])
+      // setRelatedProducts(response.data.related || [])
+      
+      setProduct(null)
+      setReviews([])
+      setRelatedProducts([])
     } catch (error) {
       console.error('Error loading product:', error)
     } finally {

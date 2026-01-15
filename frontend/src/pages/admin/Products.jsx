@@ -17,39 +17,11 @@ const Products = () => {
 
   const loadProducts = async () => {
     try {
-      // Mock data
-      setProducts([
-        {
-          id: '1',
-          name: 'Wireless Bluetooth Earbuds Pro',
-          price: 79.99,
-          salePrice: 59.99,
-          image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=100',
-          category: 'electronics',
-          stock: 45,
-          status: 'active'
-        },
-        {
-          id: '2',
-          name: 'Smart Watch Series X',
-          price: 299.99,
-          image: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=100',
-          category: 'electronics',
-          stock: 23,
-          status: 'active'
-        },
-        {
-          id: 'd1',
-          name: 'n8n E-commerce Automation Pack',
-          price: 49.99,
-          salePrice: 29.99,
-          image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=100',
-          category: 'digital',
-          stock: 999,
-          status: 'active',
-          isDigital: true
-        }
-      ])
+      // TODO: Fetch products from API
+      // const response = await adminAPI.getProducts()
+      // setProducts(response.data.products || [])
+      
+      setProducts([])
     } catch (error) {
       console.error('Error loading products:', error)
     } finally {
@@ -103,11 +75,11 @@ const Products = () => {
             onChange={(e) => setFilter(e.target.value)}
             className="form-select"
           >
-            <option value="all">All Categories</option>
-            <option value="electronics">Electronics</option>
-            <option value="accessories">Accessories</option>
-            <option value="gadgets">Gadgets</option>
-            <option value="digital">Digital</option>
+            <option value="all">All Products</option>
+            <option value="n8n">n8n Templates</option>
+            <option value="templates">Templates</option>
+            <option value="automation">Automation</option>
+            <option value="other">Other Digital</option>
           </select>
         </div>
       </div>

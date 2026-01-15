@@ -17,36 +17,11 @@ const Contacts = () => {
 
   const loadContacts = async () => {
     try {
-      // Mock data
-      setContacts([
-        {
-          id: '1',
-          name: 'John Doe',
-          email: 'john@example.com',
-          subject: 'Order Inquiry',
-          message: 'Hi, I placed an order last week and haven\'t received any shipping updates. My order number is ORD-001. Can you please help?',
-          status: 'unread',
-          createdAt: '2024-01-15T10:30:00Z'
-        },
-        {
-          id: '2',
-          name: 'Jane Smith',
-          email: 'jane@example.com',
-          subject: 'Product Question',
-          message: 'Do you ship internationally? I\'m interested in the Smart Watch Series X but I\'m located in Canada.',
-          status: 'read',
-          createdAt: '2024-01-14T15:45:00Z'
-        },
-        {
-          id: '3',
-          name: 'Bob Wilson',
-          email: 'bob@example.com',
-          subject: 'Return Request',
-          message: 'I would like to return my recent purchase. The earbuds don\'t fit well. Please guide me through the return process.',
-          status: 'replied',
-          createdAt: '2024-01-13T09:15:00Z'
-        }
-      ])
+      // TODO: Fetch contacts from API
+      // const response = await adminAPI.getContacts()
+      // setContacts(response.data.contacts || [])
+      
+      setContacts([])
     } catch (error) {
       console.error('Error loading contacts:', error)
     } finally {

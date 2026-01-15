@@ -13,12 +13,12 @@ const AddProduct = () => {
     description: '',
     price: '',
     salePrice: '',
-    category: 'electronics',
+    category: 'n8n',
     sku: '',
-    stock: '',
-    isDigital: false,
-    supplierUrl: '',
-    supplierSource: '',
+    stock: '999',
+    isDigital: true,
+    downloadUrl: '',
+    fileType: '',
     images: [],
     features: [''],
     specifications: [{ key: '', value: '' }],
@@ -32,19 +32,10 @@ const AddProduct = () => {
   })
 
   const categories = [
-    { value: 'electronics', label: 'Electronics' },
-    { value: 'accessories', label: 'Accessories' },
-    { value: 'gadgets', label: 'Gadgets' },
-    { value: 'digital', label: 'Digital Products' }
-  ]
-
-  const supplierSources = [
-    { value: '', label: 'Select Supplier' },
-    { value: 'amazon', label: 'Amazon' },
-    { value: 'printify', label: 'Printify' },
-    { value: 'temu', label: 'Temu' },
-    { value: 'aliexpress', label: 'AliExpress' },
-    { value: 'other', label: 'Other' }
+    { value: 'n8n', label: 'n8n Templates' },
+    { value: 'templates', label: 'Templates' },
+    { value: 'automation', label: 'Automation' },
+    { value: 'other', label: 'Other Digital' }
   ]
 
   const handleChange = (e) => {
@@ -221,32 +212,6 @@ const AddProduct = () => {
                 />
               </div>
             </div>
-
-            <div className="form-group checkbox-group">
-              <label className="checkbox-label">
-                <input
-                  type="checkbox"
-                  name="isDigital"
-                  checked={formData.isDigital}
-                  onChange={handleChange}
-                />
-                <span>This is a digital product</span>
-              </label>
-            </div>
-
-            {!formData.isDigital && (
-              <div className="form-group">
-                <label className="form-label">Stock Quantity</label>
-                <input
-                  type="number"
-                  name="stock"
-                  value={formData.stock}
-                  onChange={handleChange}
-                  className="form-input"
-                  min="0"
-                />
-              </div>
-            )}
           </div>
 
           {/* Images */}
@@ -286,33 +251,31 @@ const AddProduct = () => {
             )}
           </div>
 
-          {/* Supplier Info */}
+          {/* Digital File Info */}
           <div className="form-section">
-            <h2>Supplier Information</h2>
+            <h2>Digital File Information</h2>
             
             <div className="form-group">
-              <label className="form-label">Supplier Source</label>
-              <select
-                name="supplierSource"
-                value={formData.supplierSource}
+              <label className="form-label">Download URL</label>
+              <input
+                type="url"
+                name="downloadUrl"
+                value={formData.downloadUrl}
                 onChange={handleChange}
-                className="form-select"
-              >
-                {supplierSources.map(src => (
-                  <option key={src.value} value={src.value}>{src.label}</option>
-                ))}
-              </select>
+                className="form-input"
+                placeholder="https://drive.google.com/..."
+              />
             </div>
 
             <div className="form-group">
-              <label className="form-label">Supplier Product URL</label>
+              <label className="form-label">File Type</label>
               <input
-                type="url"
-                name="supplierUrl"
-                value={formData.supplierUrl}
+                type="text"
+                name="fileType"
+                value={formData.fileType}
                 onChange={handleChange}
                 className="form-input"
-                placeholder="https://..."
+                placeholder="JSON, ZIP, PDF, etc."
               />
             </div>
           </div>

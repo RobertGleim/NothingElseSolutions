@@ -18,46 +18,11 @@ const Orders = () => {
 
   const loadOrders = async () => {
     try {
-      // Mock data
-      setOrders([
-        {
-          id: 'ORD-001',
-          customer: { name: 'John Doe', email: 'john@example.com' },
-          items: [
-            { name: 'Wireless Earbuds Pro', qty: 2, price: 59.99 }
-          ],
-          total: 119.98,
-          status: 'processing',
-          shippingAddress: '123 Main St, New York, NY 10001',
-          createdAt: '2024-01-15T10:30:00Z',
-          paymentMethod: 'card'
-        },
-        {
-          id: 'ORD-002',
-          customer: { name: 'Jane Smith', email: 'jane@example.com' },
-          items: [
-            { name: 'Smart Watch Series X', qty: 1, price: 299.99 }
-          ],
-          total: 299.99,
-          status: 'shipped',
-          shippingAddress: '456 Oak Ave, Los Angeles, CA 90001',
-          trackingNumber: '1Z999AA10123456784',
-          createdAt: '2024-01-14T15:45:00Z',
-          paymentMethod: 'card'
-        },
-        {
-          id: 'ORD-003',
-          customer: { name: 'Bob Wilson', email: 'bob@example.com' },
-          items: [
-            { name: 'n8n Automation Pack', qty: 1, price: 29.99 }
-          ],
-          total: 29.99,
-          status: 'delivered',
-          createdAt: '2024-01-13T09:15:00Z',
-          paymentMethod: 'card',
-          isDigital: true
-        }
-      ])
+      // TODO: Fetch orders from API
+      // const response = await adminAPI.getOrders()
+      // setOrders(response.data.orders || [])
+      
+      setOrders([])
     } catch (error) {
       console.error('Error loading orders:', error)
     } finally {

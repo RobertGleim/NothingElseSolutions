@@ -26,42 +26,11 @@ const Promos = () => {
 
   const loadPromos = async () => {
     try {
-      // Mock data
-      setPromos([
-        {
-          id: '1',
-          code: 'SAVE10',
-          type: 'percentage',
-          value: 10,
-          minPurchase: 50,
-          maxUses: 100,
-          usedCount: 45,
-          expiresAt: '2024-02-28',
-          isActive: true
-        },
-        {
-          id: '2',
-          code: 'FLAT20',
-          type: 'fixed',
-          value: 20,
-          minPurchase: 100,
-          maxUses: 50,
-          usedCount: 12,
-          expiresAt: '2024-03-15',
-          isActive: true
-        },
-        {
-          id: '3',
-          code: 'WELCOME15',
-          type: 'percentage',
-          value: 15,
-          minPurchase: 0,
-          maxUses: null,
-          usedCount: 234,
-          expiresAt: null,
-          isActive: false
-        }
-      ])
+      // TODO: Fetch promos from API
+      // const response = await adminAPI.getPromos()
+      // setPromos(response.data.promos || [])
+      
+      setPromos([])
     } catch (error) {
       console.error('Error loading promos:', error)
     } finally {
