@@ -61,7 +61,7 @@ export const orderAPI = {
   create: (orderData) => api.post('/orders', orderData),
   getMyOrders: () => api.get('/orders/my-orders'),
   getById: (id) => api.get(`/orders/${id}`),
-  createPaymentIntent: (data) => api.post('/payments/create-intent', data),
+  createPaymentIntent: (data) => api.post('/orders/create-payment-intent', data),
 }
 
 // Auth API calls

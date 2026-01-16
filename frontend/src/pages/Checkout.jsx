@@ -51,10 +51,12 @@ const Checkout = () => {
     setIsProcessing(true)
 
     try {
-      // Create payment intent
+      // Create payment intent (send amount in dollars, backend converts to cents)
       const { data } = await orderAPI.createPaymentIntent({
-        amount: Math.round(total * 100),
-        currency: 'usd'
+        amount: total,
+        currency: 'usd',
+        email: formData.email,
+        items: cartItems
       })
 
       // Confirm payment
@@ -84,6 +86,9 @@ const Checkout = () => {
         // Create order
         await orderAPI.create({
           items: cartItems,
+          name: `${formData.firstName} ${formData.lastName}`,
+          email: formData.email,
+          phone: formData.phone,
           shippingAddress: formData,
           total,
           paymentIntentId: paymentIntent.id
