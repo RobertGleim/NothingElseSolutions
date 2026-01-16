@@ -99,6 +99,41 @@ CONTACT_EMAIL=nothingelsestore@nothingelsesolutions.com
 
 ## 📦 Deployment
 
+### Frontend Deployment (Vercel)
+
+1. **Import to Vercel**:
+   - Go to [vercel.com](https://vercel.com) and sign in
+   - Click "Add New" → "Project"
+   - Import your GitHub repository
+
+2. **Configure Build Settings** (auto-detected from vercel.json):
+   - Framework Preset: Vite
+   - Build Command: `cd frontend && npm install && npm run build`
+   - Output Directory: `frontend/dist`
+   - Install Command: `cd frontend && npm install`
+
+3. **Set Environment Variables** in Vercel Dashboard:
+   ```
+   VITE_API_URL=https://your-backend-url.onrender.com/api
+   VITE_STRIPE_PUBLISHABLE_KEY=pk_live_your_stripe_key
+   ```
+
+4. Click **Deploy**!
+
+### Backend Deployment (Render)
+
+1. Go to [render.com](https://render.com) and create a new Web Service
+2. Connect your GitHub repository
+3. Set the root directory to `backend`
+4. Configure environment variables from `backend/.env.example`
+5. Deploy!
+
+### Post-Deployment Checklist
+- [ ] Update `VITE_API_URL` in Vercel to point to your Render backend URL
+- [ ] Add your Vercel frontend URL to CORS allowed origins in backend
+- [ ] Test Stripe webhook endpoints
+- [ ] Verify all API endpoints are working
+
 - **Frontend**: Vercel
 - **Backend**: Render
 - **Database**: Pinecone

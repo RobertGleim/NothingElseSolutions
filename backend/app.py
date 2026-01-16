@@ -17,7 +17,16 @@ app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'jwt-secret-key')
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = int(os.getenv('JWT_ACCESS_TOKEN_EXPIRES', 3600))
 
 # Initialize extensions
-cors = CORS(app, origins=[os.getenv('FRONTEND_URL', 'http://localhost:3000'), 'http://localhost:5173', 'http://localhost:3000'], supports_credentials=True)
+# CORS configuration for production
+allowed_origins = [
+    os.getenv('FRONTEND_URL', 'http://localhost:3000'),
+    'http://localhost:5173',
+    'http://localhost:3000',
+]
+# Add Vercel preview URLs support
+if os.getenv('VERCEL_PREVIEW_URL'):
+    allowed_origins.append(os.getenv('VERCEL_PREVIEW_URL'))
+cors = CORS(app, origins=allowed_origins, supports_credentials=True)
 jwt = JWTManager(app)
 bcrypt = Bcrypt(app)
 
