@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 
 // Layouts
 import MainLayout from './layouts/MainLayout'
@@ -92,6 +93,7 @@ function App() {
           <Route path="settings" element={<AdminSettings />} />
         </Route>
       </Routes>
+      <SpeedInsights />
     </Elements>
   )
 }
