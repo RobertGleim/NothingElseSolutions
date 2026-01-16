@@ -22,11 +22,17 @@ allowed_origins = [
     os.getenv('FRONTEND_URL', 'http://localhost:3000'),
     'http://localhost:5173',
     'http://localhost:3000',
+    'https://nothing-else-solutions-bom7.vercel.app',
+    'https://nothing-else-solutions.vercel.app',
 ]
-# Add Vercel preview URLs support
-if os.getenv('VERCEL_PREVIEW_URL'):
-    allowed_origins.append(os.getenv('VERCEL_PREVIEW_URL'))
-cors = CORS(app, origins=allowed_origins, supports_credentials=True)
+# Add any Vercel preview URLs (they use different subdomains)
+frontend_url = os.getenv('FRONTEND_URL', '')
+if frontend_url and frontend_url not in allowed_origins:
+    allowed_origins.append(frontend_url)
+
+cors = CORS(app, origins=allowed_origins, supports_credentials=True, 
+            methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+            allow_headers=["Content-Type", "Authorization", "X-Requested-With"])
 jwt = JWTManager(app)
 bcrypt = Bcrypt(app)
 
