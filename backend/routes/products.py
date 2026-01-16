@@ -6,6 +6,23 @@ products_bp = Blueprint('products', __name__)
 
 # In-memory product store (replace with Pinecone)
 products = {
+    'test-stripe': {
+        'id': 'test-stripe',
+        'name': 'Stripe Test Product - $1.00',
+        'description': 'This is a test product to verify Stripe payment integration. Use test card 4242 4242 4242 4242 with any future expiry and any CVC.',
+        'price': 1.00,
+        'salePrice': None,
+        'category': 'digital',
+        'images': ['https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400'],
+        'stock': 999,
+        'rating': 5.0,
+        'reviewCount': 1,
+        'features': ['Test Stripe integration', 'Use card: 4242 4242 4242 4242', 'Any future date, any CVC'],
+        'specifications': {'Type': 'Test Product', 'Price': '$1.00'},
+        'isDigital': True,
+        'downloadUrl': '/downloads/test-receipt.pdf',
+        'status': 'active'
+    },
     '1': {
         'id': '1',
         'name': 'Wireless Bluetooth Earbuds Pro',
