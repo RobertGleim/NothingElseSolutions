@@ -12,7 +12,7 @@ products = {
         'description': 'This is a test product to verify Stripe payment integration. Use test card 4242 4242 4242 4242 with any future expiry and any CVC.',
         'price': 1.00,
         'salePrice': None,
-        'category': 'digital',
+        'category': 'other',
         'images': ['https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400'],
         'stock': 999,
         'rating': 5.0,
@@ -21,7 +21,8 @@ products = {
         'specifications': {'Type': 'Test Product', 'Price': '$1.00'},
         'isDigital': True,
         'downloadUrl': '/downloads/test-receipt.pdf',
-        'status': 'active'
+        'status': 'active',
+        'isFeatured': True
     },
     '1': {
         'id': '1',
