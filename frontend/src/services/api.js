@@ -138,7 +138,20 @@ export const contactAPI = {
         to_email: 'nothingelsestore@nothingelsesolutions.com'
       })
     })
-    return response.json()
+    // Surface full response for better debugging
+    let json
+    try {
+      json = await response.json()
+    } catch (err) {
+      throw new Error('Invalid JSON response from Web3Forms')
+    }
+
+    if (!response.ok || json.success === false) {
+      const errMsg = json.error || json.message || JSON.stringify(json)
+      throw new Error(`Web3Forms error: ${errMsg}`)
+    }
+
+    return json
   }
 }
 

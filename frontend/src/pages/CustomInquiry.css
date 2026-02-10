@@ -122,6 +122,13 @@
   transition: all 0.2s ease;
 }
 
+/* Make input borders more visible in light theme */
+html[data-theme="light"] .form-input,
+html[data-theme="light"] .form-select,
+html[data-theme="light"] .form-textarea {
+  border-color: rgba(0,0,0,0.12);
+}
+
 .form-input:focus,
 .form-select:focus,
 .form-textarea:focus {
@@ -220,6 +227,19 @@
   border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 1.5rem;
+}
+
+/* Make sidebar cards stand out more in light and dark themes */
+html[data-theme="light"] .sidebar-card {
+  background: #ffffff;
+  border-color: rgba(2,6,23,0.06);
+  box-shadow: 0 6px 20px rgba(2,6,23,0.06);
+}
+
+html[data-theme="dark"] .sidebar-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-color: rgba(255,255,255,0.04);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.6);
 }
 
 .sidebar-card h3 {
