@@ -118,7 +118,7 @@ export const contactAPI = {
         'Accept': 'application/json'
       },
       body: JSON.stringify({
-        access_key: '0e391c88-5f68-40c7-b6e7-0f8469a7e9f8', // Replace with your Web3Forms access key
+        access_key: '16c9f24b-f4a0-4b2b-9b7c-89be81909a1f',
         name: data.name,
         email: data.email,
         subject: data.subject,
