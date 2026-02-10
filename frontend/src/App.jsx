@@ -47,6 +47,7 @@ import SharedWishlist from './pages/SharedWishlist'
 
 // Protected Route Components
 import ProtectedRoute from './components/ProtectedRoute'
+import ScrollToTop from './components/ScrollToTop'
 // FUTURE VERSION - Admin
 // import AdminRoute from './components/AdminRoute'
 
@@ -56,6 +57,7 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 
 function App() {
   return (
     <Elements stripe={stripePromise}>
+      <ScrollToTop />
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<MainLayout />}>
