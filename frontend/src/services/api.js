@@ -108,11 +108,26 @@ export const adminAPI = {
   updateSettings: (data) => api.put('/admin/settings', data),
 }
 
-// Contact API - Uses Vercel serverless function (same origin, no CORS issues)
+// Contact API - Uses Web3Forms (no backend required, no CORS issues)
 export const contactAPI = {
-  submit: (data) => axios.post('/api/contact', data, {
-    headers: { 'Content-Type': 'application/json' }
-  }),
+  submit: async (data) => {
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        access_key: '0e391c88-5f68-40c7-b6e7-0f8469a7e9f8', // Replace with your Web3Forms access key
+        name: data.name,
+        email: data.email,
+        subject: data.subject,
+        message: data.message,
+        to_email: 'nothingelsestore@nothingelsesolutions.com'
+      })
+    })
+    return response.json()
+  }
 }
 
 // Newsletter API
