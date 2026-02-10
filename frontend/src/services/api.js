@@ -108,9 +108,11 @@ export const adminAPI = {
   updateSettings: (data) => api.put('/admin/settings', data),
 }
 
-// Contact API
+// Contact API - Uses Vercel serverless function (same origin, no CORS issues)
 export const contactAPI = {
-  submit: (data) => api.post('/contact/', data),
+  submit: (data) => axios.post('/api/contact', data, {
+    headers: { 'Content-Type': 'application/json' }
+  }),
 }
 
 // Newsletter API
