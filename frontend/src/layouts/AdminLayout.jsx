@@ -20,11 +20,13 @@ const AdminLayout = () => {
 
   const navItems = [
     { path: '/admin/dashboard', icon: FiHome, label: 'Dashboard' },
+    /* FUTURE VERSION - Products & Orders
     { path: '/admin/products', icon: FiPackage, label: 'Products' },
     { path: '/admin/orders', icon: FiShoppingBag, label: 'Orders' },
+    { path: '/admin/promos', icon: FiTag, label: 'Promos' },
+    */
     { path: '/admin/analytics', icon: FiBarChart2, label: 'Analytics' },
     { path: '/admin/social-post', icon: FiShare2, label: 'Social Post' },
-    { path: '/admin/promos', icon: FiTag, label: 'Promos' },
     { path: '/admin/contacts', icon: FiMail, label: 'Contacts' },
     { path: '/admin/settings', icon: FiSettings, label: 'Settings' },
   ]

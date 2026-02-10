@@ -60,14 +60,14 @@ const Home = () => {
               Powerful automation templates, n8n workflows, and digital tools. 
               Everything you need to automate your business, nothing else.
             </p>
-            <div className="hero-buttons">
+            {/* <div className="hero-buttons">
               <Link to="/products" className="btn btn-primary btn-lg">
                 Browse Products <FiArrowRight />
               </Link>
               <Link to="/products/n8n" className="btn btn-outline btn-lg">
                 n8n Templates
               </Link>
-            </div>
+            </div> */}
           </div>
           <div className="hero-image">
             <div className="hero-glow"></div>
@@ -178,7 +178,7 @@ const Home = () => {
       </section>
 
       {/* Categories */}
-      <section className="section categories-section">
+      {/* <section className="section categories-section">
         <div className="container">
           <div className="section-header">
             <h2>Shop by Category</h2>
@@ -197,10 +197,10 @@ const Home = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Featured Products */}
-      <section className="section">
+      {/* <section className="section">
         <div className="container">
           <div className="section-header">
             <h2>Featured Products</h2>
@@ -222,10 +222,10 @@ const Home = () => {
             </div>
           )}
         </div>
-      </section>
+      </section> */}
 
       {/* n8n Templates Banner */}
-      <section className="digital-banner">
+      {/* <section className="digital-banner">
         <div className="container">
           <div className="banner-content">
             <div className="banner-text">
@@ -246,10 +246,10 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Best Sellers */}
-      <section className="section">
+      {/* <section className="section">
         <div className="container">
           <div className="section-header">
             <h2>Best Sellers</h2>
@@ -263,18 +263,39 @@ const Home = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
       <section className="cta-section">
+        <div className="cta-glow"></div>
+        <div className="cta-glow cta-glow-2"></div>
         <div className="container">
           <div className="cta-content">
-            <h2>Join Our Newsletter</h2>
-            <p>Get exclusive deals, new product alerts, and automation tips delivered to your inbox.</p>
-            <form className="cta-form">
-              <input type="email" placeholder="Enter your email" />
-              <button type="submit" className="btn btn-primary">Subscribe</button>
-            </form>
+            <span className="cta-badge">Let's Work Together</span>
+            <h2>Ready to Transform Your <span className="text-gradient">Business</span>?</h2>
+            <p className="cta-description">
+              Whether you need a custom website, automation workflow, or AI solution — 
+              I'm here to help bring your ideas to life.
+            </p>
+            <div className="cta-buttons">
+              <Link to="/contact" className="btn btn-primary btn-lg cta-btn-primary">
+                Get in Touch <FiArrowRight />
+              </Link>
+              <Link to="/inquiry" className="btn btn-outline btn-lg cta-btn-secondary">
+                Start a Project
+              </Link>
+            </div>
+            <div className="cta-features">
+              <div className="cta-feature">
+                <FiZap /> Fast Response
+              </div>
+              <div className="cta-feature">
+                <FiShield /> Quality Guaranteed
+              </div>
+              <div className="cta-feature">
+                <FiHeadphones /> Free Consultation
+              </div>
+            </div>
           </div>
         </div>
       </section>

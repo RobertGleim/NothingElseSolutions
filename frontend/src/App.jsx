@@ -16,6 +16,9 @@ import Checkout from './pages/Checkout'
 import Contact from './pages/Contact'
 import About from './pages/About'
 import CustomInquiry from './pages/CustomInquiry'
+import Privacy from './pages/Privacy'
+import FAQ from './pages/FAQ'
+import Terms from './pages/Terms'
 
 // Auth Pages
 import Login from './pages/auth/Login'
@@ -54,16 +57,20 @@ function App() {
         {/* Public Routes */}
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
-          <Route path="products" element={<DigitalProducts />} />
+          {/* FUTURE VERSION - Products & Shop */}
+          {/* <Route path="products" element={<DigitalProducts />} />
           <Route path="products/:category" element={<DigitalProducts />} />
           <Route path="product/:id" element={<ProductDetail />} />
           <Route path="digital" element={<DigitalProducts />} />
           <Route path="cart" element={<Cart />} />
           <Route path="checkout" element={<Checkout />} />
+          <Route path="wishlist/shared/:shareId" element={<SharedWishlist />} /> */}
           <Route path="contact" element={<Contact />} />
           <Route path="about" element={<About />} />
           <Route path="inquiry" element={<CustomInquiry />} />
-          <Route path="wishlist/shared/:shareId" element={<SharedWishlist />} />
+          <Route path="privacy" element={<Privacy />} />
+          <Route path="faq" element={<FAQ />} />
+          <Route path="terms" element={<Terms />} />
           
           {/* Auth Routes */}
           <Route path="login" element={<Login />} />
@@ -72,8 +79,9 @@ function App() {
           {/* Member Routes */}
           <Route path="member" element={<ProtectedRoute />}>
             <Route path="dashboard" element={<MemberDashboard />} />
-            <Route path="orders" element={<OrderHistory />} />
-            <Route path="wishlist" element={<Wishlist />} />
+            {/* FUTURE VERSION - Orders & Wishlist */}
+            {/* <Route path="orders" element={<OrderHistory />} />
+            <Route path="wishlist" element={<Wishlist />} /> */}
           </Route>
         </Route>
         
@@ -82,13 +90,14 @@ function App() {
         <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
           <Route index element={<AdminDashboard />} />
           <Route path="dashboard" element={<AdminDashboard />} />
-          <Route path="products" element={<AdminProducts />} />
+          {/* FUTURE VERSION - Products & Orders */}
+          {/* <Route path="products" element={<AdminProducts />} />
           <Route path="products/add" element={<AdminAddProduct />} />
           <Route path="products/edit/:id" element={<AdminEditProduct />} />
           <Route path="orders" element={<AdminOrders />} />
+          <Route path="promos" element={<AdminPromos />} /> */}
           <Route path="analytics" element={<AdminAnalytics />} />
           <Route path="social-post" element={<AdminSocialPost />} />
-          <Route path="promos" element={<AdminPromos />} />
           <Route path="contacts" element={<AdminContacts />} />
           <Route path="settings" element={<AdminSettings />} />
         </Route>

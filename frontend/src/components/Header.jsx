@@ -40,10 +40,11 @@ const Header = () => {
         {/* Logo */}
         <Link to="/" className="header-logo" onClick={() => setMobileMenuOpen(false)}>
           <img src="/logo.png" alt="Nothing Else Solutions" />
+          <span className="header-brand-name">Nothing Else Solutions</span>
         </Link>
 
-        {/* Search Bar */}
-        <form className="header-search" onSubmit={handleSearch}>
+        {/* FUTURE VERSION - Search Bar */}
+        {/* <form className="header-search" onSubmit={handleSearch}>
           <FiSearch className="search-icon" />
           <input
             type="text"
@@ -51,7 +52,7 @@ const Header = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-        </form>
+        </form> */}
 
         {/* Mobile Menu Button */}
         <button 
@@ -68,6 +69,7 @@ const Header = () => {
           <div className="mobile-nav-header">
             <Link to="/" className="mobile-logo" onClick={() => setMobileMenuOpen(false)}>
               <img src="/logo.png" alt="Nothing Else Solutions" />
+              <span className="mobile-brand-name">Nothing Else Solutions</span>
             </Link>
             <button 
               className="mobile-close-btn"
@@ -109,7 +111,8 @@ const Header = () => {
               </Link>
             )}
 
-            <Link to="/member/wishlist" className="mobile-action-btn" onClick={() => setMobileMenuOpen(false)}>
+            {/* FUTURE VERSION - Wishlist & Cart */}
+            {/* <Link to="/member/wishlist" className="mobile-action-btn" onClick={() => setMobileMenuOpen(false)}>
               <FiHeart />
               <span>Wishlist</span>
             </Link>
@@ -117,7 +120,7 @@ const Header = () => {
             <Link to="/cart" className="mobile-action-btn" onClick={() => setMobileMenuOpen(false)}>
               <FiShoppingCart />
               <span>Cart {getCartCount() > 0 && `(${getCartCount()})`}</span>
-            </Link>
+            </Link> */}
           </div>
 
           <div className="mobile-nav-divider"></div>
@@ -125,7 +128,8 @@ const Header = () => {
           <NavLink to="/" className="nav-link" onClick={() => setMobileMenuOpen(false)}>
             Home
           </NavLink>
-          <div className="nav-dropdown">
+          {/* FUTURE VERSION - Shop Dropdown */}
+          {/* <div className="nav-dropdown">
             <span className="nav-link dropdown-trigger">Shop</span>
             <div className="dropdown-menu">
               <NavLink to="/products" onClick={() => setMobileMenuOpen(false)}>
@@ -137,7 +141,7 @@ const Header = () => {
                 </NavLink>
               ))}
             </div>
-          </div>
+          </div> */}
           <div className="nav-dropdown">
             <span className="nav-link dropdown-trigger">Services</span>
             <div className="dropdown-menu">
@@ -175,33 +179,35 @@ const Header = () => {
             {isDarkMode ? <FiSun /> : <FiMoon />}
           </button>
 
-          {isAuthenticated ? (
+          {/* {isAuthenticated ? (
             <div className="user-dropdown">
               <button className="action-btn user-btn">
                 <FiUser />
                 <span className="user-name">{user?.name?.split(' ')[0]}</span>
-              </button>
-              <div className="dropdown-menu">
+              </button> */}
+              {/* <div className="dropdown-menu">
                 {isAdmin && (
                   <NavLink to="/admin/dashboard" className="admin-link">
                     <FiSettings /> Admin Panel
                   </NavLink>
                 )}
-                <NavLink to="/member/dashboard">Dashboard</NavLink>
-                <NavLink to="/member/orders">My Orders</NavLink>
-                <NavLink to="/member/wishlist">Wishlist</NavLink>
-                <button onClick={handleLogout} className="logout-link">
+                <NavLink to="/member/dashboard">Dashboard</NavLink> */}
+                {/* FUTURE VERSION - Orders & Wishlist */}
+                {/* <NavLink to="/member/orders">My Orders</NavLink>
+                <NavLink to="/member/wishlist">Wishlist</NavLink> */}
+                {/* <button onClick={handleLogout} className="logout-link">
                   Logout
                 </button>
-              </div>
-            </div>
+              </div> */}
+            {/* </div>
           ) : (
             <Link to="/login" className="action-btn">
               <FiUser />
             </Link>
-          )}
+          )} */}
 
-          <Link to="/member/wishlist" className="action-btn">
+          {/* FUTURE VERSION - Wishlist & Cart */}
+          {/* <Link to="/member/wishlist" className="action-btn">
             <FiHeart />
           </Link>
 
@@ -210,7 +216,7 @@ const Header = () => {
             {getCartCount() > 0 && (
               <span className="cart-count">{getCartCount()}</span>
             )}
-          </Link>
+          </Link> */}
         </div>
       </div>
     </header>

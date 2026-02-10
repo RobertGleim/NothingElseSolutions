@@ -1,18 +1,22 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import { useWishlist } from '../../context/WishlistContext'
-import { FiPackage, FiHeart, FiUser, FiShoppingBag } from 'react-icons/fi'
+// FUTURE VERSION - Wishlist
+// import { useWishlist } from '../../context/WishlistContext'
+import { FiPackage, FiHeart, FiUser, FiShoppingBag, FiMail, FiFileText } from 'react-icons/fi'
 import './Member.css'
 
 const Dashboard = () => {
   const { user } = useAuth()
-  const { wishlistItems } = useWishlist()
+  // FUTURE VERSION - Wishlist
+  // const { wishlistItems } = useWishlist()
 
+  /* FUTURE VERSION - Stats with orders/wishlist
   const stats = [
     { icon: FiShoppingBag, label: 'Orders', value: '0', link: '/member/orders' },
     { icon: FiHeart, label: 'Wishlist', value: wishlistItems.length.toString(), link: '/member/wishlist' },
     { icon: FiPackage, label: 'In Transit', value: '0', link: '/member/orders' }
   ]
+  */
 
   return (
     <div className="member-page">
@@ -27,6 +31,7 @@ const Dashboard = () => {
           </div>
         </div>
 
+        {/* FUTURE VERSION - Stats Grid
         <div className="stats-grid">
           {stats.map(stat => (
             <Link key={stat.label} to={stat.link} className="stat-card">
@@ -36,8 +41,10 @@ const Dashboard = () => {
             </Link>
           ))}
         </div>
+        */}
 
         <div className="dashboard-sections">
+          {/* FUTURE VERSION - Recent Orders
           <div className="dashboard-section">
             <h2>Recent Orders</h2>
             <div className="empty-state">
@@ -46,10 +53,24 @@ const Dashboard = () => {
               <Link to="/products" className="btn btn-primary">Start Shopping</Link>
             </div>
           </div>
+          */}
 
           <div className="dashboard-section">
             <h2>Quick Actions</h2>
             <div className="quick-actions">
+              <Link to="/inquiry" className="action-card">
+                <FiFileText />
+                <span>Start a Project</span>
+              </Link>
+              <Link to="/contact" className="action-card">
+                <FiMail />
+                <span>Contact Us</span>
+              </Link>
+              <Link to="/about" className="action-card">
+                <FiUser />
+                <span>About Us</span>
+              </Link>
+              {/* FUTURE VERSION - Shop Links
               <Link to="/products" className="action-card">
                 <FiShoppingBag />
                 <span>Browse Products</span>
@@ -62,10 +83,7 @@ const Dashboard = () => {
                 <FiPackage />
                 <span>Track Orders</span>
               </Link>
-              <Link to="/contact" className="action-card">
-                <FiUser />
-                <span>Get Support</span>
-              </Link>
+              */}
             </div>
           </div>
         </div>

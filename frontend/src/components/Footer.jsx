@@ -31,9 +31,12 @@ const Footer = () => {
         <div className="footer-grid">
           {/* Brand Section */}
           <div className="footer-brand">
-            <img src="/logo.png" alt="Nothing Else Solutions" className="footer-logo" />
+            <div className="footer-brand-header">
+              <img src="/logo.png" alt="Nothing Else Solutions" className="footer-logo" />
+              <span className="footer-brand-name">Nothing Else Solutions</span>
+            </div>
             <p className="footer-description">
-              Your one-stop shop for quality electronics, digital products, and n8n automation templates.
+              Your one-stop shop for quality Websites and n8n automation.
             </p>
             <div className="footer-social">
               <a href="#" aria-label="Facebook"><FiFacebook /></a>
@@ -43,27 +46,30 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div className="footer-links">
-            <h4>Quick Links</h4>
-            <Link to="/products">All Products</Link>
-            <Link to="/digital">Digital Products</Link>
-            <Link to="/about">About Us</Link>
-            <Link to="/contact">Contact</Link>
-          </div>
+          {/* Right Side Links Container */}
+          <div className="footer-links-container">
+            {/* Quick Links */}
+            <div className="footer-links">
+              <h4>Quick Links</h4>
+              {/* <Link to="/products">All Products</Link> */}
+              {/* <Link to="/digital">Digital Products</Link> */}
+              <Link to="/about">About Us</Link>
+              <Link to="/contact">Contact</Link>
+            </div>
 
-          {/* Customer Service */}
-          <div className="footer-links">
-            <h4>Customer Service</h4>
-            <Link to="/faq">FAQ</Link>
-            <Link to="/shipping">Shipping Info</Link>
-            <Link to="/returns">Returns Policy</Link>
-            <Link to="/privacy">Privacy Policy</Link>
-            <Link to="/terms">Terms of Service</Link>
+            {/* Customer Service */}
+            <div className="footer-links">
+              <h4>Customer Service</h4>
+              <Link to="/faq">FAQ</Link>
+              {/* <Link to="/shipping">Shipping Info</Link> */}
+              {/* <Link to="/returns">Returns Policy</Link> */}
+              <Link to="/privacy">Privacy Policy</Link>
+              <Link to="/terms">Terms of Service</Link>
+            </div>
           </div>
 
           {/* Newsletter */}
-          <div className="footer-newsletter">
+          {/* <div className="footer-newsletter">
             <h4>Stay Updated</h4>
             <p>Subscribe to get updates on new products and special offers.</p>
             <form className="newsletter-form" onSubmit={handleNewsletterSubmit}>
@@ -81,14 +87,18 @@ const Footer = () => {
                 {isLoading ? 'Subscribing...' : 'Subscribe'}
               </button>
             </form>
-          </div>
+          </div> */}
         </div>
 
         <div className="footer-bottom">
           <p>&copy; {new Date().getFullYear()} Nothing Else Solutions. All rights reserved.</p>
           <div className="footer-payments">
-            <span>Secure payments with</span>
-            <img src="/stripe-badge.png" alt="Stripe" />
+            <img 
+              src="/stripe-badge.png" 
+              alt="Powered by Stripe" 
+              className="stripe-badge" 
+              style={{ height: '100px', width: 'auto' }}
+            />
           </div>
         </div>
       </div>
