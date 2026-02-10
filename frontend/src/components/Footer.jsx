@@ -38,12 +38,12 @@ const Footer = () => {
             <p className="footer-description">
               Your one-stop shop for quality Websites and n8n automation.
             </p>
-            <div className="footer-social">
+            {/* <div className="footer-social">
               <a href="#" aria-label="Facebook"><FiFacebook /></a>
               <a href="#" aria-label="Twitter"><FiTwitter /></a>
               <a href="#" aria-label="Instagram"><FiInstagram /></a>
               <a href="#" aria-label="YouTube"><FiYoutube /></a>
-            </div>
+            </div> */}
           </div>
 
           {/* Right Side Links Container */}

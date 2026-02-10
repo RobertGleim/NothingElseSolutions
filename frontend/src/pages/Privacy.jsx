@@ -130,7 +130,7 @@ const Privacy = () => {
               </div>
             </div>
             <p className="rights-note">
-              To exercise your rights, contact us at <a href="mailto:Rgleim@outlook.com">Rgleim@outlook.com</a> and 
+              To exercise your rights, contact us at <a href="mailto:nothingelsestore@nothingelsesolutions.com">nothingelsestore@nothingelsesolutions.com</a> and 
               allow up to 45 days for a response, per TDPSA requirements.
             </p>
           </section>

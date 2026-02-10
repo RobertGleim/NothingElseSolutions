@@ -19,13 +19,13 @@ const About = () => {
     {
       title: 'Grace Lutheran Website',
       description: 'Designed and developed a full-stack web application with multipage navigation, a searchable API for Bible content, daily verse features, and an admin portal for content/user management.',
-      link: 'https://grace-lutheran.vercel.app/',
+      // link: 'https://grace-lutheran.vercel.app/',
       tech: ['React', 'Python', 'SQL', 'CSS']
     },
     {
       title: 'Cool X3 Mechanics Shop',
       description: 'Built a React-based portal for inventory and services management, customer database, and admin section for employee/inventory management.',
-      link: 'https://mech-shop-react.vercel.app/',
+      // link: 'https://mech-shop-react.vercel.app/',
       tech: ['React', 'Full-Stack']
     }
   ]
@@ -128,7 +128,7 @@ const About = () => {
               <div className="timeline-content">
                 <div className="timeline-header">
                   <h3>Software Engineer</h3>
-                  <span className="timeline-date">Jun 2025 – Dec 2025</span>
+                  {/* <span className="timeline-date">Jun 2025 – Dec 2025</span> */}
                 </div>
                 <p className="timeline-company">Coding Temple</p>
                 <ul>
@@ -143,7 +143,7 @@ const About = () => {
               <div className="timeline-content">
                 <div className="timeline-header">
                   <h3>Maintenance Manager</h3>
-                  <span className="timeline-date">Apr 2019 – May 2025</span>
+                  {/* <span className="timeline-date">Apr 2019 – May 2025</span> */}
                 </div>
                 <p className="timeline-company">Lane Enterprises</p>
                 <ul>

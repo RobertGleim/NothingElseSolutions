@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { FiChevronDown, FiHelpCircle, FiCode, FiCpu, FiCreditCard, FiSettings, FiMail, FiPhone, FiShield, FiFileText, FiArrowRight } from 'react-icons/fi'
+import { FiChevronDown, FiHelpCircle, FiCode, FiCpu, FiCreditCard, FiSettings, FiShield, FiFileText, FiArrowRight } from 'react-icons/fi'
 import './FAQ.css'
 
 const FAQ = () => {
@@ -150,20 +150,20 @@ const FAQ = () => {
             </>
           )
         },
-        {
-          id: 'process-2',
-          question: 'How can I contact you for a project or collaboration?',
-          answer: (
-            <>
-              <p>You can reach me directly by:</p>
-              <ul>
-                <li><strong>Email:</strong> <a href="mailto:Rgleim@outlook.com">Rgleim@outlook.com</a></li>
-                <li><strong>Phone:</strong> 254-392-1740</li>
-                <li><strong>LinkedIn / GitHub:</strong> Available on my <Link to="/about">professional profile</Link></li>
-              </ul>
-            </>
-          )
-        },
+        // {
+        //   id: 'process-2',
+        //   question: 'How can I contact you for a project or collaboration?',
+        //   answer: (
+        //     <>
+        //       <p>You can reach me directly by:</p>
+        //       <ul>
+        //         <li><strong>Email:</strong> <a href="mailto:Rgleim@outlook.com">Rgleim@outlook.com</a></li>
+        //         <li><strong>Phone:</strong> 254-392-1740</li>
+        //         <li><strong>LinkedIn / GitHub:</strong> Available on my <Link to="/about">professional profile</Link></li>
+        //       </ul>
+        //     </>
+        //   )
+        // },
         {
           id: 'process-3',
           question: 'Do you provide ongoing support or documentation?',
@@ -251,22 +251,6 @@ const FAQ = () => {
         <div className="faq-cta">
           <h2>Still have questions?</h2>
           <p>Can't find what you're looking for? Feel free to reach out directly.</p>
-          <div className="faq-contact-options">
-            <a href="mailto:Rgleim@outlook.com" className="contact-option">
-              <FiMail />
-              <div>
-                <span className="contact-label">Email</span>
-                <span className="contact-value">Rgleim@outlook.com</span>
-              </div>
-            </a>
-            <a href="tel:254-392-1740" className="contact-option">
-              <FiPhone />
-              <div>
-                <span className="contact-label">Phone</span>
-                <span className="contact-value">254-392-1740</span>
-              </div>
-            </a>
-          </div>
           <div className="faq-cta-buttons">
             <Link to="/contact" className="btn btn-primary">
               Contact Me

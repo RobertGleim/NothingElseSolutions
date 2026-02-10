@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { FiFileText, FiCheck, FiMail, FiPhone, FiMapPin } from 'react-icons/fi'
+import { FiFileText, FiCheck } from 'react-icons/fi'
 import './Terms.css'
 
 const Terms = () => {
@@ -184,25 +184,13 @@ const Terms = () => {
           <section className="terms-section contact-section">
             <h2><span className="section-number">12.</span> Contact Information</h2>
             <p>
-              If you have questions about these Terms of Service, please contact us:
+              If you have questions about these Terms of Service, please reach out through our contact page.
             </p>
-            <div className="contact-card">
-              <h3>Nothing Else Solutions</h3>
-              <div className="contact-info">
-                <div className="contact-item">
-                  <FiMapPin />
-                  <span>Texas, United States</span>
-                </div>
-                <div className="contact-item">
-                  <FiMail />
-                  <a href="mailto:Rgleim@outlook.com">Rgleim@outlook.com</a>
-                </div>
-                <div className="contact-item">
-                  <FiPhone />
-                  <span>254-392-1740</span>
-                </div>
-              </div>
-            </div>
+            {/* <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
+              <Link to="/contact" className="btn btn-primary">
+                Contact Us
+              </Link>
+            </div> */}
           </section>
 
           {/* Related Links */}

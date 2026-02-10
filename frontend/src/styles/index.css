@@ -76,12 +76,12 @@
   --color-secondary: #E8E8F0;
   --color-accent: #0099CC;
   
-  /* Background Colors - Deep gray/slate tones for that dark feel */
-  --bg-dark: #F0F0F5;
-  --bg-darker: #E5E5EB;
-  --bg-card: #FFFFFF;
-  --bg-card-hover: #F5F5FA;
-  --bg-input: #F0F0F5;
+  /* Background Colors - Softer, easier on the eyes */
+  --bg-dark: #EAEAEF;
+  --bg-darker: #E0E0E6;
+  --bg-card: #F5F5F8;
+  --bg-card-hover: #EFEFF2;
+  --bg-input: #EAEAEF;
   
   /* Text Colors - High contrast but not pure black */
   --text-primary: #1A1A2E;
@@ -96,8 +96,8 @@
   
   /* Gradients - Light versions maintaining the style */
   --gradient-primary: linear-gradient(135deg, #0066FF 0%, #0099CC 100%);
-  --gradient-dark: linear-gradient(180deg, #F0F0F5 0%, #E5E5EB 100%);
-  --gradient-card: linear-gradient(145deg, #FFFFFF 0%, #F5F5FA 100%);
+  --gradient-dark: linear-gradient(180deg, #EAEAEF 0%, #E0E0E6 100%);
+  --gradient-card: linear-gradient(145deg, #F5F5F8 0%, #EFEFF2 100%);
   
   /* Shadows - Subtle but defined */
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);

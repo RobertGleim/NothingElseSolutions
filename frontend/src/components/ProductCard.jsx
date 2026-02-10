@@ -48,12 +48,12 @@ const ProductCard = ({ product }) => {
         {discount > 0 && <span className="product-discount">-{discount}%</span>}
         {isDigital && <span className="product-digital">Digital</span>}
         
-        <button 
+        {/* <button 
           className={`wishlist-btn ${inWishlist ? 'active' : ''}`}
           onClick={handleWishlistClick}
         >
           <FiHeart />
-        </button>
+        </button> */}
       </div>
 
       <div className="product-info">
