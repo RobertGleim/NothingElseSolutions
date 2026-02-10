@@ -110,7 +110,7 @@ export const adminAPI = {
 
 // Contact API
 export const contactAPI = {
-  submit: (data) => api.post('/contact', data),
+  submit: (data) => api.post('/contact/', data),
 }
 
 // Newsletter API

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { FiSend, FiUser, FiMail, FiPhone, FiMessageSquare, FiCheck } from 'react-icons/fi'
 import { toast } from 'react-toastify'
+import { contactAPI } from '../services/api'
 import './CustomInquiry.css'
 
 const CustomInquiry = () => {
@@ -113,11 +114,27 @@ const CustomInquiry = () => {
     setIsSubmitting(true)
 
     try {
-      // In production, this would send to your backend
-      console.log('Form submitted:', formData)
+      // Send inquiry to backend
+      const inquiryData = {
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        subject: `${currentService.title} Inquiry`,
+        message: `
+Service Type: ${formData.serviceType}
+Company: ${formData.company || 'N/A'}
+Phone: ${formData.phone || 'N/A'}
+Budget: ${formData.budget || 'Not specified'}
+Timeline: ${formData.timeline || 'Not specified'}
+Current Website: ${formData.currentWebsite || 'N/A'}
+Features Requested: ${formData.features.join(', ') || 'None specified'}
+How They Found Us: ${formData.howDidYouHear || 'Not specified'}
+
+Project Description:
+${formData.projectDescription}
+        `.trim()
+      }
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500))
+      await contactAPI.submit(inquiryData)
       
       setSubmitted(true)
       toast.success('Your inquiry has been submitted! We\'ll be in touch soon.')
@@ -142,8 +159,8 @@ const CustomInquiry = () => {
               <button onClick={() => navigate('/')} className="btn btn-primary">
                 Back to Home
               </button>
-              <button onClick={() => navigate('/products')} className="btn btn-outline">
-                Browse Products
+              <button onClick={() => navigate('/about')} className="btn btn-outline">
+                Learn More About Us
               </button>
             </div>
           </div>

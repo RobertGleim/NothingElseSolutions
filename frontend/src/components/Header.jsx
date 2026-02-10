@@ -97,12 +97,13 @@ const Header = () => {
                   <FiUser />
                   <span>{user?.name?.split(' ')[0] || 'Account'}</span>
                 </Link>
-                {isAdmin && (
+                {/* FUTURE VERSION - Admin Panel */}
+                {/* {isAdmin && (
                   <Link to="/admin/dashboard" className="mobile-action-btn admin" onClick={() => setMobileMenuOpen(false)}>
                     <FiSettings />
                     <span>Admin Panel</span>
                   </Link>
-                )}
+                )} */}
               </>
             ) : (
               <Link to="/login" className="mobile-action-btn" onClick={() => setMobileMenuOpen(false)}>

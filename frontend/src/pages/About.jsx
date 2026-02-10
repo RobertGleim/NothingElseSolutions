@@ -57,7 +57,7 @@ const About = () => {
             <a href="https://github.com/rgleim" target="_blank" rel="noopener noreferrer" className="social-link">
               <FiGithub /> GitHub
             </a>
-            <a href="mailto:Rgleim@outlook.com" className="social-link">
+            <a href="mailto:nothingelsestore@nothingelsesolutions.com" className="social-link">
               <FiMail /> Email
             </a>
           </div>
