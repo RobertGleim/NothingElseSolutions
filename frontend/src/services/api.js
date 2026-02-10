@@ -12,7 +12,14 @@ const api = axios.create({
 // Request interceptor to add auth token
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token')
+    // Prefer token from cookie if available (for cookie-based auth).
+    // Fallback to localStorage for backwards compatibility.
+    const getTokenFromCookie = () => {
+      const match = document.cookie.match(new RegExp('(^| )token=([^;]+)'))
+      return match ? match[2] : null
+    }
+
+    const token = getTokenFromCookie() || localStorage.getItem('token')
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -111,6 +118,11 @@ export const adminAPI = {
 // Contact API - Uses Web3Forms (no backend required, no CORS issues)
 export const contactAPI = {
   submit: async (data) => {
+    const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY
+    if (!WEB3FORMS_KEY) {
+      console.error('VITE_WEB3FORMS_KEY is not set. Contact submissions will fail.')
+    }
+
     const response = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: {
@@ -118,7 +130,7 @@ export const contactAPI = {
         'Accept': 'application/json'
       },
       body: JSON.stringify({
-        access_key: '16c9f24b-f4a0-4b2b-9b7c-89be81909a1f',
+        access_key: WEB3FORMS_KEY || '',
         name: data.name,
         email: data.email,
         subject: data.subject,

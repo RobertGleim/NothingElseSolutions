@@ -58,6 +58,7 @@ python run.py
 ```
 VITE_API_URL=http://localhost:5000/api
 VITE_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
+VITE_WEB3FORMS_KEY=your_web3forms_access_key
 ```
 
 ### Backend (.env)
@@ -144,6 +145,10 @@ CONTACT_EMAIL=nothingelsestore@nothingelsesolutions.com
 - Environment variable protection
 - CORS configuration
 - Input validation & sanitization
+ 
+Notes and immediate actions:
+- The Web3Forms access key should be set in Vercel as `VITE_WEB3FORMS_KEY` and not committed to the repository. If the key was previously committed, rotate the key in Web3Forms immediately and remove it from the git history.
+- Ensure `SECRET_KEY` and `JWT_SECRET_KEY` are set in production; the backend will refuse to start if these are missing.
 
 ## 📧 Contact
 nothingelsestore@nothingelsesolutions.com
