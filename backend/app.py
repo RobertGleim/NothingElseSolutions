@@ -63,6 +63,7 @@ from routes.orders import orders_bp
 from routes.admin import admin_bp
 from routes.webhooks import webhooks_bp
 from routes.contact import contact_bp
+from routes.tax import tax_bp
 
 # Register blueprints
 app.register_blueprint(auth_bp, url_prefix='/api/auth')
@@ -71,6 +72,7 @@ app.register_blueprint(orders_bp, url_prefix='/api/orders')
 app.register_blueprint(admin_bp, url_prefix='/api/admin')
 app.register_blueprint(webhooks_bp, url_prefix='/api/webhooks')
 app.register_blueprint(contact_bp, url_prefix='/api/contact')
+app.register_blueprint(tax_bp, url_prefix='/api/tax')
 
 # Note: after_request CORS echo removed to avoid insecure origin reflection.
 

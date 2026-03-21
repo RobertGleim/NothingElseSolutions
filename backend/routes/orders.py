@@ -5,6 +5,7 @@ import os
 import uuid
 from datetime import datetime
 import requests
+from routes.tax import get_rate_for_state
 
 orders_bp = Blueprint('orders', __name__)
 
@@ -67,9 +68,31 @@ def create_payment_intent():
 def create_order():
     """Create a new order"""
     data = request.get_json()
-    
+    # Ensure numeric values
+    try:
+        subtotal = float(data.get('subtotal', 0) or 0)
+    except Exception:
+        subtotal = 0.0
+    try:
+        shipping = float(data.get('shipping', 0) or 0)
+    except Exception:
+        shipping = 0.0
+
     order_id = f"ORD-{str(uuid.uuid4())[:8].upper()}"
-    
+    # Calculate tax server-side if not provided
+    tax_value = data.get('tax')
+    if tax_value is None:
+        # Attempt to get state from shipping or billing address
+        shipping_addr = data.get('shippingAddress') or {}
+        billing_addr = data.get('billingAddress') or {}
+        state = shipping_addr.get('state') or billing_addr.get('state') or ''
+        rate = get_rate_for_state(state)
+        tax_value = round(subtotal * rate, 2)
+
+    total_value = data.get('total')
+    if total_value is None:
+        total_value = round(subtotal + shipping + float(tax_value or 0), 2)
+
     order = {
         'id': order_id,
         'customer': {
@@ -80,10 +103,10 @@ def create_order():
         'items': data.get('items', []),
         'shippingAddress': data.get('shippingAddress'),
         'billingAddress': data.get('billingAddress'),
-        'subtotal': data.get('subtotal'),
-        'shipping': data.get('shipping'),
-        'tax': data.get('tax'),
-        'total': data.get('total'),
+        'subtotal': subtotal,
+        'shipping': shipping,
+        'tax': tax_value,
+        'total': total_value,
         'paymentIntentId': data.get('paymentIntentId'),
         'paymentMethod': 'card',
         'status': 'processing',
