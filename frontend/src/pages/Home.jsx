@@ -4,6 +4,7 @@ import { FiArrowRight, FiDownload, FiShield, FiHeadphones, FiZap, FiCode, FiCpu,
 import ProductCard from '../components/ProductCard'
 import { productAPI } from '../services/api'
 import './Home.css'
+import SEO from '../components/SEO'
 
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([])
@@ -36,7 +37,7 @@ const Home = () => {
   const features = [
     { icon: FiDownload, title: 'Instant Download', desc: 'Immediate access' },
     { icon: FiShield, title: 'Secure Payment', desc: '100% protected' },
-    { icon: FiHeadphones, title: '24/7 Support', desc: 'Dedicated support' },
+    { icon: FiHeadphones, title: 'Dedicated Support', desc: 'Dedicated support' },
     { icon: FiZap, title: 'Ready to Use', desc: 'Pre-built templates' }
   ]
 
@@ -49,6 +50,12 @@ const Home = () => {
 
   return (
     <div className="home-page">
+      <SEO
+        title="Nothing Else Solutions — Automation & Digital Products"
+        description="Powerful automation templates, n8n workflows, and digital tools to streamline your business."
+        image="https://www.nothingelsesolutions.com/logo.png"
+        url="https://www.nothingelsesolutions.com/"
+      />
       {/* Hero Section */}
       <section className="hero">
         <div className="hero-content container">

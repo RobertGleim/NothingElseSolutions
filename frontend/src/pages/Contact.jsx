@@ -58,7 +58,7 @@ const Contact = () => {
             <div className="info-card">
               <FiPhone className="info-icon" />
               <h3>Support</h3>
-              <p>24/7 Online Support</p>
+              <p>Dedicated support</p>
             </div>
           </div>
 

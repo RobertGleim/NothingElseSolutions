@@ -4,6 +4,7 @@ import { FiFilter, FiGrid, FiList, FiChevronDown } from 'react-icons/fi'
 import ProductCard from '../components/ProductCard'
 import { productAPI } from '../services/api'
 import './Products.css'
+import SEO from '../components/SEO'
 
 const Products = () => {
   const { category } = useParams()
@@ -59,6 +60,15 @@ const Products = () => {
 
   return (
     <div className="products-page">
+      <SEO
+        title={category ? `Products — ${category}` : 'All Products — Nothing Else Solutions'}
+        description={category ? `Browse ${category} products.` : 'Explore all products at Nothing Else Solutions.'}
+        url={
+          category
+            ? `https://www.nothingelsesolutions.com/products/${category}`
+            : 'https://www.nothingelsesolutions.com/products'
+        }
+      />
       <div className="container">
         {/* Page Header */}
         <div className="products-header">

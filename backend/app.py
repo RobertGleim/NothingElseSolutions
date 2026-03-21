@@ -32,7 +32,7 @@ allowed_origins = [
     'http://localhost:3000',
     'http://localhost:3001',
     'https://nothing-else-solutions-bom7.vercel.app',
-    'https://nothing-else-solutions.vercel.app',
+    'https://www.nothingelsesolutions.com',
     'https://*.vercel.app',
 ]
 # Add any Vercel preview URLs (they use different subdomains)
@@ -46,7 +46,7 @@ cors = CORS(app, resources={r"/api/*": {"origins": [
     'http://localhost:3000',
     'http://localhost:3001',
     'https://nothing-else-solutions-bom7.vercel.app',
-    'https://nothing-else-solutions.vercel.app'
+    'https://www.nothingelsesolutions.com'
 ]}}, supports_credentials=False,
             methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
             allow_headers=["Content-Type", "Authorization", "X-Requested-With"])

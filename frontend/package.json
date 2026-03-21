@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "generate-sitemap": "node ./scripts/generate-sitemap.js"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^2.4.0",

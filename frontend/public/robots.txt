@@ -1,0 +1,12 @@
+# robots.txt for Nothing Else Solutions
+# Update the Sitemap URL below to your primary domain if different
+User-agent: *
+Allow: /
+
+# Point crawlers to the sitemap
+Sitemap: https://www.nothingelsesolutions.com/sitemap.xml
+
+# NOTE: Replace the domain above with your production domain (e.g. https://www.nothingelsesolutions.com/sitemap.xml)
+
+# If you need to block any paths, add them below, for example:
+# Disallow: /admin/

@@ -11,6 +11,7 @@ import ProductCard from '../components/ProductCard'
 import { productAPI } from '../services/api'
 import { toast } from 'react-toastify'
 import './ProductDetail.css'
+import SEO from '../components/SEO'
 
 const ProductDetail = () => {
   const { id } = useParams()
@@ -109,6 +110,12 @@ const ProductDetail = () => {
 
   return (
     <div className="product-detail-page">
+      <SEO
+        title={product ? `${product.name} — Nothing Else Solutions` : 'Product — Nothing Else Solutions'}
+        description={product ? product.description : 'Product details'}
+        image={product && product.images && product.images[0] ? product.images[0] : 'https://www.nothingelsesolutions.com/logo.png'}
+        url={typeof window !== 'undefined' ? window.location.href : `https://www.nothingelsesolutions.com/products/${id}`}
+      />
       <div className="container">
         {/* Breadcrumb */}
         <nav className="breadcrumb">
