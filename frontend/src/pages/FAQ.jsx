@@ -157,7 +157,7 @@ const FAQ = () => {
         //     <>
         //       <p>You can reach me directly by:</p>
         //       <ul>
-        //         <li><strong>Email:</strong> <a href="mailto:Rgleim@outlook.com">Rgleim@outlook.com</a></li>
+        //         <li><strong>Email:</strong> <a href="mailto:customerservice@nothingelsesolutions.com">customerservice@nothingelsesolutions.com</a></li>
         //         <li><strong>Phone:</strong> 254-392-1740</li>
         //         <li><strong>LinkedIn / GitHub:</strong> Available on my <Link to="/about">professional profile</Link></li>
         //       </ul>

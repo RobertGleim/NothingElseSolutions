@@ -46,7 +46,7 @@ const Contact = () => {
             <div className="info-card">
               <FiMail className="info-icon" />
               <h3>Email</h3>
-              <p>nothingelsestore@nothingelsesolutions.com</p>
+              <p>customerservice@nothingelsesolutions.com</p>
             </div>
 
             <div className="info-card">

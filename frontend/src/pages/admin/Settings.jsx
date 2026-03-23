@@ -12,8 +12,8 @@ const Settings = () => {
   const [settings, setSettings] = useState({
     // General
     storeName: 'Nothing Else Solutions',
-    storeEmail: 'nothingelsestore@nothingelsesolutions.com',
-    supportEmail: 'support@nothingelsesolutions.com',
+    storeEmail: 'customerservice@nothingelsesolutions.com',
+    supportEmail: 'customerservice@nothingelsesolutions.com',
     phone: '',
     address: '',
     

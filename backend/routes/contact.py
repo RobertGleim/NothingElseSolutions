@@ -23,7 +23,7 @@ def send_email_notification(contact_data):
         smtp_port = int(os.getenv('SMTP_PORT', 587))
         smtp_user = os.getenv('SMTP_USER')
         smtp_password = os.getenv('SMTP_PASSWORD')
-        recipient_email = os.getenv('CONTACT_EMAIL', 'nothingelsestore@nothingelsesolutions.com')
+        recipient_email = os.getenv('CONTACT_EMAIL', 'customerservice@nothingelsesolutions.com')
         
         if not smtp_user or not smtp_password:
             print("SMTP credentials not configured, skipping email notification")

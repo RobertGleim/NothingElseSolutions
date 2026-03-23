@@ -136,7 +136,7 @@ export const contactAPI = {
         email: data.email,
         subject: data.subject,
         message: data.message,
-        to_email: 'nothingelsestore@nothingelsesolutions.com'
+        to_email: 'customerservice@nothingelsesolutions.com'
       })
     })
     // Surface full response for better debugging

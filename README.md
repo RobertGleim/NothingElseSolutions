@@ -70,7 +70,7 @@ STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
 PINECONE_API_KEY=your_pinecone_api_key
 PINECONE_ENVIRONMENT=your_pinecone_environment
 N8N_WEBHOOK_URL=your_n8n_webhook_url
-CONTACT_EMAIL=nothingelsestore@nothingelsesolutions.com
+CONTACT_EMAIL=customerservice@nothingelsesolutions.com
 ```
 
 ## 🎨 Features
@@ -151,4 +151,4 @@ Notes and immediate actions:
 - Ensure `SECRET_KEY` and `JWT_SECRET_KEY` are set in production; the backend will refuse to start if these are missing.
 
 ## 📧 Contact
-nothingelsestore@nothingelsesolutions.com
+customerservice@nothingelsesolutions.com
