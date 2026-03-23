@@ -52,7 +52,8 @@ cors = CORS(app, resources={r"/api/*": {"origins": [
             allow_headers=["Content-Type", "Authorization", "X-Requested-With"])
 
 # Rate limiting
-limiter = Limiter(app, key_func=get_remote_address, default_limits=["60 per minute"])
+# Provide `app=` as a keyword to avoid multiple-values error with some flask-limiter versions
+limiter = Limiter(key_func=get_remote_address, app=app, default_limits=["60 per minute"])
 jwt = JWTManager(app)
 bcrypt = Bcrypt(app)
 
@@ -73,6 +74,15 @@ app.register_blueprint(admin_bp, url_prefix='/api/admin')
 app.register_blueprint(webhooks_bp, url_prefix='/api/webhooks')
 app.register_blueprint(contact_bp, url_prefix='/api/contact')
 app.register_blueprint(tax_bp, url_prefix='/api/tax')
+
+# Apply rate limit to contact submit endpoint to avoid importing limiter from routes (prevents circular import)
+try:
+    # view function key is '<blueprint_name>.<function_name>'
+    submit_fn = app.view_functions.get('contact.submit_contact')
+    if submit_fn:
+        limiter.limit("10 per minute")(submit_fn)
+except Exception as _:
+    pass
 
 # Note: after_request CORS echo removed to avoid insecure origin reflection.
 

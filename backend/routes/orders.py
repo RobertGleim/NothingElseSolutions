@@ -64,6 +64,52 @@ def create_payment_intent():
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
+
+@orders_bp.route('/create-checkout-session', methods=['POST'])
+def create_checkout_session():
+    """Create a Stripe Checkout Session with automatic tax and shipping collection."""
+    try:
+        data = request.get_json() or {}
+        items = data.get('items', [])
+        email = data.get('email')
+
+        # Build line_items using price_data (no stored Price IDs required)
+        line_items = []
+        for it in items:
+            unit_price = float((it.get('salePrice') or it.get('price') or 0) or 0)
+            line_items.append({
+                'price_data': {
+                    'currency': 'usd',
+                    'product_data': {
+                        'name': it.get('name') or 'Product',
+                        'images': [it.get('image')] if it.get('image') else []
+                    },
+                    'unit_amount': int(unit_price * 100)
+                },
+                'quantity': int(it.get('quantity', 1))
+            })
+
+        frontend_url = os.getenv('FRONTEND_URL', 'https://www.nothingelsesolutions.com')
+        success_url = f"{frontend_url}/success?session_id={{CHECKOUT_SESSION_ID}}"
+        cancel_url = f"{frontend_url}/checkout"
+
+        session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            mode='payment',
+            line_items=line_items,
+            automatic_tax={'enabled': True},
+            shipping_address_collection={'allowed_countries': ['US']},
+            customer_creation='always',
+            customer_email=email,
+            success_url=success_url,
+            cancel_url=cancel_url
+        )
+
+        return jsonify({'url': session.url})
+    except Exception as e:
+        print('create_checkout_session error:', e)
+        return jsonify({'error': str(e)}), 400
+
 @orders_bp.route('/', methods=['POST'])
 def create_order():
     """Create a new order"""

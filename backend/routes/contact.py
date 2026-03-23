@@ -8,8 +8,7 @@ from datetime import datetime
 import re
 import html as html_escape
 
-# Rate limiter (initialized in app.py)
-from app import limiter
+from flask import current_app
 
 contact_bp = Blueprint('contact', __name__)
 
@@ -101,7 +100,6 @@ Submitted: {contact_data['created_at']}
 
 
 @contact_bp.route('/', methods=['POST', 'OPTIONS'])
-@limiter.limit("10 per minute")
 def submit_contact():
     """Handle contact form submissions"""
     # Handle CORS preflight

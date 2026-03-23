@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
+import { useStripe } from '@stripe/react-stripe-js'
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
 import { orderAPI } from '../services/api'
@@ -10,7 +10,6 @@ import './Checkout.css'
 
 const Checkout = () => {
   const stripe = useStripe()
-  const elements = useElements()
   const navigate = useNavigate()
   const { cartItems, getCartTotal, clearCart } = useCart()
   const { isAuthenticated, user } = useAuth()
@@ -30,7 +29,7 @@ const Checkout = () => {
   })
 
   const subtotal = getCartTotal()
-  const shipping = 0 // Digital products only - no shipping
+  const shipping = 0 // shipping handled by Checkout if required
   const total = subtotal
 
   const handleInputChange = (e) => {
@@ -44,62 +43,24 @@ const Checkout = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     
-    if (!stripe || !elements) {
-      return
-    }
+    if (!stripe) return
 
     setIsProcessing(true)
-
     try {
-      // Create payment intent (send amount in dollars, backend converts to cents)
-      const { data } = await orderAPI.createPaymentIntent({
-        amount: total,
-        currency: 'usd',
-        email: formData.email,
-        items: cartItems
+      // Create a Checkout Session on the backend (automatic_tax + shipping collection)
+      const { data } = await orderAPI.createCheckoutSession({
+        items: cartItems,
+        email: formData.email
       })
 
-      // Confirm payment
-      const { error, paymentIntent } = await stripe.confirmCardPayment(
-        data.clientSecret,
-        {
-          payment_method: {
-            card: elements.getElement(CardElement),
-            billing_details: {
-              name: `${formData.firstName} ${formData.lastName}`,
-              email: formData.email,
-              address: {
-                line1: formData.address,
-                city: formData.city,
-                state: formData.state,
-                postal_code: formData.zipCode,
-                country: 'US'
-              }
-            }
-          }
-        }
-      )
-
-      if (error) {
-        toast.error(error.message)
-      } else if (paymentIntent.status === 'succeeded') {
-        // Create order
-        await orderAPI.create({
-          items: cartItems,
-          name: `${formData.firstName} ${formData.lastName}`,
-          email: formData.email,
-          phone: formData.phone,
-          shippingAddress: formData,
-          total,
-          paymentIntentId: paymentIntent.id
-        })
-
-        clearCart()
-        toast.success('Order placed successfully!')
-        navigate('/member/orders')
+      if (data && data.url) {
+        // Redirect to Stripe Checkout
+        window.location.href = data.url
+        return
       }
+      throw new Error('Failed to create Checkout session')
     } catch (error) {
-      toast.error('Payment failed. Please try again.')
+      toast.error('Checkout failed. Please try again.')
       console.error(error)
     } finally {
       setIsProcessing(false)
@@ -188,11 +149,8 @@ const Checkout = () => {
                 <FiCreditCard className="section-icon" />
                 <h2>Payment</h2>
               </div>
-              <div className="card-element-wrapper">
-                <CardElement options={cardElementOptions} />
-              </div>
-              <p className="payment-secure">
-                <FiLock /> Your payment information is encrypted and secure
+              <p>
+                You will be redirected to Stripe Checkout to complete your payment. Shipping address will be collected during Checkout.
               </p>
             </div>
 
