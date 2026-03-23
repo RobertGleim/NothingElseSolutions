@@ -7,6 +7,8 @@ from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 import re
 import html as html_escape
+from threading import Thread
+import traceback
 
 from flask import current_app
 
@@ -85,17 +87,31 @@ Submitted: {contact_data['created_at']}
         msg.attach(MIMEText(text, 'plain'))
         msg.attach(MIMEText(html, 'html'))
         
-        # Send email
-        with smtplib.SMTP(smtp_host, smtp_port) as server:
-            server.starttls()
-            server.login(smtp_user, smtp_password)
-            server.sendmail(smtp_user, recipient_email, msg.as_string())
+        # Send email with timeouts and safer handshake. If port is 465 use SSL.
+        smtp_timeout = int(os.getenv('SMTP_TIMEOUT', 15))
+        use_ssl = os.getenv('SMTP_USE_SSL', 'False').lower() in ('1', 'true', 'yes') or smtp_port == 465
+        if use_ssl:
+            with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=smtp_timeout) as server:
+                server.login(smtp_user, smtp_password)
+                server.sendmail(smtp_user, recipient_email, msg.as_string())
+        else:
+            with smtplib.SMTP(smtp_host, smtp_port, timeout=smtp_timeout) as server:
+                server.ehlo()
+                try:
+                    server.starttls()
+                    server.ehlo()
+                except Exception:
+                    # STARTTLS may fail on some servers; continue to attempt login
+                    pass
+                server.login(smtp_user, smtp_password)
+                server.sendmail(smtp_user, recipient_email, msg.as_string())
         
         print(f"Email notification sent to {recipient_email}")
         return True
         
     except Exception as e:
         print(f"Failed to send email notification: {e}")
+        traceback.print_exc()
         return False
 
 
@@ -111,7 +127,37 @@ def submit_contact():
         return response, 200
     
     try:
-        data = request.get_json() or {}
+        # Parse JSON safely, with fallbacks for form-encoded bodies or malformed payloads.
+        data = None
+        try:
+            data = request.get_json(silent=True)
+        except Exception:
+            data = None
+
+        raw = None
+        if not data:
+            # Try reading raw body and decode as UTF-8 JSON
+            try:
+                raw = request.get_data(cache=True)
+                if raw:
+                    import json
+                    try:
+                        data = json.loads(raw.decode('utf-8'))
+                    except Exception:
+                        data = None
+            except Exception:
+                raw = None
+
+        if not data:
+            # Fallback to form data (application/x-www-form-urlencoded)
+            try:
+                data = request.form.to_dict() or {}
+            except Exception:
+                data = {}
+
+        if not data:
+            print(f"Invalid request body; raw bytes: {raw!r}")
+            return jsonify({'error': 'Invalid JSON or empty body'}), 400
 
         # Basic validation and sanitization
         name = (data.get('name') or '').strip()
@@ -155,8 +201,11 @@ def submit_contact():
         print(f"New contact submission from {data['name']} ({data['email']})")
         print(f"Subject: {data['subject']}")
         
-        # Send email notification
-        send_email_notification(contact)
+        # Send email notification in a background thread to avoid blocking
+        try:
+            Thread(target=send_email_notification, args=(contact,), daemon=True).start()
+        except Exception as e:
+            print(f"Failed to start background email thread: {e}")
         
         # Optional: Send to n8n webhook for additional processing
         webhook_url = os.getenv('CONTACT_WEBHOOK_URL')
@@ -173,6 +222,7 @@ def submit_contact():
         
     except Exception as e:
         print(f"Error processing contact form: {e}")
+        traceback.print_exc()
         return jsonify({'error': 'Failed to process your message'}), 500
 
 
