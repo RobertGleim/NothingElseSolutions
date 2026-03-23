@@ -68,7 +68,7 @@ const Terms = () => {
             
             <h3>Payments</h3>
             <p>
-              All payments are securely processed through Stripe. We never directly handle your financial data. 
+              Invoices are issued electronically and payments are handled via our payment processor. We do not store raw card numbers on this site.
               Payment terms and pricing are outlined in the service agreement prior to project start.
             </p>
 
@@ -83,7 +83,8 @@ const Terms = () => {
             <ul>
               <li>Deposits are non-refundable once design or development has begun.</li>
               <li>Full or partial refunds are considered only in cases where deliverables have not been initiated.</li>
-              <li>Any approved refunds are processed back through Stripe within 5–10 business days.</li>
+              <li>Any approved refunds are processed through our payment processor and may take 5–10 business days.
+              </li>
             </ul>
           </section>
 

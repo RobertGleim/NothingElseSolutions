@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import { Elements } from '@stripe/react-stripe-js'
-import { loadStripe } from '@stripe/stripe-js'
+// Stripe removed — no client-side payment integration
 import { SpeedInsights } from '@vercel/speed-insights/react'
 
 // Layouts
@@ -51,12 +50,9 @@ import ScrollToTop from './components/ScrollToTop'
 // FUTURE VERSION - Admin
 // import AdminRoute from './components/AdminRoute'
 
-// Initialize Stripe
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_51Snjgx579jZVJbUs0PBwKYkz4EhDND2iiEl4p2eEqnBZNlMSdd7j5mtekPRHHbZbfkPoLrvssT9dixVLvCI8U6a900maeestSo')
-
 function App() {
   return (
-    <Elements stripe={stripePromise}>
+    <>
       <ScrollToTop />
       <Routes>
         {/* Public Routes */}
@@ -107,7 +103,7 @@ function App() {
         </Route> */}
       </Routes>
       <SpeedInsights />
-    </Elements>
+    </>
   )
 }
 

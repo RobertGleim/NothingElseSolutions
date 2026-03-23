@@ -69,7 +69,7 @@ export const orderAPI = {
   getMyOrders: () => api.get('/orders/my-orders'),
   getById: (id) => api.get(`/orders/${id}`),
   createPaymentIntent: (data) => api.post('/orders/create-payment-intent', data),
-  createCheckoutSession: (data) => api.post('/orders/create-checkout-session', data),
+  // Checkout session removed — invoicing will be handled via Stripe dashboard
 }
 
 // Auth API calls

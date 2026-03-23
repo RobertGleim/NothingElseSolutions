@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useStripe } from '@stripe/react-stripe-js'
+// Stripe removed — checkout is handled via Stripe Dashboard/invoice links
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
 import { orderAPI } from '../services/api'
@@ -9,7 +9,6 @@ import { FiLock, FiCreditCard, FiUser } from 'react-icons/fi'
 import './Checkout.css'
 
 const Checkout = () => {
-  const stripe = useStripe()
   const navigate = useNavigate()
   const { cartItems, getCartTotal, clearCart } = useCart()
   const { isAuthenticated, user } = useAuth()
@@ -42,28 +41,28 @@ const Checkout = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
-    if (!stripe) return
-
-    setIsProcessing(true)
+    // Payments/invoicing are handled from the Stripe dashboard.
+    toast.info('We will email an invoice. Please complete payment via the Stripe invoice link.')
+    // Optionally create an order record and send invoice manually from dashboard.
     try {
-      // Create a Checkout Session on the backend (automatic_tax + shipping collection)
-      const { data } = await orderAPI.createCheckoutSession({
+      await orderAPI.create({
         items: cartItems,
-        email: formData.email
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        subtotal: getCartTotal(),
+        shippingAddress: {
+          address: formData.address,
+          city: formData.city,
+          state: formData.state,
+          postal_code: formData.zipCode,
+          country: formData.country
+        }
       })
-
-      if (data && data.url) {
-        // Redirect to Stripe Checkout
-        window.location.href = data.url
-        return
-      }
-      throw new Error('Failed to create Checkout session')
-    } catch (error) {
-      toast.error('Checkout failed. Please try again.')
-      console.error(error)
-    } finally {
-      setIsProcessing(false)
+      clearCart()
+      navigate('/success')
+    } catch (err) {
+      console.error(err)
+      toast.error('Failed to create order. Please try again.')
     }
   }
 
@@ -150,16 +149,15 @@ const Checkout = () => {
                 <h2>Payment</h2>
               </div>
               <p>
-                You will be redirected to Stripe Checkout to complete your payment. Shipping address will be collected during Checkout.
+                Payments are handled via Stripe invoices. After placing your order we'll create an invoice in the Stripe dashboard and email you a secure payment link.
               </p>
             </div>
 
             <button 
               type="submit" 
               className="btn btn-primary btn-lg place-order-btn"
-              disabled={!stripe || isProcessing}
             >
-              {isProcessing ? 'Processing...' : `Pay $${total.toFixed(2)}`}
+              Place Order
             </button>
           </form>
 

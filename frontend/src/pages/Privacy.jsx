@@ -46,7 +46,7 @@ const Privacy = () => {
             <h3>A. Information You Provide</h3>
             <ul>
               <li><strong>Account & Business Information:</strong> Your name, business name, email, phone number, and login credentials.</li>
-              <li><strong>Billing Information:</strong> Processed securely through Stripe; we do not store payment card numbers.</li>
+              <li><strong>Billing Information:</strong> Processed securely via our payment processor; we do not store raw payment card numbers on this site.</li>
               <li><strong>Project Data:</strong> Information about your website, automation workflows, or SaaS integration preferences.</li>
               <li><strong>Communications:</strong> Emails, forms, and chat messages.</li>
             </ul>
@@ -60,7 +60,7 @@ const Privacy = () => {
 
             <h3>C. Third-Party Integrations</h3>
             <ul>
-              <li><strong>Stripe</strong> (payment processor): Follows its own Privacy Policy.</li>
+              <li><strong>Payment Processor</strong>: We use a third-party payment processor to handle invoices.</li>
               <li><strong>Hostinger</strong> (hosting provider): See Hostinger Privacy Policy for server security and data handling.</li>
               <li><strong>Analytics:</strong> May use Google Analytics for service optimization.</li>
             </ul>

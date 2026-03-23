@@ -93,12 +93,8 @@ const Footer = () => {
         <div className="footer-bottom">
           <p>&copy; {new Date().getFullYear()} Nothing Else Solutions. All rights reserved.</p>
           <div className="footer-payments">
-            <img 
-              src="/stripe-badge.png" 
-              alt="Powered by Stripe" 
-              className="stripe-badge" 
-              style={{ height: '100px', width: 'auto' }}
-            />
+            {/* Payments handled externally via Stripe invoices */}
+            <span>Payments processed via secure invoice links.</span>
           </div>
         </div>
       </div>
