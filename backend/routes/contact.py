@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 import os
 import requests
 import smtplib
+import socket
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
@@ -90,21 +91,33 @@ Submitted: {contact_data['created_at']}
         # Send email with timeouts and safer handshake. If port is 465 use SSL.
         smtp_timeout = int(os.getenv('SMTP_TIMEOUT', 15))
         use_ssl = os.getenv('SMTP_USE_SSL', 'False').lower() in ('1', 'true', 'yes') or smtp_port == 465
-        if use_ssl:
-            with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=smtp_timeout) as server:
-                server.login(smtp_user, smtp_password)
-                server.sendmail(smtp_user, recipient_email, msg.as_string())
-        else:
-            with smtplib.SMTP(smtp_host, smtp_port, timeout=smtp_timeout) as server:
-                server.ehlo()
-                try:
-                    server.starttls()
+        # Attempt SMTP connection. If a plain STARTTLS connection times out,
+        # try SSL on port 465 as a fallback (some hosts prefer SMTPS).
+        try:
+            if use_ssl:
+                with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=smtp_timeout) as server:
+                    server.login(smtp_user, smtp_password)
+                    server.sendmail(smtp_user, recipient_email, msg.as_string())
+            else:
+                with smtplib.SMTP(smtp_host, smtp_port, timeout=smtp_timeout) as server:
                     server.ehlo()
-                except Exception:
-                    # STARTTLS may fail on some servers; continue to attempt login
-                    pass
-                server.login(smtp_user, smtp_password)
-                server.sendmail(smtp_user, recipient_email, msg.as_string())
+                    try:
+                        server.starttls()
+                        server.ehlo()
+                    except Exception:
+                        # STARTTLS may fail on some servers; continue to attempt login
+                        pass
+                    server.login(smtp_user, smtp_password)
+                    server.sendmail(smtp_user, recipient_email, msg.as_string())
+        except (TimeoutError, socket.timeout) as e:
+            print(f"SMTP connection timed out ({smtp_host}:{smtp_port}): {e}. Trying SMTPS on port 465...")
+            try:
+                with smtplib.SMTP_SSL(smtp_host, 465, timeout=smtp_timeout) as server:
+                    server.login(smtp_user, smtp_password)
+                    server.sendmail(smtp_user, recipient_email, msg.as_string())
+            except Exception as e2:
+                print(f"SMTPS fallback failed: {e2}")
+                raise
         
         print(f"Email notification sent to {recipient_email}")
         return True
