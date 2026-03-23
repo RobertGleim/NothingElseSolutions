@@ -119,27 +119,55 @@ export const adminAPI = {
 // Contact API - Uses Web3Forms (no backend required, no CORS issues)
 export const contactAPI = {
   submit: async (data) => {
+    // Try backend endpoint first (preferred - uses server SMTP). If backend
+    // is unavailable or returns an error, fall back to Web3Forms if a key
+    // is configured at build time.
+    const backendUrl = `${API_URL}/contact`
+    try {
+      const res = await fetch(backendUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          subject: data.subject,
+          message: data.message,
+        }),
+      })
+
+      if (res.ok) {
+        // Backend returns 201 on success
+        const body = await res.json().catch(() => ({}))
+        return body
+      }
+      // If backend responded with a 4xx/5xx, fall through to try Web3Forms
+      console.warn(`Backend contact failed (${res.status}). Falling back to Web3Forms if available.`)
+    } catch (err) {
+      console.warn('Could not reach backend contact endpoint, will try Web3Forms if configured.', err)
+    }
+
+    // Fallback: Web3Forms (works for static hosts but requires VITE_WEB3FORMS_KEY at build time)
     const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY
     if (!WEB3FORMS_KEY) {
-      console.error('VITE_WEB3FORMS_KEY is not set. Contact submissions will fail.')
+      throw new Error('Contact submission failed: backend unavailable and VITE_WEB3FORMS_KEY is not set.')
     }
 
     const response = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
       },
       body: JSON.stringify({
-        access_key: WEB3FORMS_KEY || '',
+        access_key: WEB3FORMS_KEY,
         name: data.name,
         email: data.email,
         subject: data.subject,
         message: data.message,
-        to_email: 'customerservice@nothingelsesolutions.com'
-      })
+        to_email: 'customerservice@nothingelsesolutions.com',
+      }),
     })
-    // Surface full response for better debugging
+
     let json
     try {
       json = await response.json()
