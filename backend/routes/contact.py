@@ -28,9 +28,13 @@ def send_email_notification(contact_data):
         smtp_password = os.getenv('SMTP_PASSWORD')
         recipient_email = os.getenv('CONTACT_EMAIL', 'customerservice@nothingelsesolutions.com')
         
+        print(f"[SMTP DEBUG] Host: {smtp_host}, Port: {smtp_port}, User: {smtp_user}, Recipient: {recipient_email}")
+        
         if not smtp_user or not smtp_password:
-            print("SMTP credentials not configured, skipping email notification")
+            print("[SMTP ERROR] SMTP credentials not configured, skipping email notification")
             return False
+        
+        print("[SMTP DEBUG] Credentials found, proceeding with connection")
         
         # Create message
         # Prevent header injection
@@ -91,39 +95,58 @@ Submitted: {contact_data['created_at']}
         # Send email with timeouts and safer handshake. If port is 465 use SSL.
         smtp_timeout = int(os.getenv('SMTP_TIMEOUT', 15))
         use_ssl = os.getenv('SMTP_USE_SSL', 'False').lower() in ('1', 'true', 'yes') or smtp_port == 465
+        print(f"[SMTP DEBUG] SSL Mode: {use_ssl}, Timeout: {smtp_timeout}s")
+        
         # Attempt SMTP connection. If a plain STARTTLS connection times out,
         # try SSL on port 465 as a fallback (some hosts prefer SMTPS).
         try:
             if use_ssl:
+                print(f"[SMTP DEBUG] Attempting SMTP_SSL connection to {smtp_host}:{smtp_port}")
                 with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=smtp_timeout) as server:
+                    print("[SMTP DEBUG] Connected via SMTP_SSL, logging in...")
                     server.login(smtp_user, smtp_password)
+                    print("[SMTP DEBUG] Login successful, sending mail...")
                     server.sendmail(smtp_user, recipient_email, msg.as_string())
+                    print("[SMTP DEBUG] Mail sent successfully via SMTP_SSL")
             else:
+                print(f"[SMTP DEBUG] Attempting SMTP connection to {smtp_host}:{smtp_port}")
                 with smtplib.SMTP(smtp_host, smtp_port, timeout=smtp_timeout) as server:
+                    print("[SMTP DEBUG] Connected, sending EHLO...")
                     server.ehlo()
                     try:
+                        print("[SMTP DEBUG] Attempting STARTTLS...")
                         server.starttls()
+                        print("[SMTP DEBUG] STARTTLS successful, sending EHLO...")
                         server.ehlo()
-                    except Exception:
+                    except Exception as e:
+                        print(f"[SMTP DEBUG] STARTTLS failed (continuing anyway): {e}")
                         # STARTTLS may fail on some servers; continue to attempt login
                         pass
+                    print("[SMTP DEBUG] Logging in...")
                     server.login(smtp_user, smtp_password)
+                    print("[SMTP DEBUG] Login successful, sending mail...")
                     server.sendmail(smtp_user, recipient_email, msg.as_string())
+                    print("[SMTP DEBUG] Mail sent successfully via SMTP")
         except (TimeoutError, socket.timeout) as e:
-            print(f"SMTP connection timed out ({smtp_host}:{smtp_port}): {e}. Trying SMTPS on port 465...")
+            print(f"[SMTP ERROR] Connection timed out ({smtp_host}:{smtp_port}): {e}. Trying SMTPS on port 465...")
             try:
+                print("[SMTP DEBUG] Attempting SMTP_SSL fallback on port 465...")
                 with smtplib.SMTP_SSL(smtp_host, 465, timeout=smtp_timeout) as server:
+                    print("[SMTP DEBUG] Connected via SMTP_SSL (465), logging in...")
                     server.login(smtp_user, smtp_password)
+                    print("[SMTP DEBUG] Login successful, sending mail...")
                     server.sendmail(smtp_user, recipient_email, msg.as_string())
+                    print("[SMTP DEBUG] Mail sent successfully via SMTP_SSL (465)")
             except Exception as e2:
-                print(f"SMTPS fallback failed: {e2}")
+                print(f"[SMTP ERROR] SMTPS fallback failed: {e2}")
+                traceback.print_exc()
                 raise
         
         print(f"Email notification sent to {recipient_email}")
         return True
         
     except Exception as e:
-        print(f"Failed to send email notification: {e}")
+        print(f"[SMTP ERROR] Failed to send email notification: {e}")
         traceback.print_exc()
         return False
 
