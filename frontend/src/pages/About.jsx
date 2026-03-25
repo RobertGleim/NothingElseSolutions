@@ -23,10 +23,10 @@ const About = () => {
       tech: ['React', 'Python', 'SQL', 'CSS']
     },
     {
-      title: 'Cool X3 Mechanics Shop',
-      description: 'Built a React-based portal for inventory and services management, customer database, and admin section for employee/inventory management.',
-      // link: 'https://mech-shop-react.vercel.app/',
-      tech: ['React', 'Full-Stack']
+      title: 'SGC Art Website',
+      description: 'Built and launched www.sgcgart.com to help customers explore stained-glass styles, save design ideas, and submit structured work orders with less back-and-forth. Developed with React + Fabric.js on the frontend and a Flask/PostgreSQL backend with Stripe support, deployed across Hostinger and Render.',
+      link: 'https://www.sgcgart.com/',
+      tech: ['React', 'Fabric.js', 'Flask', 'PostgreSQL', 'Stripe']
     }
   ]
 

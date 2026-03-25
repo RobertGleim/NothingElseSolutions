@@ -138,7 +138,10 @@ export const contactAPI = {
       if (res.ok) {
         // Backend returns 201 on success
         const body = await res.json().catch(() => ({}))
-        return body
+        return {
+          ...body,
+          _delivery: 'backend',
+        }
       }
       // If backend responded with a 4xx/5xx, fall through to try Web3Forms
       console.warn(`Backend contact failed (${res.status}). Falling back to Web3Forms if available.`)
@@ -180,7 +183,10 @@ export const contactAPI = {
       throw new Error(`Web3Forms error: ${errMsg}`)
     }
 
-    return json
+    return {
+      ...json,
+      _delivery: 'web3forms',
+    }
   }
 }
 

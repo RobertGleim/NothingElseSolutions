@@ -70,7 +70,7 @@ const FAQ = () => {
               <p><strong>Notable projects:</strong></p>
               <ul>
                 <li><strong>Grace Lutheran Website</strong> – A React + Python multipage site with interactive scripture content and admin management.</li>
-                <li><strong>Cool X3 Mechanics Shop</strong> – A React-based portal managing customer data, inventory, and services efficiently.</li>
+                <li><strong>SGC Art Website</strong> – A custom platform at www.sgcgart.com that improves client intake through interactive design selection, saved projects, and structured work-order submission, powered by React/Fabric.js + Flask/PostgreSQL.</li>
               </ul>
             </>
           )

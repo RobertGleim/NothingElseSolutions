@@ -163,6 +163,40 @@ const Home = () => {
                 Automate Your Business <FiArrowRight />
               </Link>
             </div>
+
+            {/* Custom Web Apps Card (Purple) */}
+            <div className="service-card">
+              <div className="service-card-glow webapps-glow"></div>
+              <div className="service-icon webapps-icon">
+                <FiLayers />
+              </div>
+              <h3>Custom Web Apps</h3>
+              <p className="service-description">
+                Build tailored web applications such as inventory management systems, admin dashboards,
+                customer portals, and internal tools that streamline operations and provide real-time insights.
+              </p>
+              <div className="service-features">
+                <div className="service-feature">
+                  <FiCode /> Scalable Backends & APIs
+                </div>
+                <div className="service-feature">
+                  <FiLayers /> Admin Dashboards & Reporting
+                </div>
+                <div className="service-feature">
+                  <FiShield /> Role-Based Access & Security
+                </div>
+              </div>
+              <div className="service-skills">
+                <span>React</span>
+                <span>Node.js</span>
+                <span>Postgres</span>
+                <span>Redis</span>
+                <span>Docker</span>
+              </div>
+              <Link to="/inquiry?service=webapps" className="btn btn-primary service-btn">
+                Discuss Your App <FiArrowRight />
+              </Link>
+            </div>
           </div>
         </div>
       </section>

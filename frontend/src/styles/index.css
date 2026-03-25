@@ -27,7 +27,7 @@
   --color-info: #00B8D4;
   
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #0066FF 0%, #00D9FF 100%);
+  --gradient-primary: linear-gradient(135deg, #1b63d1 0%, #0e4cae 100%);
   --gradient-dark: linear-gradient(180deg, #0D0D1A 0%, #080810 100%);
   --gradient-card: linear-gradient(145deg, #16162A 0%, #1A1A2E 100%);
   
@@ -95,7 +95,7 @@
   --color-info: #0099B8;
   
   /* Gradients - Light versions maintaining the style */
-  --gradient-primary: linear-gradient(135deg, #0066FF 0%, #0099CC 100%);
+  --gradient-primary: linear-gradient(135deg, #1b63d1 0%, #0e4cae 100%);
   --gradient-dark: linear-gradient(180deg, #EAEAEF 0%, #E0E0E6 100%);
   --gradient-card: linear-gradient(145deg, #F5F5F8 0%, #EFEFF2 100%);
   
@@ -229,7 +229,7 @@ h6 { font-size: 0.875rem; }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 30px rgba(0, 102, 255, 0.5);
+  box-shadow: 0 0 24px rgba(14, 76, 174, 0.42);
 }
 
 .btn-secondary {

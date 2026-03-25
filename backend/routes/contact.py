@@ -128,7 +128,7 @@ Submitted: {contact_data['created_at']}
         return False
 
 
-@contact_bp.route('/', methods=['POST', 'OPTIONS'])
+@contact_bp.route('/', methods=['POST', 'OPTIONS'], strict_slashes=False)
 def submit_contact():
     """Handle contact form submissions"""
     # Handle CORS preflight
@@ -211,26 +211,32 @@ def submit_contact():
         contacts.append(contact)
         
         # Log the contact submission
-        print(f"New contact submission from {data['name']} ({data['email']})")
-        print(f"Subject: {data['subject']}")
-        
-        # Send email notification in a background thread to avoid blocking
-        try:
-            Thread(target=send_email_notification, args=(contact,), daemon=True).start()
-        except Exception as e:
-            print(f"Failed to start background email thread: {e}")
+        print(f"New contact submission from {name} ({email})")
+        print(f"Subject: {subject}")
+
+        # Deliver notifications before acknowledging success so the frontend
+        # can fall back cleanly when SMTP is unavailable.
+        email_sent = send_email_notification(contact)
         
         # Optional: Send to n8n webhook for additional processing
         webhook_url = os.getenv('CONTACT_WEBHOOK_URL')
+        webhook_sent = False
         if webhook_url:
             try:
                 requests.post(webhook_url, json=contact, timeout=5)
+                webhook_sent = True
             except Exception as e:
                 print(f"Failed to send webhook notification: {e}")
+
+        if not email_sent and not webhook_sent:
+            return jsonify({
+                'error': 'Failed to deliver contact notification'
+            }), 502
         
         return jsonify({
             'success': True,
-            'message': 'Thank you for your message. We will get back to you soon!'
+            'message': 'Thank you for your message. We will get back to you soon!',
+            'delivery': 'backend'
         }), 201
         
     except Exception as e:
@@ -239,7 +245,30 @@ def submit_contact():
         return jsonify({'error': 'Failed to process your message'}), 500
 
 
-@contact_bp.route('/', methods=['GET'])
+@contact_bp.route('/', methods=['GET'], strict_slashes=False)
 def get_contacts():
     """Get all contacts (admin only - add auth later)"""
     return jsonify(contacts), 200
+
+
+@contact_bp.route('/_smtp_test', methods=['GET'])
+def smtp_test():
+    """Check outbound TCP connectivity to the configured SMTP host on common ports.
+
+    Returns JSON with per-port connection success/failure and any error message.
+    Useful to confirm whether the hosting environment allows outbound SMTP.
+    """
+    smtp_host = os.getenv('SMTP_HOST', 'mail.privateemail.com')
+    ports = [587, 465]
+    results = {}
+    import socket
+    timeout = float(os.getenv('SMTP_TIMEOUT', 5))
+    for p in ports:
+        try:
+            sock = socket.create_connection((smtp_host, p), timeout=timeout)
+            sock.close()
+            results[str(p)] = {'ok': True, 'error': None}
+        except Exception as e:
+            results[str(p)] = {'ok': False, 'error': str(e)}
+
+    return jsonify({'host': smtp_host, 'results': results}), 200

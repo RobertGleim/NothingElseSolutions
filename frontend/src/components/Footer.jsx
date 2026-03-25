@@ -94,7 +94,7 @@ const Footer = () => {
           <p>&copy; {new Date().getFullYear()} Nothing Else Solutions. All rights reserved.</p>
           <div className="footer-payments">
             {/* Payments handled externally via Stripe invoices */}
-            <span>Payments processed via secure invoice links.</span>
+            <span>Payments processed via Stripe.</span>
           </div>
         </div>
       </div>

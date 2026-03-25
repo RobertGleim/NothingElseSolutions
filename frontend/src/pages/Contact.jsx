@@ -23,8 +23,12 @@ const Contact = () => {
     setIsSubmitting(true)
 
     try {
-      await contactAPI.submit(formData)
-      toast.success('Message sent! We\'ll get back to you soon.')
+      const result = await contactAPI.submit(formData)
+      toast.success(
+        result?._delivery === 'web3forms'
+          ? 'Message sent via backup form service.'
+          : 'Message sent! We\'ll get back to you soon.'
+      )
       setFormData({ name: '', email: '', subject: '', message: '' })
     } catch (error) {
       toast.error('Failed to send message. Please try again.')
