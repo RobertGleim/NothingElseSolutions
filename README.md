@@ -39,6 +39,8 @@ npm install
 npm run dev
 ```
 
+Local frontend runs at `http://localhost:3000`.
+
 ### Backend Setup
 ```bash
 cd backend
@@ -49,16 +51,28 @@ venv\Scripts\activate
 source venv/bin/activate
 
 pip install -r requirements.txt
-python run.py
+python app.py
 ```
+
+Local backend runs at `http://localhost:5000`.
 
 ## 🔐 Environment Variables
 
-### Frontend (.env)
+### Frontend env files
 ```
+frontend/.env.development  -> local dev values
+frontend/.env.production   -> production build values
+frontend/.env              -> shared non-secret defaults only
+```
+
+Recommended values:
+
+```env
+# frontend/.env.development
 VITE_API_URL=http://localhost:5000/api
-VITE_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
-VITE_WEB3FORMS_KEY=your_web3forms_access_key
+
+# frontend/.env.production
+VITE_API_URL=https://nothingelsesolutions.onrender.com/api
 ```
 
 ### Backend (.env)
@@ -70,7 +84,12 @@ STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
 PINECONE_API_KEY=your_pinecone_api_key
 PINECONE_ENVIRONMENT=your_pinecone_environment
 N8N_WEBHOOK_URL=your_n8n_webhook_url
+FRONTEND_URL=http://localhost:3000
 CONTACT_EMAIL=customerservice@nothingelsesolutions.com
+SMTP_HOST=mail.privateemail.com
+SMTP_PORT=587
+SMTP_USER=customerservice@nothingelsesolutions.com
+SMTP_PASSWORD=your_mailbox_password
 ```
 
 ## 🎨 Features
@@ -117,6 +136,7 @@ CONTACT_EMAIL=customerservice@nothingelsesolutions.com
    ```
    VITE_API_URL=https://your-backend-url.onrender.com/api
    VITE_STRIPE_PUBLISHABLE_KEY=pk_live_your_stripe_key
+   VITE_WEB3FORMS_KEY=your_web3forms_access_key
    ```
 
 4. Click **Deploy**!
@@ -129,11 +149,32 @@ CONTACT_EMAIL=customerservice@nothingelsesolutions.com
 4. Configure environment variables from `backend/.env.example`
 5. Deploy!
 
+Recommended Render environment variables for contact delivery:
+```
+FRONTEND_URL=https://www.nothingelsesolutions.com
+CONTACT_EMAIL=customerservice@nothingelsesolutions.com
+SMTP_HOST=mail.privateemail.com
+SMTP_PORT=587
+SMTP_USER=customerservice@nothingelsesolutions.com
+SMTP_PASSWORD=your_mailbox_password
+SMTP_USE_SSL=False
+SMTP_TIMEOUT=15
+```
+
 ### Post-Deployment Checklist
 - [ ] Update `VITE_API_URL` in Vercel to point to your Render backend URL
 - [ ] Add your Vercel frontend URL to CORS allowed origins in backend
+- [ ] Set SMTP env vars in Render so contact emails send from production
 - [ ] Test Stripe webhook endpoints
 - [ ] Verify all API endpoints are working
+
+## Local Tasks
+
+VS Code tasks available in [.vscode/tasks.json](.vscode/tasks.json):
+- `dev: frontend`
+- `dev: backend`
+
+Use both tasks together for full local testing.
 
 - **Frontend**: Vercel
 - **Backend**: Render
