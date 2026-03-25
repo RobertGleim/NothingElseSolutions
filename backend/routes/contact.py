@@ -128,7 +128,8 @@ Submitted: {contact_data['created_at']}
                     server.sendmail(smtp_user, recipient_email, msg.as_string())
                     print("[SMTP DEBUG] Mail sent successfully via SMTP")
         except (TimeoutError, socket.timeout) as e:
-            print(f"[SMTP ERROR] Connection timed out ({smtp_host}:{smtp_port}): {e}. Trying SMTPS on port 465...")
+            print(f"[SMTP ERROR] Connection timed out ({smtp_host}:{smtp_port}): {e}")
+            print("[SMTP ERROR] Note: Render may block outbound SMTP. Attempting fallback to port 465...")
             try:
                 print("[SMTP DEBUG] Attempting SMTP_SSL fallback on port 465...")
                 with smtplib.SMTP_SSL(smtp_host, 465, timeout=smtp_timeout) as server:
@@ -138,8 +139,8 @@ Submitted: {contact_data['created_at']}
                     server.sendmail(smtp_user, recipient_email, msg.as_string())
                     print("[SMTP DEBUG] Mail sent successfully via SMTP_SSL (465)")
             except Exception as e2:
-                print(f"[SMTP ERROR] SMTPS fallback failed: {e2}")
-                traceback.print_exc()
+                print(f"[SMTP ERROR] SMTPS fallback also failed: {type(e2).__name__}: {e2}")
+                # Re-raise as we want this to be caught by the outer exception handler
                 raise
         
         print(f"Email notification sent to {recipient_email}")
@@ -147,7 +148,8 @@ Submitted: {contact_data['created_at']}
         
     except Exception as e:
         print(f"[SMTP ERROR] Failed to send email notification: {e}")
-        traceback.print_exc()
+        # Don't crash on email failure; just log and return False
+        # The contact form will still succeed; email delivery is best-effort
         return False
 
 
@@ -239,6 +241,7 @@ def submit_contact():
 
         # Deliver notifications before acknowledging success so the frontend
         # can fall back cleanly when SMTP is unavailable.
+        # Note: Email delivery is attempted but failures are non-blocking.
         email_sent = send_email_notification(contact)
         
         # Optional: Send to n8n webhook for additional processing
@@ -248,18 +251,24 @@ def submit_contact():
             try:
                 requests.post(webhook_url, json=contact, timeout=5)
                 webhook_sent = True
+                print(f"Webhook notification sent to {webhook_url}")
             except Exception as e:
                 print(f"Failed to send webhook notification: {e}")
 
+        # Always return success if contact was stored (email/webhook are best-effort)
+        delivery_source = 'backend'
         if not email_sent and not webhook_sent:
-            return jsonify({
-                'error': 'Failed to deliver contact notification'
-            }), 502
+            delivery_source = 'backend-stored-only'
+            print(f"Warning: Contact stored but email and webhook both failed")
+        elif email_sent:
+            delivery_source = 'backend-email'
+        elif webhook_sent:
+            delivery_source = 'backend-webhook'
         
         return jsonify({
             'success': True,
             'message': 'Thank you for your message. We will get back to you soon!',
-            'delivery': 'backend'
+            'delivery': delivery_source
         }), 201
         
     except Exception as e:
