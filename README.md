@@ -151,7 +151,7 @@ SMTP_PASSWORD=your_mailbox_password
 
 Recommended Render environment variables for contact delivery:
 ```
-FRONTEND_URL=https://www.nothingelsesolutions.com
+FRONTEND_URL=https://nothing-else-solutions.vercel.app
 CONTACT_EMAIL=customerservice@nothingelsesolutions.com
 SMTP_HOST=mail.privateemail.com
 SMTP_PORT=587
