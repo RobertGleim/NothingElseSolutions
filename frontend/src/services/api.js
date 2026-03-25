@@ -116,8 +116,11 @@ export const adminAPI = {
   updatePromo: (id, data) => api.put(`/admin/promos/${id}`, data),
   deletePromo: (id) => api.delete(`/admin/promos/${id}`),
   
-  // Contacts
-  getContacts: (params) => api.get('/admin/contacts', { params }),
+  // Contacts (stored in backend database)
+  getContacts: (params) => api.get('/contact', { params }),
+  getContact: (id) => api.get(`/contact/${id}`),
+  updateContactStatus: (id, status) => api.put(`/contact/${id}`, { status }),
+  deleteContact: (id) => api.delete(`/contact/${id}`),
   
   // Settings
   getSettings: () => api.get('/admin/settings'),

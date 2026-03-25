@@ -12,11 +12,11 @@ from threading import Thread
 import traceback
 
 from flask import current_app
+from models import db, Contact
 
 contact_bp = Blueprint('contact', __name__)
 
-# Store contacts in memory (in production, use a database)
-contacts = []
+# Note: Contacts are now stored in database (see models.py)
 
 def send_email_notification(contact_data):
     """Send email notification for new contact submission"""
@@ -222,18 +222,23 @@ def submit_contact():
                 return jsonify({'error': 'Invalid input'}), 400
         
         # Create contact record
-        contact = {
-            'id': len(contacts) + 1,
-            'name': name,
-            'email': email,
-            'subject': subject,
-            'message': message,
-            'created_at': datetime.utcnow().isoformat(),
-            'status': 'new'
-        }
+        contact = Contact(
+            name=name,
+            email=email,
+            subject=subject,
+            message=message,
+            status='new'
+        )
         
-        # Store contact
-        contacts.append(contact)
+        # Save contact to database
+        try:
+            db.session.add(contact)
+            db.session.commit()
+            print(f"Contact saved to database with ID: {contact.id}")
+        except Exception as e:
+            db.session.rollback()
+            print(f"[DB ERROR] Failed to save contact: {e}")
+            return jsonify({'error': 'Failed to save contact'}), 500
         
         # Log the contact submission
         print(f"New contact submission from {name} ({email})")
@@ -249,7 +254,7 @@ def submit_contact():
         webhook_sent = False
         if webhook_url:
             try:
-                requests.post(webhook_url, json=contact, timeout=5)
+                requests.post(webhook_url, json=contact.to_dict(), timeout=5)
                 webhook_sent = True
                 print(f"Webhook notification sent to {webhook_url}")
             except Exception as e:
@@ -279,8 +284,88 @@ def submit_contact():
 
 @contact_bp.route('/', methods=['GET'], strict_slashes=False)
 def get_contacts():
-    """Get all contacts (admin only - add auth later)"""
-    return jsonify(contacts), 200
+    """Get all contacts (requires admin authentication to be added)"""
+    try:
+        # For now, return all contacts; add JWT check when auth is configured
+        contacts = Contact.query.order_by(Contact.created_at.desc()).all()
+        return jsonify({
+            'success': True,
+            'total': len(contacts),
+            'contacts': [c.to_dict() for c in contacts]
+        }), 200
+    except Exception as e:
+        print(f"Error retrieving contacts: {e}")
+        return jsonify({'error': 'Failed to retrieve contacts'}), 500
+
+
+@contact_bp.route('/<int:contact_id>', methods=['GET'], strict_slashes=False)
+def get_contact(contact_id):
+    """Get a single contact by ID"""
+    try:
+        contact = Contact.query.get(contact_id)
+        if not contact:
+            return jsonify({'error': 'Contact not found'}), 404
+        
+        # Mark as read
+        if contact.status == 'new':
+            contact.status = 'read'
+            db.session.commit()
+        
+        return jsonify({
+            'success': True,
+            'contact': contact.to_dict()
+        }), 200
+    except Exception as e:
+        print(f"Error retrieving contact: {e}")
+        return jsonify({'error': 'Failed to retrieve contact'}), 500
+
+
+@contact_bp.route('/<int:contact_id>', methods=['PUT'], strict_slashes=False)
+def update_contact(contact_id):
+    """Update contact status (mark as read, responded, etc)"""
+    try:
+        contact = Contact.query.get(contact_id)
+        if not contact:
+            return jsonify({'error': 'Contact not found'}), 404
+        
+        data = request.get_json() or {}
+        if 'status' in data:
+            valid_statuses = ['new', 'read', 'responded']
+            if data['status'] in valid_statuses:
+                contact.status = data['status']
+                db.session.commit()
+                print(f"Contact {contact_id} status updated to '{data['status']}'")
+        
+        return jsonify({
+            'success': True,
+            'contact': contact.to_dict()
+        }), 200
+    except Exception as e:
+        print(f"Error updating contact: {e}")
+        db.session.rollback()
+        return jsonify({'error': 'Failed to update contact'}), 500
+
+
+@contact_bp.route('/<int:contact_id>', methods=['DELETE'], strict_slashes=False)
+def delete_contact(contact_id):
+    """Delete a contact"""
+    try:
+        contact = Contact.query.get(contact_id)
+        if not contact:
+            return jsonify({'error': 'Contact not found'}), 404
+        
+        db.session.delete(contact)
+        db.session.commit()
+        print(f"Contact {contact_id} deleted")
+        
+        return jsonify({
+            'success': True,
+            'message': 'Contact deleted'
+        }), 200
+    except Exception as e:
+        print(f"Error deleting contact: {e}")
+        db.session.rollback()
+        return jsonify({'error': 'Failed to delete contact'}), 500
 
 
 @contact_bp.route('/_smtp_test', methods=['GET'])

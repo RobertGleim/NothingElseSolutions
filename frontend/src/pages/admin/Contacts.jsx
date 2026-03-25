@@ -17,13 +17,11 @@ const Contacts = () => {
 
   const loadContacts = async () => {
     try {
-      // TODO: Fetch contacts from API
-      // const response = await adminAPI.getContacts()
-      // setContacts(response.data.contacts || [])
-      
-      setContacts([])
+      const response = await adminAPI.getContacts()
+      setContacts(response.data.contacts || [])
     } catch (error) {
       console.error('Error loading contacts:', error)
+      toast.error('Failed to load contacts')
     } finally {
       setIsLoading(false)
     }

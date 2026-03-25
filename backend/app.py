@@ -2,6 +2,7 @@ from flask import Flask, request
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_bcrypt import Bcrypt
+from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -23,6 +24,14 @@ if os.getenv('FLASK_ENV') == 'production' and (not secret_key or not jwt_secret)
 app.config['SECRET_KEY'] = secret_key or 'dev-secret-key'
 app.config['JWT_SECRET_KEY'] = jwt_secret or 'jwt-secret-key'
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = int(os.getenv('JWT_ACCESS_TOKEN_EXPIRES', 3600))
+
+# Database configuration - use SQLite for simplicity, stores in persistent disk on Render
+database_url = os.getenv('DATABASE_URL')
+if not database_url:
+    # Default to SQLite for local development and Render
+    database_url = 'sqlite:////tmp/nothingelse.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize extensions
 # CORS configuration for production
@@ -49,6 +58,15 @@ cors = CORS(app, resources={r"/api/*": {"origins": allowed_origins}}, supports_c
 limiter = Limiter(key_func=get_remote_address, app=app, default_limits=["60 per minute"])
 jwt = JWTManager(app)
 bcrypt = Bcrypt(app)
+
+# Initialize database
+from models import db, Contact
+db.init_app(app)
+
+# Create tables on startup
+with app.app_context():
+    db.create_all()
+    print("[DB] Database tables created/verified")
 
 # Import routes
 from routes.auth import auth_bp
