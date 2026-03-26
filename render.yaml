@@ -4,7 +4,7 @@
 services:
   # Backend API
   - type: web
-    name: nothing-else-solutions-api
+    name: nothingelsesolutions
     runtime: python
     region: oregon
     plan: free
