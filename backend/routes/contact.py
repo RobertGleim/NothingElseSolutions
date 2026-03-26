@@ -1,8 +1,79 @@
 from flask import Blueprint, request, jsonify
 import re
+import os
+import smtplib
 import traceback
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 from models import db, Contact
+
+
+FORM_TAGS = {
+    'contact': {
+        'tag': 'Contact Form',
+        'label': 'CONTACT FORM SUBMISSION',
+        'source': 'Contact Page',
+    },
+    'website': {
+        'tag': 'Website Inquiry',
+        'label': 'WEBSITE DEVELOPMENT INQUIRY',
+        'source': 'Custom Website Inquiry Form',
+    },
+    'ai': {
+        'tag': 'AI & Automation Inquiry',
+        'label': 'AI & AUTOMATION INQUIRY',
+        'source': 'Custom AI & Automation Inquiry Form',
+    },
+}
+
+
+def send_contact_email(name, email, subject, message, form_type='contact'):
+    """Send contact form submission to inbox via SMTP."""
+    smtp_host = os.getenv('SMTP_HOST')
+    smtp_port = int(os.getenv('SMTP_PORT', 587))
+    smtp_user = os.getenv('SMTP_USERNAME')
+    smtp_pass = os.getenv('SMTP_PASSWORD')
+    to_email = os.getenv('CONTACT_EMAIL', 'customerservice@nothingelsesolutions.com')
+
+    if not smtp_host or not smtp_user or not smtp_pass:
+        print("[EMAIL] SMTP not configured — skipping email notification")
+        return False
+
+    info = FORM_TAGS.get(form_type, FORM_TAGS['contact'])
+
+    msg = MIMEMultipart()
+    msg['From'] = smtp_user
+    msg['To'] = to_email
+    msg['Subject'] = f"[{info['tag']}] {subject}"
+    msg['Reply-To'] = email
+
+    body = (
+        f"══════════════════════════════════════════\n"
+        f"  {info['label']}\n"
+        f"  Source: nothingelsesolutions.com\n"
+        f"══════════════════════════════════════════\n\n"
+        f"From:    {name}\n"
+        f"Email:   {email}\n"
+        f"Subject: {subject}\n\n"
+        f"── Message ────────────────────────────────\n\n"
+        f"{message}\n\n"
+        f"══════════════════════════════════════════\n"
+        f"This message was sent via the {info['source']}\n"
+        f"on nothingelsesolutions.com\n"
+        f"══════════════════════════════════════════\n"
+    )
+    msg.attach(MIMEText(body, 'plain'))
+
+    try:
+        with smtplib.SMTP_SSL(smtp_host, smtp_port) as server:
+            server.login(smtp_user, smtp_pass)
+            server.send_message(msg)
+        print(f"[EMAIL] Contact notification sent to {to_email}")
+        return True
+    except Exception as e:
+        print(f"[EMAIL ERROR] Failed to send email: {e}")
+        return False
 
 contact_bp = Blueprint('contact', __name__)
 
@@ -56,6 +127,11 @@ def submit_contact():
         email = (data.get('email') or '').strip()
         subject = (data.get('subject') or '').strip()
         message = (data.get('message') or '').strip()
+        form_type = (data.get('form_type') or 'contact').strip()
+
+        # Validate form_type
+        if form_type not in ('contact', 'website', 'ai'):
+            form_type = 'contact'
 
         # Required checks
         if not name or not email or not subject or not message:
@@ -98,10 +174,13 @@ def submit_contact():
         print(f"New contact submission from {name} ({email})")
         print(f"Subject: {subject}")
 
+        # Send email notification (best-effort — DB save already succeeded)
+        email_sent = send_contact_email(name, email, subject, message, form_type)
+
         return jsonify({
             'success': True,
             'message': 'Thank you for your message. We will get back to you soon!',
-            'delivery': 'backend-database'
+            'email_sent': email_sent
         }), 201
         
     except Exception as e:

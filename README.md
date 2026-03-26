@@ -154,17 +154,6 @@ FRONTEND_URL=https://nothing-else-solutions.vercel.app
 - [ ] Test Stripe webhook endpoints
 - [ ] Verify all API endpoints are working
 
-## Auto Deploy On Push
-
-This repo includes a workflow at `.github/workflows/auto-deploy.yml` that triggers both Vercel and Render on every push to `main`.
-
-Required GitHub repository secrets:
-
-- `VERCEL_DEPLOY_HOOK_URL` (from Vercel Deploy Hooks)
-- `RENDER_DEPLOY_HOOK_URL` (from Render Deploy Hook for service `srv-d5l80bkhg0os73c3pi0g`)
-
-If either secret is missing, the workflow fails so you immediately know auto deploy is not fully configured.
-
 ## Local Tasks
 
 VS Code tasks available in [.vscode/tasks.json](.vscode/tasks.json):
