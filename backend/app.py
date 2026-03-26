@@ -69,13 +69,25 @@ with app.app_context():
     print("[DB] Database tables created/verified")
 
 # Import routes
-from routes.auth import auth_bp
-from routes.products import products_bp
-from routes.orders import orders_bp
-from routes.admin import admin_bp
-from routes.webhooks import webhooks_bp
-from routes.contact import contact_bp
-from routes.tax import tax_bp
+try:
+    from routes.auth import auth_bp
+    print("[ROUTES] auth loaded")
+    from routes.products import products_bp
+    print("[ROUTES] products loaded")
+    from routes.orders import orders_bp
+    print("[ROUTES] orders loaded")
+    from routes.admin import admin_bp
+    print("[ROUTES] admin loaded")
+    from routes.webhooks import webhooks_bp
+    print("[ROUTES] webhooks loaded")
+    from routes.contact import contact_bp
+    print("[ROUTES] contact loaded")
+    from routes.tax import tax_bp
+    print("[ROUTES] tax loaded")
+except Exception as e:
+    print(f"[ROUTES ERROR] Failed to import routes: {e}")
+    import traceback
+    traceback.print_exc()
 
 # Register blueprints
 app.register_blueprint(auth_bp, url_prefix='/api/auth')
@@ -85,6 +97,7 @@ app.register_blueprint(admin_bp, url_prefix='/api/admin')
 app.register_blueprint(webhooks_bp, url_prefix='/api/webhooks')
 app.register_blueprint(contact_bp, url_prefix='/api/contact')
 app.register_blueprint(tax_bp, url_prefix='/api/tax')
+print("[ROUTES] All blueprints registered")
 
 # Apply rate limit to contact submit endpoint to avoid importing limiter from routes (prevents circular import)
 try:
