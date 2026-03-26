@@ -23,7 +23,7 @@ const Contact = () => {
     setIsSubmitting(true)
 
     try {
-      await contactAPI.submit(formData)
+      await contactAPI.submit({ ...formData, form_type: 'contact' })
       toast.success('Message sent! We\'ll get back to you soon.')
       setFormData({ name: '', email: '', subject: '', message: '' })
     } catch (error) {

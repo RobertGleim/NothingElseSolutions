@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { FiArrowRight, FiDownload, FiShield, FiHeadphones, FiZap, FiCode, FiCpu, FiLayers, FiGlobe } from 'react-icons/fi'
-import ProductCard from '../components/ProductCard'
-import { productAPI } from '../services/api'
 import './Home.css'
 import SEO from '../components/SEO'
 

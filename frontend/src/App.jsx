@@ -8,10 +8,6 @@ import AdminLayout from './layouts/AdminLayout'
 
 // Public Pages
 import Home from './pages/Home'
-import DigitalProducts from './pages/DigitalProducts'
-import ProductDetail from './pages/ProductDetail'
-import Cart from './pages/Cart'
-import Checkout from './pages/Checkout'
 import Contact from './pages/Contact'
 import About from './pages/About'
 import CustomInquiry from './pages/CustomInquiry'
@@ -26,9 +22,6 @@ import AdminLogin from './pages/auth/AdminLogin'
 
 // Member Pages
 import MemberDashboard from './pages/member/Dashboard'
-import OrderHistory from './pages/member/OrderHistory'
-import Wishlist from './pages/member/Wishlist'
-import SharedWishlist from './pages/SharedWishlist'
 
 // Admin Pages
 import AdminDashboard from './pages/admin/Dashboard'

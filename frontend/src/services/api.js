@@ -141,6 +141,7 @@ export const contactAPI = {
         email: data.email,
         subject: data.subject,
         message: data.message,
+        form_type: data.form_type || 'contact',
       }),
     })
 

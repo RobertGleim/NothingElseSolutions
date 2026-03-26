@@ -118,6 +118,7 @@ const CustomInquiry = () => {
       const inquiryData = {
         name: `${formData.firstName} ${formData.lastName}`,
         email: formData.email,
+        form_type: formData.serviceType === 'automation' ? 'ai' : 'website',
         subject: `${currentService.title} Inquiry`,
         message: `
 Service Type: ${formData.serviceType}

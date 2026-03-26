@@ -105,12 +105,13 @@ const Header = () => {
                   </Link>
                 )} */}
               </>
-            ) : (
-              <Link to="/login" className="mobile-action-btn" onClick={() => setMobileMenuOpen(false)}>
+            ) : null}
+
+            {/* FUTURE VERSION - Customer Login */}
+            {/* <Link to="/login" className="mobile-action-btn" onClick={() => setMobileMenuOpen(false)}>
                 <FiUser />
                 <span>Login</span>
-              </Link>
-            )}
+              </Link> */}
 
             {/* FUTURE VERSION - Wishlist & Cart */}
             {/* <Link to="/member/wishlist" className="mobile-action-btn" onClick={() => setMobileMenuOpen(false)}>
