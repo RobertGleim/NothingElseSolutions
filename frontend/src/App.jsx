@@ -4,8 +4,7 @@ import { SpeedInsights } from '@vercel/speed-insights/react'
 
 // Layouts
 import MainLayout from './layouts/MainLayout'
-// FUTURE VERSION - Admin
-// import AdminLayout from './layouts/AdminLayout'
+import AdminLayout from './layouts/AdminLayout'
 
 // Public Pages
 import Home from './pages/Home'
@@ -23,8 +22,7 @@ import Terms from './pages/Terms'
 // Auth Pages
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
-// FUTURE VERSION - Admin
-// import AdminLogin from './pages/auth/AdminLogin'
+import AdminLogin from './pages/auth/AdminLogin'
 
 // Member Pages
 import MemberDashboard from './pages/member/Dashboard'
@@ -32,23 +30,22 @@ import OrderHistory from './pages/member/OrderHistory'
 import Wishlist from './pages/member/Wishlist'
 import SharedWishlist from './pages/SharedWishlist'
 
-// FUTURE VERSION - Admin Pages
-// import AdminDashboard from './pages/admin/Dashboard'
-// import AdminProducts from './pages/admin/Products'
-// import AdminAddProduct from './pages/admin/AddProduct'
-// import AdminEditProduct from './pages/admin/EditProduct'
-// import AdminOrders from './pages/admin/Orders'
-// import AdminAnalytics from './pages/admin/Analytics'
-// import AdminSocialPost from './pages/admin/SocialPost'
-// import AdminPromos from './pages/admin/Promos'
-// import AdminSettings from './pages/admin/Settings'
-// import AdminContacts from './pages/admin/Contacts'
+// Admin Pages
+import AdminDashboard from './pages/admin/Dashboard'
+import AdminProducts from './pages/admin/Products'
+import AdminAddProduct from './pages/admin/AddProduct'
+import AdminEditProduct from './pages/admin/EditProduct'
+import AdminOrders from './pages/admin/Orders'
+import AdminAnalytics from './pages/admin/Analytics'
+import AdminSocialPost from './pages/admin/SocialPost'
+import AdminPromos from './pages/admin/Promos'
+import AdminSettings from './pages/admin/Settings'
+import AdminContacts from './pages/admin/Contacts'
 
 // Protected Route Components
 import ProtectedRoute from './components/ProtectedRoute'
+import AdminRoute from './components/AdminRoute'
 import ScrollToTop from './components/ScrollToTop'
-// FUTURE VERSION - Admin
-// import AdminRoute from './components/AdminRoute'
 
 function App() {
   return (
@@ -86,8 +83,8 @@ function App() {
           </Route>
         </Route>
         
-        {/* FUTURE VERSION - Admin Routes */}
-        {/* <Route path="/admin/login" element={<AdminLogin />} />
+        {/* Admin Routes */}
+        <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
           <Route index element={<AdminDashboard />} />
           <Route path="dashboard" element={<AdminDashboard />} />
@@ -100,7 +97,7 @@ function App() {
           <Route path="social-post" element={<AdminSocialPost />} />
           <Route path="contacts" element={<AdminContacts />} />
           <Route path="settings" element={<AdminSettings />} />
-        </Route> */}
+        </Route>
       </Routes>
       <SpeedInsights />
     </>
