@@ -1,10 +1,8 @@
 from flask import Blueprint, request, jsonify
 import re
 import os
-import smtplib
 import traceback
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+import resend
 
 from models import db, Contact
 
@@ -29,26 +27,19 @@ FORM_TAGS = {
 
 
 def send_contact_email(name, email, subject, message, form_type='contact'):
-    """Send contact form submission to inbox via SMTP."""
-    smtp_host = os.getenv('SMTP_HOST')
-    smtp_port = int(os.getenv('SMTP_PORT', 587))
-    smtp_user = os.getenv('SMTP_USERNAME')
-    smtp_pass = os.getenv('SMTP_PASSWORD')
+    """Send contact form submission via Resend HTTP API."""
+    api_key = os.getenv('RESEND_API_KEY')
+    from_email = os.getenv('RESEND_FROM_EMAIL', 'noreply@nothingelsesolutions.com')
     to_email = os.getenv('CONTACT_EMAIL', 'customerservice@nothingelsesolutions.com')
 
-    if not smtp_host or not smtp_user or not smtp_pass:
-        print("[EMAIL] SMTP not configured — skipping email notification")
+    if not api_key:
+        print("[EMAIL] RESEND_API_KEY not configured — skipping email notification")
         return False
 
+    resend.api_key = api_key
     info = FORM_TAGS.get(form_type, FORM_TAGS['contact'])
 
-    msg = MIMEMultipart()
-    msg['From'] = smtp_user
-    msg['To'] = to_email
-    msg['Subject'] = f"[{info['tag']}] {subject}"
-    msg['Reply-To'] = email
-
-    body = (
+    text_body = (
         f"══════════════════════════════════════════\n"
         f"  {info['label']}\n"
         f"  Source: nothingelsesolutions.com\n"
@@ -63,20 +54,15 @@ def send_contact_email(name, email, subject, message, form_type='contact'):
         f"on nothingelsesolutions.com\n"
         f"══════════════════════════════════════════\n"
     )
-    msg.attach(MIMEText(body, 'plain'))
 
     try:
-        if smtp_port == 465:
-            # SSL-wrapped connection (port 465)
-            with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=15) as server:
-                server.login(smtp_user, smtp_pass)
-                server.send_message(msg)
-        else:
-            # STARTTLS connection (port 587)
-            with smtplib.SMTP(smtp_host, smtp_port, timeout=15) as server:
-                server.starttls()
-                server.login(smtp_user, smtp_pass)
-                server.send_message(msg)
+        resend.Emails.send({
+            "from": f"Nothing Else Solutions <{from_email}>",
+            "to": [to_email],
+            "subject": f"[{info['tag']}] {subject}",
+            "reply_to": email,
+            "text": text_body,
+        })
         print(f"[EMAIL] Contact notification sent to {to_email}")
         return True
     except Exception as e:
