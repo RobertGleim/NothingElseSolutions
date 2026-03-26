@@ -66,13 +66,14 @@ def send_contact_email(name, email, subject, message, form_type='contact'):
     msg.attach(MIMEText(body, 'plain'))
 
     try:
-        with smtplib.SMTP_SSL(smtp_host, smtp_port) as server:
+        with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=15) as server:
             server.login(smtp_user, smtp_pass)
             server.send_message(msg)
         print(f"[EMAIL] Contact notification sent to {to_email}")
         return True
     except Exception as e:
         print(f"[EMAIL ERROR] Failed to send email: {e}")
+        traceback.print_exc()
         return False
 
 contact_bp = Blueprint('contact', __name__)
