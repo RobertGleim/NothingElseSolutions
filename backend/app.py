@@ -28,8 +28,8 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = int(os.getenv('JWT_ACCESS_TOKEN_EXPIRES
 # Database configuration - use SQLite for simplicity, stores in persistent disk on Render
 database_url = os.getenv('DATABASE_URL')
 if not database_url:
-    # Default to SQLite for local development and Render
-    database_url = 'sqlite:////tmp/nothingelse.db'
+    # Default to SQLite - use relative path that works on both Windows and Linux
+    database_url = 'sqlite:///contacts.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
