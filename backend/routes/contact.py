@@ -78,17 +78,9 @@ def send_contact_email(name, email, subject, message, form_type='contact'):
 contact_bp = Blueprint('contact', __name__)
 
 
-@contact_bp.route('/', methods=['POST', 'OPTIONS'], strict_slashes=False)
+@contact_bp.route('/', methods=['POST'], strict_slashes=False)
 def submit_contact():
     """Handle contact form submissions"""
-    # Handle CORS preflight
-    if request.method == 'OPTIONS':
-        response = jsonify({'status': 'ok'})
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-        response.headers.add('Access-Control-Allow-Methods', 'POST,OPTIONS')
-        return response, 200
-    
     try:
         # Parse JSON safely, with fallbacks for form-encoded bodies or malformed payloads.
         data = None
