@@ -7,7 +7,7 @@ flask-bcrypt==1.0.1
 Flask-SQLAlchemy==3.1.1
 
 # Database
-pinecone-client>=2.2.1
+# pinecone-client>=2.2.1  # Disabled — not used until products are added
 
 # Stripe
 stripe==7.10.0
