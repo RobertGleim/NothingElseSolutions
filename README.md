@@ -85,11 +85,6 @@ PINECONE_API_KEY=your_pinecone_api_key
 PINECONE_ENVIRONMENT=your_pinecone_environment
 N8N_WEBHOOK_URL=your_n8n_webhook_url
 FRONTEND_URL=http://localhost:3000
-CONTACT_EMAIL=customerservice@nothingelsesolutions.com
-SMTP_HOST=mail.privateemail.com
-SMTP_PORT=587
-SMTP_USER=customerservice@nothingelsesolutions.com
-SMTP_PASSWORD=your_mailbox_password
 ```
 
 ## 🎨 Features
@@ -136,7 +131,6 @@ SMTP_PASSWORD=your_mailbox_password
    ```
    VITE_API_URL=https://your-backend-url.onrender.com/api
    VITE_STRIPE_PUBLISHABLE_KEY=pk_live_your_stripe_key
-   VITE_WEB3FORMS_KEY=your_web3forms_access_key
    ```
 
 4. Click **Deploy**!
@@ -149,22 +143,14 @@ SMTP_PASSWORD=your_mailbox_password
 4. Configure environment variables from `backend/.env.example`
 5. Deploy!
 
-Recommended Render environment variables for contact delivery:
+Recommended Render environment variables:
 ```
 FRONTEND_URL=https://nothing-else-solutions.vercel.app
-CONTACT_EMAIL=customerservice@nothingelsesolutions.com
-SMTP_HOST=mail.privateemail.com
-SMTP_PORT=587
-SMTP_USER=customerservice@nothingelsesolutions.com
-SMTP_PASSWORD=your_mailbox_password
-SMTP_USE_SSL=False
-SMTP_TIMEOUT=15
 ```
 
 ### Post-Deployment Checklist
 - [ ] Update `VITE_API_URL` in Vercel to point to your Render backend URL
 - [ ] Add your Vercel frontend URL to CORS allowed origins in backend
-- [ ] Set SMTP env vars in Render so contact emails send from production
 - [ ] Test Stripe webhook endpoints
 - [ ] Verify all API endpoints are working
 
@@ -199,7 +185,6 @@ Use both tasks together for full local testing.
 - Input validation & sanitization
  
 Notes and immediate actions:
-- The Web3Forms access key should be set in Vercel as `VITE_WEB3FORMS_KEY` and not committed to the repository. If the key was previously committed, rotate the key in Web3Forms immediately and remove it from the git history.
 - Ensure `SECRET_KEY` and `JWT_SECRET_KEY` are set in production; the backend will refuse to start if these are missing.
 
 ## 📧 Contact

@@ -127,58 +127,20 @@ export const adminAPI = {
   updateSettings: (data) => api.put('/admin/settings', data),
 }
 
-// Contact API - Uses Web3Forms (no backend required, no CORS issues)
+// Contact API - Backend only
 export const contactAPI = {
   submit: async (data) => {
-    // Try backend endpoint first (preferred - uses server SMTP). If backend
-    // is unavailable or returns an error, fall back to Web3Forms if a key
-    // is configured at build time.
     const backendUrl = `${API_URL}/contact`
-    try {
-      const res = await fetch(backendUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          subject: data.subject,
-          message: data.message,
-        }),
-      })
-
-      if (res.ok) {
-        // Backend returns 201 on success
-        const body = await res.json().catch(() => ({}))
-        return {
-          ...body,
-          _delivery: 'backend',
-        }
-      }
-      // If backend responded with a 4xx/5xx, fall through to try Web3Forms
-      console.warn(`Backend contact failed (${res.status}). Falling back to Web3Forms if available.`)
-    } catch (err) {
-      console.warn('Could not reach backend contact endpoint, will try Web3Forms if configured.', err)
-    }
-
-    // Fallback: Web3Forms (works for static hosts but requires VITE_WEB3FORMS_KEY at build time)
-    const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY
-    if (!WEB3FORMS_KEY) {
-      throw new Error('Contact submission failed: backend unavailable and VITE_WEB3FORMS_KEY is not set.')
-    }
-
-    const response = await fetch('https://api.web3forms.com/submit', {
+    const response = await fetch(backendUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
       },
       body: JSON.stringify({
-        access_key: WEB3FORMS_KEY,
         name: data.name,
         email: data.email,
         subject: data.subject,
         message: data.message,
-        to_email: 'customerservice@nothingelsesolutions.com',
       }),
     })
 
@@ -186,18 +148,15 @@ export const contactAPI = {
     try {
       json = await response.json()
     } catch (err) {
-      throw new Error('Invalid JSON response from Web3Forms')
+      throw new Error('Invalid JSON response from contact endpoint')
     }
 
     if (!response.ok || json.success === false) {
       const errMsg = json.error || json.message || JSON.stringify(json)
-      throw new Error(`Web3Forms error: ${errMsg}`)
+      throw new Error(`Contact API error: ${errMsg}`)
     }
 
-    return {
-      ...json,
-      _delivery: 'web3forms',
-    }
+    return json
   }
 }
 
