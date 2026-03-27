@@ -121,8 +121,19 @@ def submit_contact():
             form_type = 'contact'
 
         # Required checks
-        if not name or not email or not subject or not message:
-            return jsonify({'error': 'name, email, subject and message are required'}), 400
+        if not name or not email:
+            return jsonify({'error': 'name and email are required'}), 400
+
+        # Website/AI inquiry forms only require name + email.
+        if form_type == 'contact' and (not subject or not message):
+            return jsonify({'error': 'subject and message are required for contact form'}), 400
+
+        # Provide defaults for optional fields on website/AI inquiries.
+        if form_type in ('website', 'ai'):
+            if not subject:
+                subject = FORM_TAGS[form_type]['tag']
+            if not message:
+                message = 'No additional project details were provided.'
 
         # Length limits
         if len(name) > 200 or len(subject) > 200 or len(message) > 5000:

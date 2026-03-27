@@ -12,9 +12,10 @@ const About = () => {
 
   const projects = [
     {
-      title: 'n8n Automated Workflows',
-      description: 'Designed an automation system with n8n integrating AI tools and multiple APIs to synchronize data, trigger actions, and handle routine tasks. Built event-based triggers, branching logic, error handling, and monitoring.',
-      tech: ['n8n', 'AI Integration', 'API']
+      title: 'SGC Art Website',
+      description: 'Built and launched www.sgcgart.com to help customers explore stained-glass styles, save design ideas, and submit structured work orders with less back-and-forth. Developed with React + Fabric.js on the frontend and a Flask/PostgreSQL backend with Stripe support, deployed across Hostinger and Render.',
+      link: 'https://www.sgcgart.com/',
+      tech: ['React', 'Fabric.js', 'Flask', 'PostgreSQL', 'Stripe']
     },
     {
       title: 'Grace Lutheran Website',
@@ -23,10 +24,9 @@ const About = () => {
       tech: ['React', 'Python', 'SQL', 'CSS']
     },
     {
-      title: 'SGC Art Website',
-      description: 'Built and launched www.sgcgart.com to help customers explore stained-glass styles, save design ideas, and submit structured work orders with less back-and-forth. Developed with React + Fabric.js on the frontend and a Flask/PostgreSQL backend with Stripe support, deployed across Hostinger and Render.',
-      link: 'https://www.sgcgart.com/',
-      tech: ['React', 'Fabric.js', 'Flask', 'PostgreSQL', 'Stripe']
+      title: 'n8n Automated Workflows',
+      description: 'Designed an automation system with n8n integrating AI tools and multiple APIs to synchronize data, trigger actions, and handle routine tasks. Built event-based triggers, branching logic, error handling, and monitoring.',
+      tech: ['n8n', 'AI Integration', 'API']
     }
   ]
 

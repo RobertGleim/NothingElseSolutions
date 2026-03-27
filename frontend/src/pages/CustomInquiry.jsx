@@ -114,9 +114,11 @@ const CustomInquiry = () => {
     setIsSubmitting(true)
 
     try {
+      const fullName = `${formData.firstName} ${formData.lastName}`.trim()
+
       // Send inquiry to backend
       const inquiryData = {
-        name: `${formData.firstName} ${formData.lastName}`,
+        name: fullName,
         email: formData.email,
         form_type: formData.serviceType === 'automation' ? 'ai' : 'website',
         subject: `${currentService.title} Inquiry`,
@@ -203,14 +205,13 @@ ${formData.projectDescription}
                   />
                 </div>
                 <div className="form-group">
-                  <label className="form-label">Last Name *</label>
+                  <label className="form-label">Last Name</label>
                   <input
                     type="text"
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleChange}
                     className="form-input"
-                    required
                   />
                 </div>
               </div>
@@ -258,13 +259,12 @@ ${formData.projectDescription}
 
               <div className="form-row">
                 <div className="form-group">
-                  <label className="form-label">Budget Range *</label>
+                  <label className="form-label">Budget Range</label>
                   <select
                     name="budget"
                     value={formData.budget}
                     onChange={handleChange}
                     className="form-select"
-                    required
                   >
                     {budgetOptions.map(opt => (
                       <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -272,13 +272,12 @@ ${formData.projectDescription}
                   </select>
                 </div>
                 <div className="form-group">
-                  <label className="form-label">Timeline *</label>
+                  <label className="form-label">Timeline</label>
                   <select
                     name="timeline"
                     value={formData.timeline}
                     onChange={handleChange}
                     className="form-select"
-                    required
                   >
                     {timelineOptions.map(opt => (
                       <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -302,7 +301,7 @@ ${formData.projectDescription}
               )}
 
               <div className="form-group">
-                <label className="form-label">Project Description *</label>
+                <label className="form-label">Project Description</label>
                 <textarea
                   name="projectDescription"
                   value={formData.projectDescription}
@@ -313,7 +312,6 @@ ${formData.projectDescription}
                     ? "Describe the workflows you want to automate, current pain points, tools you use, and your goals..."
                     : "Describe your website vision, target audience, key features needed, and any design preferences..."
                   }
-                  required
                 />
               </div>
 
