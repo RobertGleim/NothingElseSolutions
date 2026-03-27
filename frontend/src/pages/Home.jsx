@@ -33,10 +33,10 @@ const Home = () => {
   }
 
   const features = [
-    { icon: FiDownload, title: 'Instant Download', desc: 'Immediate access' },
-    { icon: FiShield, title: 'Secure Payment', desc: '100% protected' },
-    { icon: FiHeadphones, title: 'Dedicated Support', desc: 'Dedicated support' },
-    { icon: FiZap, title: 'Ready to Use', desc: 'Pre-built templates' }
+    { icon: FiDownload, title: 'Form-Based Intake', desc: 'Every project starts with your inquiry' },
+    { icon: FiShield, title: 'Secure Payments', desc: 'Protected invoicing and transactions' },
+    { icon: FiHeadphones, title: 'Dedicated Support', desc: 'Direct communication throughout your build' },
+    { icon: FiZap, title: 'Built for You', desc: 'Custom solutions, not off-the-shelf products' }
   ]
 
   const categories = [
