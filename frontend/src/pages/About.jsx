@@ -54,9 +54,10 @@ const About = () => {
             <a href="https://linkedin.com/in/robert-gleim" target="_blank" rel="noopener noreferrer" className="social-link">
               <FiLinkedin /> LinkedIn
             </a>
-            <a href="https://github.com/rgleim" target="_blank" rel="noopener noreferrer" className="social-link">
+            <a href="https://github.com/RobertGleim" target="_blank" rel="noopener noreferrer" className="social-link">
               <FiGithub /> GitHub
-            </a>
+            </a> 
+            {/* /github link */}
             <a href="mailto:customerservice@nothingelsesolutions.com" className="social-link">
               <FiMail /> Email
             </a>
