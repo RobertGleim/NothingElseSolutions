@@ -3,6 +3,7 @@ import re
 import os
 import traceback
 import resend
+import requests
 
 from models import db, Contact
 
@@ -24,6 +25,8 @@ FORM_TAGS = {
         'source': 'Custom AI & Automation Inquiry Form',
     },
 }
+
+DEFAULT_N8N_CONTACT_TEST_WEBHOOK = 'https://robert-gleim.app.n8n.cloud/webhook-test/contact-form'
 
 
 def send_contact_email(name, email, subject, message, form_type='contact'):
@@ -68,6 +71,38 @@ def send_contact_email(name, email, subject, message, form_type='contact'):
     except Exception as e:
         print(f"[EMAIL ERROR] Failed to send email: {e}")
         traceback.print_exc()
+        return False
+
+
+def send_contact_webhook(contact, form_type='contact'):
+    """Send contact payload to n8n webhook (best-effort)."""
+    webhook_url = (os.getenv('N8N_CONTACT_WEBHOOK') or '').strip() or DEFAULT_N8N_CONTACT_TEST_WEBHOOK
+    info = FORM_TAGS.get(form_type, FORM_TAGS['contact'])
+
+    payload = {
+        'event': 'contact_submitted',
+        'source': info['source'],
+        'form_type': form_type,
+        'contact': {
+            'id': contact.id,
+            'name': contact.name,
+            'email': contact.email,
+            'subject': contact.subject,
+            'message': contact.message,
+            'status': contact.status,
+            'created_at': contact.created_at.isoformat() if contact.created_at else None,
+        }
+    }
+
+    try:
+        resp = requests.post(webhook_url, json=payload, timeout=8)
+        if 200 <= resp.status_code < 300:
+            print(f"[WEBHOOK] Contact webhook sent to n8n ({resp.status_code})")
+            return True
+        print(f"[WEBHOOK WARN] n8n webhook returned status {resp.status_code}")
+        return False
+    except Exception as e:
+        print(f"[WEBHOOK ERROR] Failed to send n8n webhook: {e}")
         return False
 
 contact_bp = Blueprint('contact', __name__)
@@ -174,11 +209,13 @@ def submit_contact():
 
         # Send email notification (best-effort — DB save already succeeded)
         email_sent = send_contact_email(name, email, subject, message, form_type)
+        webhook_sent = send_contact_webhook(contact, form_type)
 
         return jsonify({
             'success': True,
             'message': 'Thank you for your message. We will get back to you soon!',
-            'email_sent': email_sent
+            'email_sent': email_sent,
+            'webhook_sent': webhook_sent
         }), 201
         
     except Exception as e:
