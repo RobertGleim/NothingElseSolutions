@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { FiArrowRight, FiDownload, FiShield, FiHeadphones, FiZap, FiCode, FiCpu, FiLayers, FiGlobe } from 'react-icons/fi'
+import { FiArrowRight, FiDownload, FiShield, FiHeadphones, FiZap, FiCode, FiCpu, FiLayers, FiGlobe, FiMapPin, FiClock, FiBell, FiNavigation, FiSmartphone } from 'react-icons/fi'
 import './Home.css'
 import SEO from '../components/SEO'
 
@@ -80,6 +80,63 @@ const Home = () => {
               src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600" 
               alt="Automation Templates"
             />
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Project - Boroughline */}
+      <section className="featured-project">
+        <div className="container">
+          <div className="section-header centered">
+            <span className="section-badge">Featured Build</span>
+            <h2>Meet <span className="text-gradient">Boroughline</span></h2>
+            <p>A real app, built end to end — proof of what we can build for you.</p>
+          </div>
+
+          <div className="project-showcase">
+            <div className="project-info">
+              <div className="project-logo">
+                <img src="/images/boroughline/icon.png" alt="Boroughline app icon" />
+              </div>
+              <h3>Live NYC Subway &amp; Bus Tracker</h3>
+              <p className="service-description">
+                Boroughline is a dark-mode, high-velocity NYC transit companion — live vehicle
+                positions, station arrivals, service alerts, and turn-by-turn journey planning,
+                decoded straight from the MTA's real-time GTFS feeds. Built with React 19 and a
+                single Express/TypeScript server, and packaged for Android and iOS with Capacitor.
+              </p>
+              <ul className="project-feature-list">
+                <li><FiMapPin /> Live vehicle positions for subway &amp; bus, decoded from MTA GTFS-realtime feeds</li>
+                <li><FiClock /> Real-time station arrivals boards, refreshed continuously</li>
+                <li><FiBell /> Service alerts, including elevator &amp; escalator status</li>
+                <li><FiNavigation /> GPS journey planning with walking directions and timeline route guides</li>
+                <li><FiSmartphone /> Ships as a web app and a native Android/iOS app via Capacitor</li>
+              </ul>
+              <div className="service-skills">
+                <span>React 19</span>
+                <span>TypeScript</span>
+                <span>Vite 6</span>
+                <span>Express</span>
+                <span>Capacitor</span>
+                <span>GTFS-Realtime</span>
+                <span>Google Maps</span>
+              </div>
+              <Link to="/inquiry?service=webapps" className="btn btn-primary">
+                Want an App Like This? <FiArrowRight />
+              </Link>
+            </div>
+
+            <div className="project-screens">
+              <div className="project-screen">
+                <img src="/images/boroughline/arrivals.png" alt="Boroughline live arrivals board screen" loading="lazy" />
+              </div>
+              <div className="project-screen project-screen-featured">
+                <img src="/images/boroughline/alerts.png" alt="Boroughline live MTA service alerts screen" loading="lazy" />
+              </div>
+              <div className="project-screen">
+                <img src="/images/boroughline/plan.png" alt="Boroughline GPS route planner screen" loading="lazy" />
+              </div>
+            </div>
           </div>
         </div>
       </section>

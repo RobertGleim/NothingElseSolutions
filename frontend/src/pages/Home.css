@@ -72,6 +72,94 @@
   box-shadow: var(--shadow-lg);
 }
 
+/* Featured Project - Boroughline */
+.featured-project {
+  padding: var(--space-3xl) 0;
+  background: var(--bg-dark);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.project-showcase {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3xl);
+  align-items: center;
+}
+
+.project-logo {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--space-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.project-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project-info h3 {
+  font-size: 1.75rem;
+  margin-bottom: var(--space-md);
+}
+
+.project-feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin: var(--space-lg) 0;
+}
+
+.project-feature-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.project-feature-list li svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--color-primary);
+}
+
+.project-info .service-skills {
+  margin-bottom: var(--space-xl);
+}
+
+.project-screens {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+.project-screen {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  box-shadow: var(--shadow-lg);
+  transition: transform var(--transition-normal);
+}
+
+.project-screen:hover {
+  transform: translateY(-6px);
+}
+
+.project-screen img {
+  width: 100%;
+  display: block;
+}
+
+.project-screen-featured {
+  grid-row: span 2;
+  align-self: start;
+}
+
 /* Custom Services Section */
 .services-section {
   padding: var(--space-3xl) 0;
@@ -608,6 +696,27 @@
     margin-top: var(--space-xl);
   }
 
+  .project-showcase {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .project-logo {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .project-feature-list li {
+    text-align: left;
+  }
+
+  .project-screens {
+    margin-top: var(--space-xl);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .services-grid {
     grid-template-columns: 1fr;
     max-width: 600px;
@@ -639,6 +748,14 @@
 }
 
 @media (max-width: 640px) {
+  .project-screens {
+    grid-template-columns: 1fr;
+  }
+
+  .project-screen-featured {
+    grid-row: auto;
+  }
+
   .services-grid {
     gap: var(--space-lg);
   }
