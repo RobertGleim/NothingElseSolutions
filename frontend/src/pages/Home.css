@@ -83,7 +83,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-3xl);
-  align-items: center;
+  align-items: start;
 }
 
 .project-logo {
@@ -132,32 +132,59 @@
   margin-bottom: var(--space-xl);
 }
 
-.project-screens {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-lg);
+/* Boroughline 3D flip carousel */
+.boroughline-carousel {
+  width: 300px;
+  max-width: 100%;
+  aspect-ratio: 430 / 932;
+  margin: 0 auto;
+  perspective: 1600px;
 }
 
-.project-screen {
+.boroughline-carousel-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.boroughline-carousel-face {
+  position: absolute;
+  inset: 0;
   border-radius: var(--radius-xl);
   overflow: hidden;
   border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
   box-shadow: var(--shadow-lg);
-  transition: transform var(--transition-normal);
+  backface-visibility: hidden;
 }
 
-.project-screen:hover {
-  transform: translateY(-6px);
-}
-
-.project-screen img {
+.boroughline-carousel-face img {
   width: 100%;
+  height: 100%;
   display: block;
+  object-fit: cover;
 }
 
-.project-screen-featured {
-  grid-row: span 2;
-  align-self: start;
+.boroughline-carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+}
+
+.boroughline-carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.boroughline-carousel-dot.active {
+  background: var(--color-primary);
+  transform: scale(1.3);
 }
 
 /* Custom Services Section */
@@ -710,11 +737,8 @@
     text-align: left;
   }
 
-  .project-screens {
+  .boroughline-carousel {
     margin-top: var(--space-xl);
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
   }
 
   .services-grid {
@@ -748,12 +772,8 @@
 }
 
 @media (max-width: 640px) {
-  .project-screens {
-    grid-template-columns: 1fr;
-  }
-
-  .project-screen-featured {
-    grid-row: auto;
+  .boroughline-carousel {
+    width: 240px;
   }
 
   .services-grid {

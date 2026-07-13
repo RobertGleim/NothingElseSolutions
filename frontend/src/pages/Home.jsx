@@ -4,6 +4,56 @@ import { FiArrowRight, FiDownload, FiShield, FiHeadphones, FiZap, FiCode, FiCpu,
 import './Home.css'
 import SEO from '../components/SEO'
 
+const BoroughlineCarousel = ({ images }) => {
+  const count = images.length
+  const cardWidth = 300
+  const radius = Math.round((cardWidth / 2) / Math.tan(Math.PI / count))
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
+
+  useEffect(() => {
+    if (isPaused) return
+    const timer = setInterval(() => {
+      setActiveIndex(i => (i + 1) % count)
+    }, 4000)
+    return () => clearInterval(timer)
+  }, [isPaused, count])
+
+  return (
+    <div
+      className="boroughline-carousel"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      <div
+        className="boroughline-carousel-track"
+        style={{ transform: `rotateY(${-activeIndex * (360 / count)}deg)` }}
+      >
+        {images.map((img, i) => (
+          <div
+            key={img.alt}
+            className="boroughline-carousel-face"
+            style={{ transform: `rotateY(${i * (360 / count)}deg) translateZ(${radius}px)` }}
+          >
+            <img src={img.src} alt={img.alt} loading="lazy" />
+          </div>
+        ))}
+      </div>
+      <div className="boroughline-carousel-dots">
+        {images.map((img, i) => (
+          <button
+            key={img.alt}
+            type="button"
+            className={`boroughline-carousel-dot ${i === activeIndex ? 'active' : ''}`}
+            aria-label={`Show ${img.alt}`}
+            onClick={() => setActiveIndex(i)}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([])
   const [bestSellers, setBestSellers] = useState([])
@@ -126,17 +176,13 @@ const Home = () => {
               </Link>
             </div>
 
-            <div className="project-screens">
-              <div className="project-screen">
-                <img src="/images/boroughline/arrivals.png" alt="Boroughline live arrivals board screen" loading="lazy" />
-              </div>
-              <div className="project-screen project-screen-featured">
-                <img src="/images/boroughline/alerts.png" alt="Boroughline live MTA service alerts screen" loading="lazy" />
-              </div>
-              <div className="project-screen">
-                <img src="/images/boroughline/plan.png" alt="Boroughline GPS route planner screen" loading="lazy" />
-              </div>
-            </div>
+            <BoroughlineCarousel
+              images={[
+                { src: '/images/boroughline/arrivals.png', alt: 'Boroughline live arrivals board screen' },
+                { src: '/images/boroughline/alerts.png', alt: 'Boroughline live MTA service alerts screen' },
+                { src: '/images/boroughline/plan.png', alt: 'Boroughline GPS route planner screen' }
+              ]}
+            />
           </div>
         </div>
       </section>
