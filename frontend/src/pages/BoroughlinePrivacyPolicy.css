@@ -1,0 +1,74 @@
+.boroughline-privacy-page {
+  --bg: #0a0a0a;
+  --card: #121214;
+  --text: #e8e8ef;
+  --muted: #a1a1aa;
+  --accent: #c5a059;
+  --border: rgba(255, 255, 255, 0.1);
+  min-height: 100vh;
+  margin: 0;
+  background: radial-gradient(circle at top right, #1a1a1d 0%, #0a0a0a 55%);
+  color: var(--text);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+}
+
+.boroughline-privacy-page * {
+  box-sizing: border-box;
+}
+
+.boroughline-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.boroughline-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.boroughline-card h1 {
+  margin: 0 0 8px;
+  font-size: 1.6rem;
+}
+
+.boroughline-card h2 {
+  margin-top: 22px;
+  margin-bottom: 8px;
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.boroughline-card p,
+.boroughline-card li {
+  color: var(--muted);
+}
+
+.boroughline-card strong {
+  color: var(--text);
+}
+
+.boroughline-card a {
+  color: var(--accent);
+}
+
+.boroughline-meta {
+  margin: 0 0 20px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.boroughline-pill {
+  display: inline-block;
+  border: 1px solid rgba(197, 160, 89, 0.45);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  color: var(--accent);
+  margin-bottom: 10px;
+}

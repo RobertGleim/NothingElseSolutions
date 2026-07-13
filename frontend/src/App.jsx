@@ -12,6 +12,7 @@ import Contact from './pages/Contact'
 import About from './pages/About'
 import CustomInquiry from './pages/CustomInquiry'
 import Privacy from './pages/Privacy'
+import BoroughlinePrivacyPolicy from './pages/BoroughlinePrivacyPolicy'
 import FAQ from './pages/FAQ'
 import Terms from './pages/Terms'
 
@@ -60,6 +61,7 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="inquiry" element={<CustomInquiry />} />
           <Route path="privacy" element={<Privacy />} />
+          <Route path="boroughline/privacy-policy" element={<BoroughlinePrivacyPolicy />} />
           <Route path="faq" element={<FAQ />} />
           <Route path="terms" element={<Terms />} />
           
