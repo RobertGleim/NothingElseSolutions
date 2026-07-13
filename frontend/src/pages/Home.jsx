@@ -148,7 +148,7 @@ const Home = () => {
               <div className="project-logo">
                 <img src="/images/boroughline/icon.png" alt="Boroughline app icon" />
               </div>
-              <h3>Live NYC Subway &amp; Bus Tracker</h3>
+              <h3>Live NYC Subway</h3>
               <p className="service-description">
                 Boroughline is a dark-mode, high-velocity NYC transit companion — live vehicle
                 positions, station arrivals, service alerts, and turn-by-turn journey planning,
@@ -178,6 +178,7 @@ const Home = () => {
 
             <BoroughlineCarousel
               images={[
+                { src: '/images/boroughline/map.png', alt: 'Boroughline live map with nearby stations' },
                 { src: '/images/boroughline/arrivals.png', alt: 'Boroughline live arrivals board screen' },
                 { src: '/images/boroughline/alerts.png', alt: 'Boroughline live MTA service alerts screen' },
                 { src: '/images/boroughline/plan.png', alt: 'Boroughline GPS route planner screen' }
