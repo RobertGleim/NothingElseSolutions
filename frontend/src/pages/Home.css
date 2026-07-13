@@ -132,6 +132,26 @@
   margin-bottom: var(--space-xl);
 }
 
+.boroughline-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.boroughline-policy-link {
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: opacity var(--transition-fast);
+}
+
+.boroughline-policy-link:hover {
+  opacity: 0.85;
+}
+
 /* Boroughline 3D flip carousel */
 .boroughline-carousel {
   width: 300px;
@@ -735,6 +755,10 @@
 
   .project-feature-list li {
     text-align: left;
+  }
+
+  .boroughline-actions {
+    align-items: center;
   }
 
   .boroughline-carousel {

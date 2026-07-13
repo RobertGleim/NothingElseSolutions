@@ -171,9 +171,14 @@ const Home = () => {
                 <span>GTFS-Realtime</span>
                 <span>Google Maps</span>
               </div>
-              <Link to="/inquiry?service=webapps" className="btn btn-primary">
-                Want an App Like This? <FiArrowRight />
-              </Link>
+              <div className="boroughline-actions">
+                <Link to="/inquiry?service=webapps" className="btn btn-primary">
+                  Want an App Like This? <FiArrowRight />
+                </Link>
+                <Link to="/boroughline/privacy-policy" className="boroughline-policy-link">
+                  View Boroughline Privacy Policy
+                </Link>
+              </div>
             </div>
 
             <BoroughlineCarousel
