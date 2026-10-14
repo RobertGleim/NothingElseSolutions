@@ -17,11 +17,6 @@ const Settings = () => {
     phone: '',
     address: '',
     
-    // Payments
-    stripePublicKey: '',
-    stripeSecretKey: '',
-    stripeSandbox: true,
-    
     // Social Media
     facebookAppId: '',
     facebookAppSecret: '',
@@ -32,23 +27,11 @@ const Settings = () => {
     // n8n Integration
     n8nBaseUrl: '',
     n8nApiKey: '',
-    n8nOrderWebhook: '',
     n8nContactWebhook: '',
     n8nNewsletterWebhook: '',
     
-    // Shipping
-    freeShippingThreshold: '50',
-    defaultShippingRate: '5.99',
-    
-    // Tax
-    taxEnabled: true,
-    taxRate: '8.25',
-    
     // Notifications
-    emailNotifications: true,
-    orderNotifications: true,
-    lowStockAlerts: true,
-    lowStockThreshold: '10'
+    emailNotifications: true
   })
 
   useEffect(() => {
@@ -92,10 +75,8 @@ const Settings = () => {
 
   const tabs = [
     { id: 'general', label: 'General' },
-    { id: 'payments', label: 'Payments' },
     { id: 'social', label: 'Social Media' },
     { id: 'n8n', label: 'n8n Integration' },
-    { id: 'shipping', label: 'Shipping & Tax' },
     { id: 'notifications', label: 'Notifications' }
   ]
 
@@ -210,32 +191,6 @@ const Settings = () => {
             </div>
           )}
 
-          {/* Payment Settings */}
-          {activeTab === 'payments' && (
-            <div className="settings-section">
-              <h2>Stripe Configuration</h2>
-              
-              <div className="form-group checkbox-group">
-                <label className="checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={settings.stripeSandbox}
-                    onChange={(e) => handleChange('stripeSandbox', e.target.checked)}
-                  />
-                  <span>Sandbox/Test Mode</span>
-                </label>
-                <p className="form-hint">Enable for testing. Disable for live transactions.</p>
-              </div>
-
-              {renderSecretInput('Publishable Key', 'stripePublicKey', 'pk_test_...')}
-              {renderSecretInput('Secret Key', 'stripeSecretKey', 'sk_test_...')}
-
-              <div className="info-box">
-                <strong>Note:</strong> Make sure to use test keys in sandbox mode and live keys in production.
-              </div>
-            </div>
-          )}
-
           {/* Social Media Settings */}
           {activeTab === 'social' && (
             <div className="settings-section">
@@ -277,17 +232,6 @@ const Settings = () => {
               <h3>Webhook URLs</h3>
               
               <div className="form-group">
-                <label className="form-label">Order Notification Webhook</label>
-                <input
-                  type="url"
-                  value={settings.n8nOrderWebhook}
-                  onChange={(e) => handleChange('n8nOrderWebhook', e.target.value)}
-                  className="form-input"
-                  placeholder="https://your-instance.n8n.cloud/webhook/orders"
-                />
-              </div>
-
-              <div className="form-group">
                 <label className="form-label">Contact Form Webhook</label>
                 <input
                   type="url"
@@ -311,66 +255,6 @@ const Settings = () => {
             </div>
           )}
 
-          {/* Shipping & Tax */}
-          {activeTab === 'shipping' && (
-            <div className="settings-section">
-              <h2>Shipping</h2>
-              
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label">Free Shipping Threshold ($)</label>
-                  <input
-                    type="number"
-                    value={settings.freeShippingThreshold}
-                    onChange={(e) => handleChange('freeShippingThreshold', e.target.value)}
-                    className="form-input"
-                    min="0"
-                    step="0.01"
-                  />
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Default Shipping Rate ($)</label>
-                  <input
-                    type="number"
-                    value={settings.defaultShippingRate}
-                    onChange={(e) => handleChange('defaultShippingRate', e.target.value)}
-                    className="form-input"
-                    min="0"
-                    step="0.01"
-                  />
-                </div>
-              </div>
-
-              <h2>Tax</h2>
-              
-              <div className="form-group checkbox-group">
-                <label className="checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={settings.taxEnabled}
-                    onChange={(e) => handleChange('taxEnabled', e.target.checked)}
-                  />
-                  <span>Enable Tax Calculation</span>
-                </label>
-              </div>
-
-              {settings.taxEnabled && (
-                <div className="form-group">
-                  <label className="form-label">Tax Rate (%)</label>
-                  <input
-                    type="number"
-                    value={settings.taxRate}
-                    onChange={(e) => handleChange('taxRate', e.target.value)}
-                    className="form-input"
-                    min="0"
-                    max="100"
-                    step="0.01"
-                  />
-                </div>
-              )}
-            </div>
-          )}
-
           {/* Notifications */}
           {activeTab === 'notifications' && (
             <div className="settings-section">
@@ -387,43 +271,6 @@ const Settings = () => {
                 </label>
               </div>
 
-              <div className="form-group checkbox-group">
-                <label className="checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={settings.orderNotifications}
-                    onChange={(e) => handleChange('orderNotifications', e.target.checked)}
-                  />
-                  <span>New Order Notifications</span>
-                </label>
-              </div>
-
-              <h2>Stock Alerts</h2>
-
-              <div className="form-group checkbox-group">
-                <label className="checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={settings.lowStockAlerts}
-                    onChange={(e) => handleChange('lowStockAlerts', e.target.checked)}
-                  />
-                  <span>Low Stock Alerts</span>
-                </label>
-              </div>
-
-              {settings.lowStockAlerts && (
-                <div className="form-group">
-                  <label className="form-label">Low Stock Threshold</label>
-                  <input
-                    type="number"
-                    value={settings.lowStockThreshold}
-                    onChange={(e) => handleChange('lowStockThreshold', e.target.value)}
-                    className="form-input"
-                    min="1"
-                  />
-                  <p className="form-hint">Alert when product stock falls below this number</p>
-                </div>
-              )}
             </div>
           )}
         </div>

@@ -29,6 +29,19 @@ FORM_TAGS = {
 
 DEFAULT_N8N_CONTACT_TEST_WEBHOOK = 'https://robert-gleim.app.n8n.cloud/webhook-test/contact-form'
 
+# A person needs at least this long to fill in the form
+MIN_FILL_MS = 3000
+
+
+def looks_like_bot(data):
+    """Honeypot filled, timing missing (direct API post), or submitted too fast."""
+    if str(data.get('nickname') or '').strip():
+        return True
+    try:
+        return float(data.get('elapsed_ms')) < MIN_FILL_MS
+    except (TypeError, ValueError):
+        return True
+
 
 def send_contact_email(name, email, subject, message, form_type='contact'):
     """Send contact form submission via Resend HTTP API."""
@@ -144,6 +157,14 @@ def submit_contact():
         if not data:
             print(f"Invalid request body; raw bytes: {raw!r}")
             return jsonify({'error': 'Invalid JSON or empty body'}), 400
+
+        # Bots get a fake success so they don't retry; nothing is saved or sent
+        if looks_like_bot(data):
+            print(f"[SPAM] Dropped bot contact submission from {request.remote_addr}")
+            return jsonify({
+                'success': True,
+                'message': 'Thank you for your message. We will get back to you soon!'
+            }), 201
 
         # Basic validation and sanitization
         name = (data.get('name') or '').strip()

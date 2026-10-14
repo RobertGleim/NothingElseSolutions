@@ -20,7 +20,7 @@ const AdminLogin = () => {
     try {
       await adminLogin(email, password)
       toast.success('Welcome, Admin!')
-      navigate('/admin/dashboard')
+      navigate('/admin/contacts')
     } catch (error) {
       toast.error(error.response?.data?.message || 'Invalid admin credentials')
     } finally {

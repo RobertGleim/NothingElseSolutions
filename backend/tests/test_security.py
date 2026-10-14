@@ -4,7 +4,7 @@ import sys
 
 # Set before importing app; load_dotenv won't override these
 os.environ.update({'DATABASE_URL': 'sqlite://', 'ADMIN_EMAIL': 'admin@test.local',
-                   'ADMIN_PASSWORD': 'correct-horse', 'STRIPE_WEBHOOK_SECRET': ''})
+                   'ADMIN_PASSWORD': 'correct-horse'})
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 from app import app  # noqa: E402
 
@@ -22,11 +22,23 @@ def demo():
     assert r.status_code == 200
     token = r.get_json()['token']
     assert c.get('/api/contact/', headers={'Authorization': f'Bearer {token}'}).status_code == 200
-    # Unsigned Stripe events are rejected
-    assert c.post('/api/webhooks/stripe', json={'type': 'payment_intent.succeeded'}).status_code == 503
-    # Client-priced Stripe endpoints are gone
-    assert c.post('/api/orders/create-checkout-session', json={}).status_code in (404, 405)
-    assert c.post('/api/orders/create-payment-intent', json={}).status_code in (404, 405)
+    # Shop endpoints are gone
+    for path in ('/api/webhooks/stripe', '/api/orders/create-checkout-session', '/api/products/', '/api/auth/register', '/api/auth/login', '/api/tax/calculate'):
+        assert c.post(path, json={}).status_code in (404, 405), path
+    # Newsletter validates email
+    assert c.post('/api/webhooks/newsletter', json={'email': 'not-an-email'}).status_code == 400
+
+    # Contact spam filter: bots get a fake 201 but nothing is saved
+    import routes.contact as contact
+    contact.send_contact_email = contact.send_contact_webhook = lambda *a, **k: False
+    auth = {'Authorization': f'Bearer {token}'}
+    count = lambda: c.get('/api/contact/', headers=auth).get_json()['total']
+    form = {'name': 'Jo', 'email': 'jo@example.com', 'subject': 'Hi', 'message': 'Hello'}
+    for bot in ({**form, 'elapsed_ms': 9000, 'nickname': 'x'}, {**form, 'elapsed_ms': 500}, form):
+        assert c.post('/api/contact/', json=bot).status_code == 201
+    assert count() == 0
+    assert c.post('/api/contact/', json={**form, 'elapsed_ms': 9000, 'nickname': ''}).status_code == 201
+    assert count() == 1
     print('security checks passed')
 
 

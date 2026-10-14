@@ -37,28 +37,6 @@ export const AuthProvider = ({ children }) => {
 		setIsLoading(false)
 	}
 
-	const login = async (email, password) => {
-		const response = await api.post('/auth/login', { email, password })
-		const { token, user: userData } = response.data
-		localStorage.setItem('token', token)
-		localStorage.removeItem('isAdmin')
-		api.defaults.headers.common.Authorization = `Bearer ${token}`
-		setUser(userData)
-		setIsAuthenticated(true)
-		return userData
-	}
-
-	const register = async (userData) => {
-		const response = await api.post('/auth/register', userData)
-		const { token, user: newUser } = response.data
-		localStorage.setItem('token', token)
-		localStorage.removeItem('isAdmin')
-		api.defaults.headers.common.Authorization = `Bearer ${token}`
-		setUser(newUser)
-		setIsAuthenticated(true)
-		return newUser
-	}
-
 	const logout = () => {
 		localStorage.removeItem('token')
 		localStorage.removeItem('isAdmin')
@@ -86,8 +64,6 @@ export const AuthProvider = ({ children }) => {
 		isLoading,
 		isAuthenticated,
 		isAdmin: user?.is_admin || localStorage.getItem('isAdmin') === 'true',
-		login,
-		register,
 		logout,
 		adminLogin,
 		checkAuth,

@@ -23,7 +23,7 @@ const Contact = () => {
     setIsSubmitting(true)
 
     try {
-      await contactAPI.submit({ ...formData, form_type: 'contact' })
+      await contactAPI.submit({ ...formData, form_type: 'contact', nickname: e.target.nickname?.value })
       toast.success('Message sent! We\'ll get back to you soon.')
       setFormData({ name: '', email: '', subject: '', message: '' })
     } catch (error) {
@@ -63,6 +63,9 @@ const Contact = () => {
           </div>
 
           <form className="contact-form" onSubmit={handleSubmit}>
+            {/* Honeypot: hidden from people, bots fill it in */}
+            <input type="text" name="nickname" tabIndex={-1} autoComplete="off" aria-hidden="true"
+              style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, opacity: 0 }} />
             <div className="form-row">
               <div className="form-group">
                 <label className="form-label">Name</label>

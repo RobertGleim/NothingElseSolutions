@@ -51,8 +51,6 @@ const Footer = () => {
             {/* Quick Links */}
             <div className="footer-links">
               <h4>Quick Links</h4>
-              {/* <Link to="/products">All Products</Link> */}
-              {/* <Link to="/digital">Digital Products</Link> */}
               <Link to="/about">About Us</Link>
               <Link to="/contact">Contact</Link>
             </div>
@@ -61,8 +59,6 @@ const Footer = () => {
             <div className="footer-links">
               <h4>Customer Service</h4>
               <Link to="/faq">FAQ</Link>
-              {/* <Link to="/shipping">Shipping Info</Link> */}
-              {/* <Link to="/returns">Returns Policy</Link> */}
               <Link to="/privacy">Privacy Policy</Link>
               <Link to="/terms">Terms of Service</Link>
             </div>

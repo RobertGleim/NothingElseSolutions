@@ -137,7 +137,7 @@ ${formData.projectDescription}
         `.trim()
       }
       
-      await contactAPI.submit(inquiryData)
+      await contactAPI.submit({ ...inquiryData, nickname: e.target.nickname?.value })
       
       setSubmitted(true)
       toast.success('Your inquiry has been submitted! We\'ll be in touch soon.')
@@ -188,6 +188,9 @@ ${formData.projectDescription}
         <div className="inquiry-layout">
           {/* Form */}
           <form className="inquiry-form" onSubmit={handleSubmit}>
+            {/* Honeypot: hidden from people, bots fill it in */}
+            <input type="text" name="nickname" tabIndex={-1} autoComplete="off" aria-hidden="true"
+              style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, opacity: 0 }} />
             {/* Contact Information */}
             <div className="form-section">
               <h2><FiUser /> Contact Information</h2>

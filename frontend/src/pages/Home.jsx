@@ -55,45 +55,11 @@ const BoroughlineCarousel = ({ images }) => {
 }
 
 const Home = () => {
-  const [featuredProducts, setFeaturedProducts] = useState([])
-  const [bestSellers, setBestSellers] = useState([])
-  const [digitalProducts, setDigitalProducts] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    loadHomeData()
-  }, [])
-
-  const loadHomeData = async () => {
-    try {
-      // TODO: Fetch products from API
-      // const response = await productAPI.getAll()
-      // setFeaturedProducts(response.data.featured || [])
-      // setBestSellers(response.data.bestSellers || [])
-      // setDigitalProducts(response.data.products || [])
-      
-      setFeaturedProducts([])
-      setBestSellers([])
-      setDigitalProducts([])
-    } catch (error) {
-      console.error('Error loading home data:', error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
   const features = [
     { icon: FiDownload, title: 'Form-Based Intake', desc: 'Every project starts with your inquiry' },
     { icon: FiShield, title: 'Secure Payments', desc: 'Protected invoicing and transactions' },
     { icon: FiHeadphones, title: 'Dedicated Support', desc: 'Direct communication throughout your build' },
     { icon: FiZap, title: 'Built for You', desc: 'Custom solutions, not off-the-shelf products' }
-  ]
-
-  const categories = [
-    { name: 'n8n Templates', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400', path: '/products/n8n' },
-    { name: 'Templates', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400', path: '/products/templates' },
-    { name: 'Automation', image: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400', path: '/products/automation' },
-    { name: 'All Digital', image: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=400', path: '/products' }
   ]
 
   return (
@@ -115,14 +81,6 @@ const Home = () => {
               Powerful automation templates, n8n workflows, and digital tools. 
               Everything you need to automate your business, nothing else.
             </p>
-            {/* <div className="hero-buttons">
-              <Link to="/products" className="btn btn-primary btn-lg">
-                Browse Products <FiArrowRight />
-              </Link>
-              <Link to="/products/n8n" className="btn btn-outline btn-lg">
-                n8n Templates
-              </Link>
-            </div> */}
           </div>
           <div className="hero-image">
             <div className="hero-glow"></div>
@@ -324,94 +282,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* Categories */}
-      {/* <section className="section categories-section">
-        <div className="container">
-          <div className="section-header">
-            <h2>Shop by Category</h2>
-            <Link to="/products" className="view-all">
-              View All <FiArrowRight />
-            </Link>
-          </div>
-          <div className="categories-grid">
-            {categories.map(cat => (
-              <Link key={cat.name} to={cat.path} className="category-card">
-                <img src={cat.image} alt={cat.name} />
-                <div className="category-overlay">
-                  <h3>{cat.name}</h3>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section> */}
-
-      {/* Featured Products */}
-      {/* <section className="section">
-        <div className="container">
-          <div className="section-header">
-            <h2>Featured Products</h2>
-            <Link to="/products" className="view-all">
-              View All <FiArrowRight />
-            </Link>
-          </div>
-          {isLoading ? (
-            <div className="product-grid">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="skeleton product-skeleton"></div>
-              ))}
-            </div>
-          ) : (
-            <div className="product-grid">
-              {featuredProducts.map(product => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          )}
-        </div>
-      </section> */}
-
-      {/* n8n Templates Banner */}
-      {/* <section className="digital-banner">
-        <div className="container">
-          <div className="banner-content">
-            <div className="banner-text">
-              <span className="banner-label">Most Popular</span>
-              <h2>n8n Automation Templates</h2>
-              <p>
-                Supercharge your business with our premium automation workflows. 
-                Ready-to-use templates for e-commerce, social media, and more.
-              </p>
-              <Link to="/products/n8n" className="btn btn-primary">
-                Explore n8n Templates <FiArrowRight />
-              </Link>
-            </div>
-            <div className="banner-products">
-              {digitalProducts.slice(0, 2).map(product => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section> */}
-
-      {/* Best Sellers */}
-      {/* <section className="section">
-        <div className="container">
-          <div className="section-header">
-            <h2>Best Sellers</h2>
-            <Link to="/products" className="view-all">
-              View All <FiArrowRight />
-            </Link>
-          </div>
-          <div className="product-grid">
-            {bestSellers.map(product => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        </div>
-      </section> */}
 
       {/* CTA Section */}
       <section className="cta-section">

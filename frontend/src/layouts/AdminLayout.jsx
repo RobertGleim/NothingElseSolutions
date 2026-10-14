@@ -2,8 +2,7 @@ import { Outlet, NavLink, useNavigate, Link } from 'react-router-dom'
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { 
-  FiHome, FiPackage, FiShoppingBag, FiBarChart2, 
-  FiShare2, FiTag, FiMail, FiSettings, FiLogOut,
+  FiShare2, FiMail, FiSettings, FiLogOut,
   FiMenu, FiX, FiExternalLink
 } from 'react-icons/fi'
 import './AdminLayout.css'
@@ -19,15 +18,8 @@ const AdminLayout = () => {
   }
 
   const navItems = [
-    { path: '/admin/dashboard', icon: FiHome, label: 'Dashboard' },
-    /* FUTURE VERSION - Products & Orders
-    { path: '/admin/products', icon: FiPackage, label: 'Products' },
-    { path: '/admin/orders', icon: FiShoppingBag, label: 'Orders' },
-    { path: '/admin/promos', icon: FiTag, label: 'Promos' },
-    */
-    { path: '/admin/analytics', icon: FiBarChart2, label: 'Analytics' },
-    { path: '/admin/social-post', icon: FiShare2, label: 'Social Post' },
     { path: '/admin/contacts', icon: FiMail, label: 'Contacts' },
+    { path: '/admin/social-post', icon: FiShare2, label: 'Social Post' },
     { path: '/admin/settings', icon: FiSettings, label: 'Settings' },
   ]
 

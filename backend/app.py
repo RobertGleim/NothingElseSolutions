@@ -1,7 +1,6 @@
 from flask import Flask, request
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
-from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 from flask_limiter import Limiter
@@ -57,7 +56,6 @@ cors = CORS(app, resources={r"/api/*": {"origins": allowed_origins}}, supports_c
 # Provide `app=` as a keyword to avoid multiple-values error with some flask-limiter versions
 limiter = Limiter(key_func=get_remote_address, app=app, default_limits=["60 per minute"])
 jwt = JWTManager(app)
-bcrypt = Bcrypt(app)
 
 # Initialize database
 from models import db, Contact
@@ -72,18 +70,12 @@ with app.app_context():
 try:
     from routes.auth import auth_bp
     print("[ROUTES] auth loaded")
-    from routes.products import products_bp
-    print("[ROUTES] products loaded")
-    from routes.orders import orders_bp
-    print("[ROUTES] orders loaded")
     from routes.admin import admin_bp
     print("[ROUTES] admin loaded")
     from routes.webhooks import webhooks_bp
     print("[ROUTES] webhooks loaded")
     from routes.contact import contact_bp
     print("[ROUTES] contact loaded")
-    from routes.tax import tax_bp
-    print("[ROUTES] tax loaded")
 except Exception as e:
     print(f"[ROUTES ERROR] Failed to import routes: {e}")
     import traceback
@@ -91,20 +83,17 @@ except Exception as e:
 
 # Register blueprints
 app.register_blueprint(auth_bp, url_prefix='/api/auth')
-app.register_blueprint(products_bp, url_prefix='/api/products')
-app.register_blueprint(orders_bp, url_prefix='/api/orders')
 app.register_blueprint(admin_bp, url_prefix='/api/admin')
 app.register_blueprint(webhooks_bp, url_prefix='/api/webhooks')
 app.register_blueprint(contact_bp, url_prefix='/api/contact')
-app.register_blueprint(tax_bp, url_prefix='/api/tax')
 print("[ROUTES] All blueprints registered")
 
 # Apply rate limit to contact submit endpoint to avoid importing limiter from routes (prevents circular import)
 try:
     # view function key is '<blueprint_name>.<function_name>'
     for view_name, rate in (('contact.submit_contact', "10 per minute"),
-                            ('auth.login', "5 per minute"),
-                            ('auth.admin_login', "5 per minute")):
+                            ('auth.admin_login', "5 per minute"),
+                            ('webhooks.newsletter_webhook', "5 per minute")):
         view_fn = app.view_functions.get(view_name)
         if view_fn:
             limiter.limit(rate)(view_fn)

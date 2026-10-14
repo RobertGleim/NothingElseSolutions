@@ -1,14 +1,12 @@
-import { useState, useEffect } from 'react'
-import { FiFacebook, FiInstagram, FiSend, FiImage, FiX, FiCheck } from 'react-icons/fi'
+import { useState } from 'react'
+import { FiFacebook, FiInstagram, FiSend, FiX, FiCheck } from 'react-icons/fi'
 import { FaTiktok } from 'react-icons/fa'
-import { adminAPI, productAPI } from '../../services/api'
+import { adminAPI } from '../../services/api'
 import { toast } from 'react-toastify'
 import './Admin.css'
 import './SocialPost.css'
 
 const SocialPost = () => {
-  const [products, setProducts] = useState([])
-  const [selectedProduct, setSelectedProduct] = useState(null)
   const [platforms, setPlatforms] = useState({
     facebook: true,
     instagram: false,
@@ -23,74 +21,6 @@ const SocialPost = () => {
   const [isPosting, setIsPosting] = useState(false)
   const [recentPosts, setRecentPosts] = useState([])
 
-  useEffect(() => {
-    loadProducts()
-    loadRecentPosts()
-  }, [])
-
-  const loadProducts = async () => {
-    try {
-      // Mock products
-      setProducts([
-        {
-          id: '1',
-          name: 'Wireless Bluetooth Earbuds Pro',
-          price: 79.99,
-          salePrice: 59.99,
-          image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400',
-          socialTitle: '🎧 Premium Earbuds at Amazing Price!',
-          socialDescription: 'Get crystal clear audio with our wireless earbuds!',
-          hashtags: '#earbuds #wireless #audio #tech'
-        },
-        {
-          id: '2',
-          name: 'Smart Watch Series X',
-          price: 299.99,
-          image: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400',
-          socialTitle: '⌚ Stay Connected in Style',
-          socialDescription: 'The ultimate smart watch for your lifestyle',
-          hashtags: '#smartwatch #tech #fitness #wearable'
-        }
-      ])
-    } catch (error) {
-      console.error('Error loading products:', error)
-    }
-  }
-
-  const loadRecentPosts = async () => {
-    try {
-      // Mock recent posts
-      setRecentPosts([
-        {
-          id: '1',
-          product: 'Wireless Earbuds Pro',
-          platforms: ['facebook', 'instagram'],
-          status: 'success',
-          postedAt: '2024-01-15T10:30:00Z'
-        },
-        {
-          id: '2',
-          product: 'Smart Watch Series X',
-          platforms: ['facebook'],
-          status: 'success',
-          postedAt: '2024-01-14T15:45:00Z'
-        }
-      ])
-    } catch (error) {
-      console.error('Error loading recent posts:', error)
-    }
-  }
-
-  const handleProductSelect = (product) => {
-    setSelectedProduct(product)
-    setPostContent({
-      title: product.socialTitle || product.name,
-      description: product.socialDescription || '',
-      hashtags: product.hashtags || '',
-      image: product.image
-    })
-  }
-
   const handlePlatformToggle = (platform) => {
     setPlatforms(prev => ({
       ...prev,
@@ -99,8 +29,8 @@ const SocialPost = () => {
   }
 
   const handlePost = async () => {
-    if (!selectedProduct) {
-      toast.error('Please select a product')
+    if (!postContent.title.trim()) {
+      toast.error('Please add a post title')
       return
     }
 
@@ -117,8 +47,7 @@ const SocialPost = () => {
 
     try {
       // This would call your backend which triggers n8n workflow
-      await adminAPI.createSocialPost({
-        productId: selectedProduct.id,
+      await adminAPI.postToSocial({
         platforms: activePlatforms,
         content: postContent
       })
@@ -128,14 +57,13 @@ const SocialPost = () => {
       // Add to recent posts
       setRecentPosts(prev => [{
         id: Date.now().toString(),
-        product: selectedProduct.name,
+        title: postContent.title,
         platforms: activePlatforms,
         status: 'success',
         postedAt: new Date().toISOString()
       }, ...prev])
 
       // Reset form
-      setSelectedProduct(null)
       setPostContent({ title: '', description: '', hashtags: '', image: '' })
     } catch (error) {
       toast.error('Failed to create post')
@@ -160,34 +88,9 @@ const SocialPost = () => {
       </div>
 
       <div className="social-post-grid">
-        {/* Product Selection */}
-        <div className="admin-card">
-          <h3>1. Select Product</h3>
-          <div className="product-select-list">
-            {products.map(product => (
-              <div 
-                key={product.id}
-                className={`product-select-item ${selectedProduct?.id === product.id ? 'selected' : ''}`}
-                onClick={() => handleProductSelect(product)}
-              >
-                <img src={product.image} alt={product.name} />
-                <div className="product-select-info">
-                  <span className="product-name">{product.name}</span>
-                  <span className="product-price">
-                    ${(product.salePrice || product.price).toFixed(2)}
-                  </span>
-                </div>
-                {selectedProduct?.id === product.id && (
-                  <FiCheck className="selected-check" />
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Post Content */}
         <div className="admin-card">
-          <h3>2. Customize Content</h3>
+          <h3>1. Write Your Post</h3>
           
           <div className="form-group">
             <label className="form-label">Post Title</label>
@@ -218,7 +121,18 @@ const SocialPost = () => {
               value={postContent.hashtags}
               onChange={(e) => setPostContent({ ...postContent, hashtags: e.target.value })}
               className="form-input"
-              placeholder="#electronics #deals #tech"
+              placeholder="#automation #webdesign #ai"
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Image URL (optional)</label>
+            <input
+              type="url"
+              value={postContent.image}
+              onChange={(e) => setPostContent({ ...postContent, image: e.target.value })}
+              className="form-input"
+              placeholder="https://..."
             />
           </div>
 
@@ -237,7 +151,7 @@ const SocialPost = () => {
 
         {/* Platform Selection */}
         <div className="admin-card">
-          <h3>3. Select Platforms</h3>
+          <h3>2. Select Platforms</h3>
           
           <div className="platform-toggles">
             <button 
@@ -271,7 +185,7 @@ const SocialPost = () => {
           <button 
             className="btn btn-primary post-btn"
             onClick={handlePost}
-            disabled={isPosting || !selectedProduct}
+            disabled={isPosting || !postContent.title.trim()}
           >
             <FiSend />
             {isPosting ? 'Posting...' : 'Post Now'}
@@ -289,7 +203,7 @@ const SocialPost = () => {
               {recentPosts.map(post => (
                 <div key={post.id} className="recent-post-item">
                   <div className="post-info">
-                    <span className="post-product">{post.product}</span>
+                    <span className="post-product">{post.title}</span>
                     <div className="post-platforms">
                       {post.platforms.map(p => (
                         <span key={p} className={`platform-badge ${p}`}>

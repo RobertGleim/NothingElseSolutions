@@ -21,12 +21,6 @@ services:
         generateValue: true
       - key: JWT_SECRET_KEY
         generateValue: true
-      - key: STRIPE_PUBLIC_KEY
-        sync: false
-      - key: STRIPE_SECRET_KEY
-        sync: false
-      - key: PINECONE_API_KEY
-        sync: false
       - key: FRONTEND_URL
         sync: false
     healthCheckPath: /health
