@@ -1,0 +1,61 @@
+.boroughline-privacy-page {
+  min-height: 100vh;
+  background: radial-gradient(circle at top right, #1a1a1d 0%, #0a0a0a 55%);
+}
+
+.boroughline-privacy-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.boroughline-privacy-card {
+  background: #121214;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 20px;
+  color: #e8e8ef;
+}
+
+.boroughline-privacy-pill {
+  display: inline-block;
+  border: 1px solid rgba(197, 160, 89, 0.45);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  color: #c5a059;
+  margin-bottom: 10px;
+}
+
+.boroughline-privacy-card h1 {
+  margin: 0 0 8px;
+  font-size: 1.6rem;
+}
+
+.boroughline-privacy-card h2 {
+  margin-top: 22px;
+  margin-bottom: 8px;
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+  color: #c5a059;
+  text-transform: uppercase;
+}
+
+.boroughline-privacy-card p,
+.boroughline-privacy-card li {
+  color: #a1a1aa;
+  line-height: 1.65;
+}
+
+.boroughline-privacy-card strong {
+  color: #e8e8ef;
+}
+
+.boroughline-privacy-card a {
+  color: #c5a059;
+}
+
+.boroughline-privacy-meta {
+  margin: 0 0 20px;
+  font-size: 0.9rem;
+}

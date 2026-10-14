@@ -6,6 +6,7 @@ import resend
 import requests
 
 from models import db, Contact
+from routes.admin import admin_required
 
 
 FORM_TAGS = {
@@ -225,10 +226,10 @@ def submit_contact():
 
 
 @contact_bp.route('/', methods=['GET'], strict_slashes=False)
+@admin_required
 def get_contacts():
-    """Get all contacts (requires admin authentication to be added)"""
+    """Get all contacts (admin only)"""
     try:
-        # For now, return all contacts; add JWT check when auth is configured
         contacts = Contact.query.order_by(Contact.created_at.desc()).all()
         return jsonify({
             'success': True,
@@ -241,6 +242,7 @@ def get_contacts():
 
 
 @contact_bp.route('/<int:contact_id>', methods=['GET'], strict_slashes=False)
+@admin_required
 def get_contact(contact_id):
     """Get a single contact by ID"""
     try:
@@ -263,6 +265,7 @@ def get_contact(contact_id):
 
 
 @contact_bp.route('/<int:contact_id>', methods=['PUT'], strict_slashes=False)
+@admin_required
 def update_contact(contact_id):
     """Update contact status (mark as read, responded, etc)"""
     try:
@@ -289,6 +292,7 @@ def update_contact(contact_id):
 
 
 @contact_bp.route('/<int:contact_id>', methods=['DELETE'], strict_slashes=False)
+@admin_required
 def delete_contact(contact_id):
     """Delete a contact"""
     try:

@@ -1,6 +1,5 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
-import stripe
 import os
 import uuid
 from datetime import datetime
@@ -8,9 +7,6 @@ import requests
 from routes.tax import get_rate_for_state
 
 orders_bp = Blueprint('orders', __name__)
-
-# Initialize Stripe
-stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 
 # In-memory orders store
 orders = {}
@@ -40,75 +36,6 @@ def get_order(order_id):
         return jsonify({'error': 'Unauthorized'}), 403
     
     return jsonify(order)
-
-@orders_bp.route('/create-payment-intent', methods=['POST'])
-def create_payment_intent():
-    """Create a Stripe payment intent"""
-    try:
-        data = request.get_json()
-        amount = int(float(data['amount']) * 100)  # Convert to cents
-        
-        intent = stripe.PaymentIntent.create(
-            amount=amount,
-            currency='usd',
-            automatic_payment_methods={'enabled': True},
-            metadata={
-                'customer_email': data.get('email'),
-                'order_items': str(data.get('items', []))
-            }
-        )
-        
-        return jsonify({
-            'clientSecret': intent.client_secret
-        })
-    except Exception as e:
-        return jsonify({'error': str(e)}), 400
-
-
-@orders_bp.route('/create-checkout-session', methods=['POST'])
-def create_checkout_session():
-    """Create a Stripe Checkout Session with automatic tax and shipping collection."""
-    try:
-        data = request.get_json() or {}
-        items = data.get('items', [])
-        email = data.get('email')
-
-        # Build line_items using price_data (no stored Price IDs required)
-        line_items = []
-        for it in items:
-            unit_price = float((it.get('salePrice') or it.get('price') or 0) or 0)
-            line_items.append({
-                'price_data': {
-                    'currency': 'usd',
-                    'product_data': {
-                        'name': it.get('name') or 'Product',
-                        'images': [it.get('image')] if it.get('image') else []
-                    },
-                    'unit_amount': int(unit_price * 100)
-                },
-                'quantity': int(it.get('quantity', 1))
-            })
-
-        frontend_url = os.getenv('FRONTEND_URL', 'https://www.nothingelsesolutions.com')
-        success_url = f"{frontend_url}/success?session_id={{CHECKOUT_SESSION_ID}}"
-        cancel_url = f"{frontend_url}/checkout"
-
-        session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
-            mode='payment',
-            line_items=line_items,
-            automatic_tax={'enabled': True},
-            shipping_address_collection={'allowed_countries': ['US']},
-            customer_creation='always',
-            customer_email=email,
-            success_url=success_url,
-            cancel_url=cancel_url
-        )
-
-        return jsonify({'url': session.url})
-    except Exception as e:
-        print('create_checkout_session error:', e)
-        return jsonify({'error': str(e)}), 400
 
 @orders_bp.route('/', methods=['POST'])
 def create_order():
@@ -199,7 +126,7 @@ def track_order(order_id):
 @orders_bp.route('/guest/<order_id>', methods=['GET'])
 def get_guest_order(order_id):
     """Get order for guest (requires email verification)"""
-    email = request.args.get('email')
+    email = request.args.get('email') or ''
     
     order = orders.get(order_id)
     

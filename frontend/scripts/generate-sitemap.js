@@ -34,6 +34,11 @@ async function run() {
     // Products listing
     urls.push({ loc: `${baseUrl}/products`, lastmod: new Date().toISOString().slice(0,10), priority: '0.8', changefreq: 'weekly' })
 
+    // Public compliance pages
+    urls.push({ loc: `${baseUrl}/privacy`, lastmod: new Date().toISOString().slice(0,10), priority: '0.2', changefreq: 'yearly' })
+    urls.push({ loc: `${baseUrl}/terms`, lastmod: new Date().toISOString().slice(0,10), priority: '0.2', changefreq: 'yearly' })
+    urls.push({ loc: `${baseUrl}/boroughline/privacy-policy`, lastmod: new Date().toISOString().slice(0,10), priority: '0.2', changefreq: 'yearly' })
+
     if (Array.isArray(products)) {
       for (const p of products) {
         // prefer slug if available

@@ -102,9 +102,12 @@ print("[ROUTES] All blueprints registered")
 # Apply rate limit to contact submit endpoint to avoid importing limiter from routes (prevents circular import)
 try:
     # view function key is '<blueprint_name>.<function_name>'
-    submit_fn = app.view_functions.get('contact.submit_contact')
-    if submit_fn:
-        limiter.limit("10 per minute")(submit_fn)
+    for view_name, rate in (('contact.submit_contact', "10 per minute"),
+                            ('auth.login', "5 per minute"),
+                            ('auth.admin_login', "5 per minute")):
+        view_fn = app.view_functions.get(view_name)
+        if view_fn:
+            limiter.limit(rate)(view_fn)
 except Exception as _:
     pass
 

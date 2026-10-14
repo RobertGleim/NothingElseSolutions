@@ -7,6 +7,7 @@ from flask_jwt_extended import (
 )
 from flask_bcrypt import Bcrypt
 from datetime import timedelta
+import hmac
 import os
 
 auth_bp = Blueprint('auth', __name__)
@@ -14,9 +15,10 @@ bcrypt = Bcrypt()
 
 # In-memory user store (replace with Pinecone in production)
 users = {}
+# No defaults: admin login is disabled unless both env vars are set
 admin_user = {
-    'email': os.getenv('ADMIN_EMAIL', 'rgleim@outlook.com'),
-    'password': os.getenv('ADMIN_PASSWORD', 'SqueeSolutions0603!'),
+    'email': os.getenv('ADMIN_EMAIL', ''),
+    'password': os.getenv('ADMIN_PASSWORD', ''),
     'is_admin': True
 }
 
@@ -100,12 +102,15 @@ def login():
 @auth_bp.route('/admin/login', methods=['POST'])
 def admin_login():
     """Admin login"""
-    data = request.get_json()
-    
-    email = data.get('email')
-    password = data.get('password')
-    
-    if email != admin_user['email'] or password != admin_user['password']:
+    data = request.get_json(silent=True) or {}
+
+    email = str(data.get('email') or '')
+    password = str(data.get('password') or '')
+
+    configured = admin_user['email'] and admin_user['password']
+    email_ok = hmac.compare_digest(email.encode(), admin_user['email'].encode())
+    password_ok = hmac.compare_digest(password.encode(), admin_user['password'].encode())
+    if not (configured and email_ok and password_ok):
         return jsonify({'error': 'Invalid admin credentials'}), 401
     
     # Create admin token

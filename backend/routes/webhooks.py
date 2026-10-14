@@ -88,7 +88,8 @@ def stripe_webhook():
         except stripe.error.SignatureVerificationError as e:
             return jsonify({'error': 'Invalid signature'}), 400
     else:
-        event = request.get_json()
+        # Never trust unsigned events
+        return jsonify({'error': 'Webhook not configured'}), 503
     
     # Handle specific events
     if event['type'] == 'payment_intent.succeeded':
