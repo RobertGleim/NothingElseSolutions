@@ -139,6 +139,46 @@
   gap: var(--space-md);
 }
 
+.play-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  background: #000;
+  color: #fff;
+  border: 1px solid #a6a6a6;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.play-badge:hover {
+  transform: translateY(-2px);
+  border-color: #fff;
+}
+
+.play-badge-icon {
+  font-size: 1.75rem;
+}
+
+.play-badge-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  text-align: left;
+}
+
+.play-badge-text small {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.play-badge-text strong {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
 .boroughline-policy-link {
   color: var(--color-primary);
   font-weight: 600;

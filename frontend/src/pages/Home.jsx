@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { FiArrowRight, FiDownload, FiShield, FiHeadphones, FiZap, FiCode, FiCpu, FiLayers, FiGlobe, FiMapPin, FiClock, FiBell, FiNavigation, FiSmartphone } from 'react-icons/fi'
+import { FaGooglePlay } from 'react-icons/fa'
 import './Home.css'
 import SEO from '../components/SEO'
 
@@ -130,6 +131,19 @@ const Home = () => {
                 <span>Google Maps</span>
               </div>
               <div className="boroughline-actions">
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.boroughline.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="play-badge"
+                  aria-label="Download Boroughline on Google Play"
+                >
+                  <FaGooglePlay className="play-badge-icon" />
+                  <span className="play-badge-text">
+                    <small>Download now on</small>
+                    <strong>Google Play</strong>
+                  </span>
+                </a>
                 <Link to="/inquiry?service=webapps" className="btn btn-primary">
                   Want an App Like This? <FiArrowRight />
                 </Link>
