@@ -132,7 +132,7 @@ const Home = () => {
               </div>
               <div className="boroughline-actions">
                 <a
-                  href="https://play.google.com/store/apps/details?id=com.boroughline.app"
+                  href="https://tinyurl.com/Boroughline"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="play-badge"
